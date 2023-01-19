@@ -1,0 +1,77 @@
+:host {
+    display: contents;
+}
+
+.w-1-percent {
+    width: 1%;
+}
+
+.w-3-percent {
+    width: 3%;
+}
+
+.w-7-percent {
+    width: 7%;
+}
+
+.w-8-5-percent {
+    width: 8.5%;
+}
+
+.w-9-percent {
+    width: 9%;
+}
+
+.w-10-percent {
+    width: 10%;
+}
+
+.w-15-percent {
+    width: 15%;
+}
+
+.i-action {
+    font-size: 1.75rem !important;
+    margin-right: 0.75rem !important;
+}
+
+.arrow {
+    border: solid;
+    border-width: 0 3px 3px 0;
+    display: inline-block;
+    padding: 3px;
+    cursor: pointer;
+}
+
+.vl {
+    padding-left: 5%
+}
+
+.right {
+    transform: rotate(-45deg);
+    -webkit-transform: rotate(-45deg);
+}
+
+.left {
+    transform: rotate(135deg);
+    -webkit-transform: rotate(135deg);
+}
+
+.up {
+    transform: rotate(-135deg);
+    -webkit-transform: rotate(-135deg);
+}
+
+.down {
+    transform: rotate(45deg);
+    -webkit-transform: rotate(45deg);
+}
+
+.drp{
+    top: 8.5rem;
+}
+
+[type='checkbox']{
+    position: relative;
+    top: 1px;
+}
