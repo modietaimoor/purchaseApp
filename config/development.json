@@ -1,0 +1,8 @@
+{
+  "api": {
+    "baseUrl": "http://localhost:55540/api/"
+  },
+  "idle": {
+    "timeout": 10
+  }
+}
