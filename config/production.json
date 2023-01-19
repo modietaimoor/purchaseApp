@@ -1,0 +1,8 @@
+{
+  "api": {
+    "baseUrl": "https://inview-admin-webapi-v2-staging.azurewebsites.net/api"
+  },
+  "idle": {
+    "timeout": 10
+  }
+}
