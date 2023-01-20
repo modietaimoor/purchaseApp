@@ -1,5 +1,5 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl, FormGroup, Validators } from "@angular/forms";
+import { UntypedFormControl, UntypedFormGroup, Validators } from "@angular/forms";
 import { ManageProductService } from "./manage-products.service";
 
 @Component({
@@ -19,12 +19,12 @@ export class ManageProductComponent implements OnInit {
   showAlert: boolean = false;
   alertMessage: string = "";
   imageFile: any;
-  productFormGroup: FormGroup = new FormGroup({
-    productCode: new FormControl('', Validators.required),
-    productName: new FormControl('', Validators.required),
-    productDescription: new FormControl('', Validators.required),
-    productPrice: new FormControl('', Validators.required),
-    productPhoto: new FormControl('')
+  productFormGroup: UntypedFormGroup = new UntypedFormGroup({
+    productCode: new UntypedFormControl('', Validators.required),
+    productName: new UntypedFormControl('', Validators.required),
+    productDescription: new UntypedFormControl('', Validators.required),
+    productPrice: new UntypedFormControl('', Validators.required),
+    productPhoto: new UntypedFormControl('')
   });
 
   constructor(private _manageProductService: ManageProductService) {}

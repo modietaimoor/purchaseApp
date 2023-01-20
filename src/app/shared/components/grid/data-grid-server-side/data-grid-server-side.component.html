@@ -1,0 +1,129 @@
+<div class="row">
+  <div class="col-md-12" *ngIf="showExport">
+    <div class="download-buttons text-right">
+      <app-button
+        *ngIf="showAdd"
+        innerText="Add"
+        data-testid="add-new"
+        (clickEvent)="addHandler()"
+        type="add"
+        title="Add"
+      ></app-button>
+
+      <app-button
+        innerText="Excel"
+        data-testid="export-to-excel"
+        type="download"
+        (clickEvent)="exportTable('Excel')"
+        title="Download As Excel File"
+        cssClasses="btn excel-blue"
+      ></app-button>
+
+      <app-button
+        innerText="CSV"
+        data-testid="export-to-csv"
+        type="download"
+        (clickEvent)="exportTable('CSV')"
+        title="Download As CSV File"
+        cssClasses="btn csv-green"
+      ></app-button>
+    </div>
+  </div>
+</div>
+<div class="row">
+  <div class="col-md-12">
+    <dx-data-grid
+      [keyExpr]="key"
+      #gridContainer
+      [dataSource]="dataSource"
+      [remoteOperations]="remoteOperations"
+      (onContentReady)="onContentReady($event)"
+      [noDataText]="noDataTextEncoded"
+      [showColumnLines]="showColumnLines"
+      [showRowLines]="showRowLines"
+      [showBorders]="showBorders"
+      [rowAlternationEnabled]="rowAlternationEnabled"
+      [columnAutoWidth]="columnAutoWidth"
+      allowColumnResizing="true"
+      columnResizingMode="nextColumn"
+      (onRowClick)="onRowClick($event)"
+      [repaintChangesOnly]="true"
+      [width]="width"
+      [height]="height"
+      (onEditorPreparing)="onEditorPreparing($event)"
+    >
+      <dxo-filter-row [visible]="showFilterRow" applyFilter="onClick"></dxo-filter-row>
+      <dxo-header-filter [visible]="showHeaderFilter"></dxo-header-filter>
+      <dxo-scrolling rowRenderingMode="virtual" mode="standard"> </dxo-scrolling>
+      <dxo-paging [pageSize]="pageSize"></dxo-paging>
+      <dxo-selection
+        *ngIf="selectionMode === 'multiple'"
+        selectAllMode="page"
+        [mode]="selectionMode"
+        showCheckBoxesMode="always"
+      ></dxo-selection>
+      <dxi-column *ngIf="selectionMode === 'single'" cellTemplate="singleSelectRowTemplate" [width]="40"></dxi-column>
+      <div *dxTemplate="let data of 'singleSelectRowTemplate'">
+        <dx-radio-group [value]="selectedValue" [items]="[{ Id: data.data.id }]" valueExpr="Id"> </dx-radio-group>
+      </div>
+      <dxo-pager
+        visible="true"
+        [allowedPageSizes]="allowedPageSizes"
+        displayMode="full"
+        [showPageSizeSelector]="showPageSizeSelector"
+        [showInfo]="showInfo"
+      >
+      </dxo-pager>
+
+      <ng-container *ngFor="let column of columns">
+        <ng-container [ngTemplateOutlet]="column.type === 'multi-header' ? multiHeader : normal"></ng-container>
+
+        <ng-template #multiHeader>
+          <dxi-column [caption]="column.name">
+            <ng-container *ngFor="let nestedColumn of column.nestedColumns">
+              <dxi-column
+                [dataField]="nestedColumn.dataField"
+                [caption]="nestedColumn.name"
+                [format]="nestedColumn.gridFormat"
+                [cellTemplate]="nestedColumn.hasCustomTemplate ? 'custom' : null"
+              >
+              </dxi-column>
+            </ng-container>
+          </dxi-column>
+        </ng-template>
+
+        <ng-template #normal>
+          <dxi-column
+            [dataType]="column.gridType"
+            [dataField]="column.dataField"
+            [caption]="column.name"
+            [format]="column.gridFormat"
+            [cellTemplate]="column.hasCustomTemplate ? 'custom' : null"
+            [fixed]="column.fixed"
+            [fixedPosition]="column.fixedPosition"
+            [alignment]="column.alignment"
+            [allowSorting]="column.allowSorting"
+            [allowHeaderFiltering]="column.allowHeaderFiltering"
+          >
+          </dxi-column>
+        </ng-template>
+      </ng-container>
+
+      <div *dxTemplate="let row of 'custom'">
+        <app-column-cell
+          [columns]="flattenColumns"
+          [dataField]="row.column.dataField"
+          [text]="row.data[row.column.dataField]"
+          [row]="row.data"
+          [id]="row.data.id"
+          [rowIndex]="row.rowIndex"
+        ></app-column-cell>
+      </div>
+      <dxo-summary>
+        <ng-container *ngFor="let summery of summaries">
+          <dxi-total-item [column]="summery.name" [displayFormat]="summery.format"> </dxi-total-item>
+        </ng-container>
+      </dxo-summary>
+    </dx-data-grid>
+  </div>
+</div>

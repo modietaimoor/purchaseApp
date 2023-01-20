@@ -1,0 +1,12 @@
+<div class="modal-header">
+  <h3 class="modal-title pull-left">{{ params.title }}</h3>
+  <button type="button" class="btn-close close pull-right" aria-label="Close" (click)="close()">
+    <span aria-hidden="true" class="visually-hidden">&times;</span>
+  </button>
+</div>
+<div class="modal-body" [style.height]="params.height + 'px'">
+  <template #container></template>
+</div>
+<div class="modal-footer">
+  <ng-container #footer></ng-container>
+</div>

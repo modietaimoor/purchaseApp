@@ -1,0 +1,35 @@
+
+    .dropdown-menu-custom {
+      cursor: pointer;
+    }
+    .dropdown-menu-custom a.dropdown-item {
+      display: block !important;
+      margin: 10px 3px;
+      color: #ffffff;
+    }
+    .dropdown-menu-custom hr {
+      margin: 0;
+    }
+    .dropdown-menu-custom a.dropdown-item span {
+      margin: 27px;
+    }
+    #dropdownMenuButton {
+      height: 25px;
+      width: 25px;
+    }
+    .dropdown-menu {
+      left: 85%;
+      background: #6c6c6c;
+      box-shadow: 1px 3px 5px 1px rgb(0 0 0 / 16%);
+      border-radius: 5px;
+    }
+    ::ng-deep tr.dx-row.dx-data-row.dx-column-lines {
+      position: relative;
+    }
+
+    ::ng-deep tr.dx-row.dx-data-row.dx-column-lines .dropdown {
+      position: unset;
+      text-align: center;
+    }
+
+    .dropdown-menu-custom a.dropdown-item .downloadExcel {width: 35px; height: 35px;}

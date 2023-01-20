@@ -1,0 +1,74 @@
+<dx-chart
+  id="chart"
+  [dataSource]="dataSource"
+  [barGroupPadding]="barGroupPadding"
+  (onPointClick)="onPointClick($event)"
+  [size]="size"
+>
+  <dxo-export [enabled]="enableExport" [printingEnabled]="false"> </dxo-export>
+  <dxo-title [text]="title" horizontalAlignment="center">
+    <dxo-font color="black" family="Segoe UI Light" opacity="1" [size]="titleFont" weight="900"> </dxo-font>
+  </dxo-title>
+  <dxi-series
+    *ngFor="let series of seriesList.toArray()"
+    [valueField]="series.valueField"
+    [type]="series.type"
+    [name]="series.name"
+    [axis]="series.axis"
+    [argumentField]="series.argumentField"
+    [rangeValue1Field]="series.rangeValue1Field"
+    [rangeValue2Field]="series.rangeValue2Field"
+    [border]="series.border"
+    [color]="series.color"
+    [barOverlapGroup]="barOverlapGroup"
+    [showInLegend]="series.showSeriesInLegend"
+  >
+  </dxi-series>
+  <dxo-common-series-settings
+    *ngIf="argumentField && valueField"
+    [argumentField]="argumentField"
+    [valueField]="valueField"
+    [type]="type"
+  >
+  </dxo-common-series-settings>
+  <dxo-series-template *ngIf="nameField" [nameField]="nameField"> </dxo-series-template>
+
+  <dxi-value-axis [title]="yAxisTitle" [visualRange]="visualRange" [tickInterval]="tickInterval">
+    <dxo-label [customizeText]="customizeYAxisText"></dxo-label>
+  </dxi-value-axis>
+
+  <dxi-value-axis *ngIf="secondaryYAxisName" [name]="secondaryYAxisName" position="right">
+    <dxo-label [customizeText]="customizeSecondaryYAxisText"></dxo-label>
+  </dxi-value-axis>
+
+  <dxo-tooltip [enabled]="true" [customizeTooltip]="customizeTooltip"> </dxo-tooltip>
+  <dxo-legend
+    [verticalAlignment]="verticalAlignment"
+    [horizontalAlignment]="horizontalAlignment"
+    itemTextPosition="right"
+    [position]="position"
+    [customizeText]="customizeLegendText"
+  >
+  </dxo-legend>
+  <dxo-argument-axis *ngIf="xAxisType === 'datetime'" [argumentType]="xAxisType" [tickInterval]="xAxisDateTickInterval">
+    <dxo-label [format]="dateFormat" [rotationAngle]="rotationAngle" [overlappingBehavior]="overlappingBehavior">
+    </dxo-label>
+  </dxo-argument-axis>
+  <ng-container *ngIf="rotateXAxisValue; else normalXAxis">
+    <dxo-argument-axis>
+      <dxo-label
+        [rotationAngle]="rotationAngle"
+        [overlappingBehavior]="overlappingBehavior"
+        [customizeText]="customizeXAxisText"
+      >
+        <dxo-font [size]="xAxisFontSize" [family]="xAxisFontFamily"></dxo-font>
+      </dxo-label>
+    </dxo-argument-axis>
+  </ng-container>
+
+  <ng-template #normalXAxis>
+    <dxo-argument-axis>
+      <dxo-label> </dxo-label>
+    </dxo-argument-axis>
+  </ng-template>
+</dx-chart>

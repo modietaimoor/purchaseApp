@@ -1,0 +1,30 @@
+<dx-tab-panel
+  #tabPanel
+  [dataSource]="tabs"
+  [(selectedIndex)]="selectTabIndex"
+  [loop]="false"
+  [animationEnabled]="false"
+  [swipeEnabled]="false"
+  itemTitleTemplate="title"
+  itemTemplate="template"
+  (onTitleClick)="selectTab($event)"
+  [showNavButtons]="showNavButtons"
+>
+  <div *dxTemplate="let tab of 'title'">
+    <span>{{ tab.text }}</span>
+  </div>
+  <div *dxTemplate="let tabContent of 'template'">
+    <div class="container-fluid">
+      <div class="row m-t-md m-b-md">
+        <div class="tabpanel-item col-lg-12">
+          <div
+            *ngIf="optionList.length"
+            tab-body
+            [active]="selectTabIndex === optionList[tabContent.id]?.index"
+            [content]="optionList[tabContent.id]?.content"
+          ></div>
+        </div>
+      </div>
+    </div>
+  </div>
+</dx-tab-panel>

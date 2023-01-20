@@ -1,0 +1,25 @@
+<div class="form-steps-container">
+  <ng-container *ngFor="let step of steps; let i = index">
+    <div class="single-step">
+      <div
+        class="step-bubble"
+        [ngClass]="{
+          'step-incomplete': currentStep < step.index,
+          'step-complete': currentStep > step.index,
+          'step-current': currentStep === step.index
+        }"
+      >
+        {{ step.index }}
+      </div>
+      <div class="step-text">{{ step.text }}</div>
+    </div>
+    <div *ngIf="i < steps.length - 1" class="step-divider"></div>
+  </ng-container>
+</div>
+<div class="container-fluid">
+  <ng-container *ngFor="let step of steps">
+    <ng-container *ngIf="currentStep === step.index">
+      <ng-container *ngTemplateOutlet="step.content"></ng-container>
+    </ng-container>
+  </ng-container>
+</div>
