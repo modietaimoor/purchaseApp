@@ -1,0 +1,17 @@
+<dx-popover
+  [target]="target"
+  [position]="position"
+  [showTitle]="showTitle"
+  [title]="title"
+  [(visible)]="visible"
+  (onContentReady)="onContentReady($event)"
+  (onHidden)="onHidden()"
+  [height]="height"
+  [width]="width"
+  [wrapperAttr]="attr"
+  [showCloseButton]="showCloseButton"
+>
+  <div *dxTemplate="let data of 'content'">
+    <ng-template [ngTemplateOutlet]="templateRef" [ngTemplateOutletContext]="{ $implicit: data }"></ng-template>
+  </div>
+</dx-popover>

@@ -1,0 +1,87 @@
+<ng-container
+  [ngTemplateOutlet]="
+    type === 'link'
+      ? linkButton
+      : type === 'img'
+      ? imgButton
+      : type === 'noIcon'
+      ? noicon
+      : type === 'buttons-list'
+      ? dropdownListButton
+      : normalButton
+  "
+></ng-container>
+
+<ng-template #normalButton>
+  <button
+    type="button"
+    [ngClass]="type === 'save' || type === 'loading' ? 'mainBtnInner' : type === 'close' ? 'mainBtnInnerCancel' : ''"
+    [disabled]="disabled"
+    class="btn btn-default"
+    [attr.class]="cssClasses"
+    (click)="onClick($event)"
+    [title]="title"
+    [hidden]="isHiddenButton"
+  >
+    <div class="btn-img" [ngClass]="type === 'save' || type === 'loading' ? 'top-0' : type === 'close' ? 'top-0' : ''">
+      <em [appButtonIcon]="type" class="pointer-event-none"></em>{{ innerText }}
+    </div>
+  </button>
+</ng-template>
+
+<ng-template #noicon>
+  <button
+    [disabled]="disabled"
+    type="button"
+    class="btn btn-default no-icon"
+    [attr.class]="cssClasses"
+    (click)="onClick($event)"
+    [title]="title"
+    [hidden]="isHiddenButton || !show(row)"
+    [ngStyle]="{ visibility: !show(row) ? 'hidden' : 'visible' }"
+  >
+    {{ title }}
+  </button>
+</ng-template>
+
+<ng-template #noicon>
+  <button
+    [disabled]="disabled"
+    type="button"
+    class="btn btn-default no-icon"
+    [attr.class]="cssClasses"
+    (click)="onClick($event)"
+    [title]="title"
+    [hidden]="isHiddenButton || !show(row)"
+    [ngStyle]="{ visibility: !show(row) ? 'hidden' : 'visible' }"
+  >
+    {{ title }}
+  </button>
+</ng-template>
+
+<ng-template #linkButton>
+  <a class="clickable-column" (click)="onClick()">
+    <u>{{ innerText }}</u>
+  </a>
+</ng-template>
+
+<ng-template #imgButton>
+  <a (click)="onClick()" *ngIf="imgSrc">
+    <img [src]="'img/icons/' + imgSrc" [alt]="title" [height]="height" [width]="width" />
+  </a>
+</ng-template>
+
+<ng-template #dropdownListButton>
+  <dx-drop-down-button
+    [text]="title"
+    [items]="buttonsList"
+    [attr.class]="cssClasses"
+    displayExpr="name"
+    keyExpr="id"
+    [useSelectMode]="false"
+    [dropDownOptions]="{ width: 160 }"
+    height="32px"
+    (onItemClick)="onClick($event)"
+    [ngStyle]="{ visibility: !show(row) ? 'hidden' : 'visible' }"
+  ></dx-drop-down-button>
+</ng-template>

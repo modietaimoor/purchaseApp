@@ -1,7 +1,7 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { Order, StatusModel } from "../domain/models/orders";
-import { DataGridComponent } from "../shared/data-grid/data-grid.component";
-import { Column } from "../shared/data-grid/model/grid-model";
+import { DataGridClientSideComponent } from "../shared/components/grid/data-grid-client-side/data-grid-client-side.component";
+import { Column } from "../shared/components/grid/model";
 import { OrdersService } from "./orders.service";
 
 @Component({
@@ -10,21 +10,21 @@ import { OrdersService } from "./orders.service";
   styleUrls: ["./orders.component.css"]
 })
 export class OrdersComponent implements OnInit {
-  @ViewChild(DataGridComponent) grid: DataGridComponent | undefined;  
+  @ViewChild(DataGridClientSideComponent) grid: DataGridClientSideComponent<Order> | undefined;  
   ordersList: Array<Order> = [];
   statusLookup: Array<StatusModel> = [];
   selectedStatus: StatusModel | undefined;
   selectAll = false;
   dropDownOpened = false;
   columns: Column[] = [
-    { dataField: 'orderID', name: 'Order Number', alignment: 'center', width: 9  },
-    { dataField: 'username', name: 'Client Name', alignment: 'center', width: 15 },
-    { dataField: 'email', name: 'Email Address', alignment: 'center', width: 20 },
-    { dataField: 'phoneNumber', name: 'Phone Number', alignment: 'center', width: 9 },
-    { dataField: 'orderDate', name: 'Order Date', alignment: 'center', width: 9 },
-    { dataField: 'orderDate', name: 'Ordered At', alignment: 'center', width: 7 },
-    { dataField: 'statusName', name: 'Order Status', alignment: 'center', width: 9 },
-    { dataField: 'orderCost', name: 'Order Cost', alignment: 'center', width: 9 }
+    { dataField: 'orderID', name: 'Order Number', alignment: 'center'  },
+    { dataField: 'username', name: 'Client Name', alignment: 'center' },
+    { dataField: 'email', name: 'Email Address', alignment: 'center' },
+    { dataField: 'phoneNumber', name: 'Phone Number', alignment: 'center' },
+    { dataField: 'orderDate', name: 'Order Date', alignment: 'center' },
+    { dataField: 'orderDate', name: 'Ordered At', alignment: 'center' },
+    { dataField: 'statusName', name: 'Order Status', alignment: 'center' },
+    { dataField: 'orderCost', name: 'Order Cost', alignment: 'center' }
   ];
   constructor(private _ordersService: OrdersService) {}
 
@@ -103,7 +103,7 @@ export class OrdersComponent implements OnInit {
       alert('Please select new status for update.');
       return;
     }
-    let selectedRows = this.grid?.getSelectedRowsData();
+    let selectedRows = this.grid?.dxDataGrid.instance.getSelectedRowsData();
     if(selectedRows == null || selectedRows.length <= 0){
       alert('Please select at least one order');
       return;

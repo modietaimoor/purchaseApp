@@ -165,13 +165,55 @@
             </div>
         </div>-->  
         <div class="w-full p-4 shadow-lg rounded bg-white">
-            <app-data-grid 
+            <!--<app-data-grid 
                 [dataSource]="ordersList"
                 [columns]="columns"
                 [statusLookup]="statusLookup" 
                 selectionMode="multiple"
                 [expandRowDetails]="true"
-            ></app-data-grid>
+            ></app-data-grid>-->
+            <dx-data-grid
+                [dataSource]="ordersList"
+                [height]="600"
+                [showBorders]="true"
+                >
+                <ng-container *ngFor="let column of columns">
+                    <ng-container [ngTemplateOutlet]="column.type === 'multi-header' ? multiHeader : normal"></ng-container>
+            
+                    <ng-template #multiHeader>
+                      <dxi-column [caption]="column.name" [alignment]="column.alignment">
+                        <ng-container *ngFor="let nestedColumn of column.nestedColumns">
+                          <dxi-column
+                            [dataField]="nestedColumn.dataField"
+                            [caption]="nestedColumn.name"
+                            [format]="nestedColumn.gridFormat"
+                            [cssClass]="nestedColumn.cssClass"
+                            [cellTemplate]="nestedColumn.hasCustomTemplate ? 'custom' : null"
+                            [alignment]="nestedColumn.alignment"
+                          >
+                          </dxi-column>
+                        </ng-container>
+                      </dxi-column>
+                    </ng-template>
+            
+                    <ng-template #normal>
+                      <dxi-column
+                        [fixed]="column.fixed"
+                        [fixedPosition]="column.fixedPosition"
+                        [dataField]="column.dataField"
+                        [caption]="column.name"
+                        [format]="column.gridFormat"
+                        [cellTemplate]="column.hasCustomTemplate ? 'custom' : null"
+                        [alignment]="column.alignment"
+                        [cssClass]="column.cssClass"
+                        [dataType]="column.gridType"
+                        [allowHeaderFiltering]="column.allowHeaderFiltering"
+                        [allowEditing]="column.allowUpdating"
+                      >
+                      </dxi-column>
+                    </ng-template>
+                  </ng-container>
+            </dx-data-grid>
         </div>
     </ng-template>
 </div>

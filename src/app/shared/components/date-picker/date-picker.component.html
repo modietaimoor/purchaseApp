@@ -1,0 +1,23 @@
+<ng-template #monthAndYear
+  ><dx-date-box
+    type="date"
+    id="calendar-container"
+    [value]="value"
+    [min]="min"
+    [max]="max"
+    displayFormat="monthAndYear"
+    (valueChange)="onValueChange($event)"
+  >
+    <dxo-calendar-options #calendar maxZoomLevel="year" minZoomLevel="century"> </dxo-calendar-options> </dx-date-box
+></ng-template>
+<dx-date-box
+  [disabled]="disabled"
+  *ngIf="showDays; else monthAndYear"
+  [value]="value"
+  [type]="dateType"
+  displayFormat="dd/MM/yyyy"
+  type="date"
+  [min]="min"
+  (valueChange)="onValueChange($event)"
+>
+</dx-date-box>

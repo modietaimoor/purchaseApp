@@ -3,9 +3,9 @@ import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
 
-import { AuthService } from '@core/auth.service';
-import { AppSettings } from '@core/service/app.settings.service';
-import { AppInjector } from '@shared/service/app-Injector.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { AppSettings } from 'src/app/core/service/app.settings.service';
+import { AppInjector } from 'src/app/shared/service/app-Injector.service';
 
 import { HttpAdapter } from './http-adapter';
 import { HttpResponseHandler } from './http-response-handler';

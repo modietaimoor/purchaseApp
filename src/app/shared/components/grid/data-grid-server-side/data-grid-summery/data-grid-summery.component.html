@@ -1,0 +1,10 @@
+<td [attr.colspan]="colspan">
+  <div class="summary-content">
+    <div data-testid="summery-item" *ngFor="let summery of summaries">
+      <span>
+        <b>{{ summery.label }}:</b>
+      </span>
+      {{ summery.value }}
+    </div>
+  </div>
+</td>

@@ -1,0 +1,13 @@
+<dx-list
+  [dataSource]="list"
+  [searchEnabled]="searchEnabled"
+  [searchExpr]="searchExpr"
+  height="100%"
+  [hoverStateEnabled]="false"
+  [focusStateEnabled]="false"
+  [activeStateEnabled]="false"
+>
+  <div *dxTemplate="let item of 'item'">
+    <ng-template [ngTemplateOutlet]="templateRef" [ngTemplateOutletContext]="{ $implicit: item }"></ng-template>
+  </div>
+</dx-list>

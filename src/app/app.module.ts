@@ -1,6 +1,5 @@
 import { BrowserModule } from "@angular/platform-browser";
 import { APP_INITIALIZER, NgModule } from "@angular/core";
-import { FormsModule, ReactiveFormsModule } from "@angular/forms"
 import { RouterModule } from "@angular/router";
 
 import { AppRoutingModule } from "./app-routing.module";
@@ -19,8 +18,10 @@ import { OrderContentComponent } from "./orders/order-content/order-content.comp
 import { OrdersComponent } from "./orders/orders.component";
 import { OrdersService } from "./orders/orders.service";
 import { RemoveCommaPipe } from "./core/pipes/remove-comma.pipe";
-import { DataGridComponent } from "./shared/data-grid/data-grid.component";
-import { DataColumnComponent } from "./shared/data-grid/data-column/data-column.component";
+import { CommonModule } from "@angular/common";
+import { SharedModule } from "src/app/shared/shared.module";
+import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+
 
 export function configServiceFactory(config: ConfigService): () => Promise<boolean> {
   return (): Promise<boolean> => config.load();
@@ -36,17 +37,15 @@ export function configServiceFactory(config: ConfigService): () => Promise<boole
     AdminComponent,
     OrdersComponent,
     OrderContentComponent,
-    DataGridComponent,
-    DataColumnComponent,
     RemoveCommaPipe
   ],
   imports: [
     BrowserModule, 
     AppRoutingModule, 
-    FormsModule, 
-    ReactiveFormsModule, 
     HttpClientModule, 
-    RouterModule],
+    RouterModule,
+    SharedModule,
+    BrowserAnimationsModule],
   providers: [
     ManageProductService, 
     OrdersService,

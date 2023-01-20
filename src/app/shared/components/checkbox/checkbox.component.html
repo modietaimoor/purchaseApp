@@ -1,0 +1,5 @@
+<label class="cbxContainer">
+  {{ control.value.name }}
+  <input type="checkbox" [checked]="control.value.checked" (change)="changeValue($event)" />
+  <span class="checkmark"></span>
+</label>

@@ -2,10 +2,10 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError as observableThrowError } from 'rxjs';
 
-import { AuthService } from '@core/auth.service';
-import { RouteService } from '@core/service/route.service';
-import { AppInjector } from '@shared/service/app-Injector.service';
-import { NotificationService } from '@shared/service/notification.service';
+import { AuthService } from 'src/app/core/auth.service';
+import { RouteService } from 'src/app/core/service/route.service';
+import { AppInjector } from 'src/app/shared/service/app-Injector.service';
+import { NotificationService } from 'src/app/shared/service/notification.service';
 
 @Injectable({
   providedIn: 'root'

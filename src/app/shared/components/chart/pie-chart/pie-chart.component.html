@@ -1,0 +1,20 @@
+<dx-pie-chart id="chart" palette="bright" [dataSource]="dataSource" [size]="size" (onPointClick)="onPointClick($event)">
+  <dxi-series *ngFor="let item of seriesList" [argumentField]="item.argumentField" [valueField]="item.valueField">
+    <dxo-label [visible]="showLabel" [customizeText]="customizeText">
+      <dxo-connector visible="true" width="1"></dxo-connector>
+    </dxo-label>
+  </dxi-series>
+  <dxo-title [text]="title" [verticalAlignment]="titlePosition">
+    <dxo-font [size]="titleSize"> </dxo-font>
+  </dxo-title>
+  <dxo-legend
+    [visible]="showLegend"
+    [verticalAlignment]="legendAlignment"
+    [orientation]="legendOrientation"
+    horizontalAlignment="center"
+    itemTextPosition="top"
+    position="outside"
+  >
+  </dxo-legend>
+  <dxo-tooltip [enabled]="customizeTooltip !== undefined" [customizeTooltip]="customizeTooltip"> </dxo-tooltip>
+</dx-pie-chart>

@@ -1,0 +1,11 @@
+<dx-select-box
+  [value]="value"
+  [dataSource]="optionList"
+  displayExpr="value"
+  valueExpr="key"
+  (onValueChanged)="onValueChange($event)"
+  [disabled]="disabled"
+  [searchEnabled]="searchEnabled"
+  [showClearButton]="showClearButton"
+>
+</dx-select-box>
