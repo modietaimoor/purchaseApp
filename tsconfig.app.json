@@ -1,12 +1,17 @@
 {
   "extends": "./tsconfig.json",
   "compilerOptions": {
+    "baseUrl": "./",
     "outDir": "./out-tsc/app",
     "types": [],
     "paths": {
       "jszip": [
         "node_modules/jszip/dist/jszip.min.js"
-      ]
+      ],
+      "@core/*": ["src/app/core/*"],
+      "@shared/*": ["src/app/shared/*"],
+      "@domain/*": ["src/app/domain/*"],
+      "exceljs": ["node_modules/exceljs/dist/exceljs.min"]
     }
   },
   "files": [
