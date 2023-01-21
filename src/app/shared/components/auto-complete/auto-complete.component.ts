@@ -1,7 +1,7 @@
 import { Component, Input, OnChanges, SimpleChanges, ViewChild } from '@angular/core';
 
-import { AuthService } from 'src/app/core/auth.service';
-import { AppSettings } from 'src/app/core/service/app.settings.service';
+import { AuthService } from '@core/auth.service';
+import { AppSettings } from '@core/service/app.settings.service';
 import { DxAutocompleteComponent } from 'devextreme-angular';
 import data from 'devextreme/data/odata/store';
 

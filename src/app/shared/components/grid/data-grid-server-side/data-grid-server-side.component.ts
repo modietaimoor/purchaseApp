@@ -53,7 +53,7 @@ export class DataGridComponent<T> extends BaseGridComponent implements OnInit, O
   @Input() readonly key: string = '';
   @Input() readonly columnWidth: number;
   @Input() readonly pageSize: number = 10;
-  @Input() readonly columns: Column[] = [];
+  @Input() columns: Column[] = [];
   @Input() readonly exportName: string = 'file';
   @Input() readonly exportDataSource$: Observable<T[]>;
   @Input() readonly showExport: boolean = true;
@@ -100,41 +100,14 @@ export class DataGridComponent<T> extends BaseGridComponent implements OnInit, O
   }
 
   ngAfterContentInit(): void {
-    // when the component get initialized options.changes Observable was not loaded and at the same time
-    // there are list of select options already exists in this.options so we use startWith
-    // to run the subscribe manually for one time to get the options array
     this.columnsComponents.changes.pipe(startWith(true)).subscribe(() => {
       const columnsComponent = this.columnsComponents.toArray();
 
       if (columnsComponent.length < 1) return;
-      this.columns.clear();
+      this.columns = [];
       columnsComponent.forEach(col => this.columns.push(this.createColumn(col)));
-      this.flattenNestedColumns();
+      this.flattenColumns = this.flattenNestedColumns(this.columns);
     });
-  }
-
-  private createColumn(col: ColumnComponent): Column {
-    return {
-      type: col.type,
-      name: col.name,
-      dataField: col.dataField,
-      alignment: col.alignment,
-      hasCustomTemplate: this.hasCustomTemplate(col.type) || col.isLink,
-      gridFormat: this.getColumnFormat(col.type),
-      gridType: this.getColumnGridType(col.type),
-      templateRef: col.templateRef,
-      fixed: col.fixed,
-      fixedPosition: col.fixedPosition,
-      nestedColumns: col.nestedColumns
-        .toArray()
-        ?.filter(r => r !== undefined && r !== null)
-        .map(r => this.createColumn(r)),
-      clickEvent: col.clickEvent,
-      isLink: col.isLink,
-      filterName: col.filterName,
-      allowSorting: col.allowSorting,
-      allowHeaderFiltering: col.allowHeaderFiltering
-    };
   }
 
   ngOnInit(): void {
@@ -144,7 +117,7 @@ export class DataGridComponent<T> extends BaseGridComponent implements OnInit, O
   ngOnChanges(changes: SimpleChanges): void {
     const isColumnsChanged = changes.columns && changes.columns.currentValue !== changes.columns.previousValue;
     if (isColumnsChanged) {
-      this.flattenNestedColumns();
+      this.flattenColumns = this.flattenNestedColumns(this.columns);
       this.columns.forEach(r => this.updateColumn(r));
       this.generateGridSummery(changes.columns.currentValue);
     }
@@ -155,16 +128,6 @@ export class DataGridComponent<T> extends BaseGridComponent implements OnInit, O
       this.exportDataSource$.subscribe(data => {
         this.onExportDataSource(data);
       });
-  }
-
-  private flattenNestedColumns(): void {
-    this.flattenColumns.clear();
-    this.columns.forEach(t => {
-      t.alignment = t.alignment ?? this.getColumnAlignment(t.type);
-      if (t.nestedColumns?.length) this.flattenColumns.push(...t.nestedColumns);
-      const { nestedColumns, ...d } = t;
-      this.flattenColumns.push(d);
-    });
   }
 
   private updateColumn(r: Column): void {
@@ -231,7 +194,7 @@ export class DataGridComponent<T> extends BaseGridComponent implements OnInit, O
     });
   }
 
-  getData(loadOptions: LoadOptions, filter: unknown[] | undefined): Promise<DataSource<T>> {
+  getData(loadOptions: LoadOptions, filter: unknown[]): Promise<DataSource<T>> {
     const promise = new Promise<DataSource<T>>((resolve, reject) => {
       this.resolve = resolve;
       this.reject = reject;
@@ -282,7 +245,7 @@ export class DataGridComponent<T> extends BaseGridComponent implements OnInit, O
     return newSort;
   }
 
-  reFormatFilter(filter: unknown[] | undefined): unknown {
+  reFormatFilter(filter: unknown[]): unknown {
     if (!filter) return filter;
 
     // filter should be array of arrays to hold all table filters but when there is only one filter selected will get only one array

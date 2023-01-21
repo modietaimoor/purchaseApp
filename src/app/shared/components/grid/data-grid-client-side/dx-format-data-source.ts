@@ -1,7 +1,7 @@
 import { DxDataGridComponent } from 'devextreme-angular';
 import { formatDate as dxFormatDate } from 'devextreme/localization';
 import { format } from 'devextreme/ui/widget/ui.widget';
-import { SafeAny } from 'src/app/core/safe-any-type';
+import { SafeAny } from '@core/safe-any-type';
 
 export class DxFormatter {
   public static getFormattedDataSet<T>(dataSource: T[], dxDataGrid: DxDataGridComponent): SafeAny[] | T[] {

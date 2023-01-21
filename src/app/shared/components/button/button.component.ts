@@ -1,7 +1,7 @@
 import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnChanges, Output } from '@angular/core';
 
-import { ButtonsList } from 'src/app/shared/components/grid/model';
-import { SafeAny } from 'src/app/core/safe-any-type';
+import { ButtonsList } from '@shared/components/grid/model';
+import { SafeAny } from '@core/safe-any-type';
 
 export type ButtonType =
   | 'pdf'
@@ -35,53 +35,7 @@ export type ButtonType =
 @Component({
   selector: 'app-button',
   templateUrl: './button.component.html',
-  styles: [
-    `
-      :host {
-        margin: 2px;
-      }
-      .pdf-icon {
-        color: red;
-      }
-      .btn-default {
-        border: none !important;
-        border-color: inherit !important;
-      }
-      .btn-img {
-        position: relative;
-        top: 3px;
-      }
-      .csv-green {
-        background-color: #009900 !important;
-        margin-bottom: 3px !important;
-        width: 100px !important;
-        border-radius: 5px !important;
-        color: #fff !important;
-      }
-      .excel-blue {
-        background-color: #00537e !important;
-        margin-bottom: 3px !important;
-        width: 100px !important;
-        border-radius: 5px !important;
-        color: #fff !important;
-      }
-      .clickable-column {
-        color: #4db848;
-        cursor: pointer;
-      }
-      .pointer-event-none {
-        pointer-events: none;
-      }
-      :host::ng-deep.green-button {
-        background-color: #2bb231 !important;
-        color: #fff !important;
-      }
-
-      .top-0 {
-        top: 0px !important;
-      }
-    `
-  ],
+  styleUrls: ['./button.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class ButtonComponent implements OnChanges {

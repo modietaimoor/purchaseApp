@@ -1,11 +1,11 @@
 import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleChanges, ViewChild } from '@angular/core';
 
-//import { LayoutService } from 'src/app/core/layout/layout.service';
+//import { LayoutService } from '@core/layout/layout.service';
 import { DxChartComponent } from 'devextreme-angular';
 import { List } from 'immutable';
 
 import { ChartSeries } from '../chart-series';
-import { SafeAny } from 'src/app/core/safe-any-type';
+import { SafeAny } from '@core/safe-any-type';
 
 @Component({
   selector: 'app-graph-chart',

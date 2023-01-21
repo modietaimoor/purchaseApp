@@ -1,12 +1,12 @@
 import { Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
-import { Guid } from 'src/app/shared/utils/guid';
-import { createClass } from 'src/app/shared/utils/style.utils';
+import { Guid } from '@shared/utils/guid';
+import { createClass } from '@shared/utils/style.utils';
 
 import { ModalUtils } from './modal-utils';
 import { ModalComponent, ModalParams } from './modal.component';
-import { SafePropertyAny } from 'src/app/core/safe-any-type';
+import { SafePropertyAny } from '@core/safe-any-type';
 import { BsModalRef, BsModalService } from 'ngx-bootstrap/modal';
 @Injectable()
 export class ModalService {
@@ -24,7 +24,7 @@ export class ModalService {
       providers: [{ provide: ModalRef, useValue: ref }]
     });
 
-    bsModalRef.setClass(createClass(`{ width:${params.width}% !important }`));
+    bsModalRef.setClass(createClass(`{ width:${params.width}% !important; max-width: unset !important; }`));
 
     this.modalUtils.pushModalRef(bsModalRef);
     this.modalRef.set(ref.id, bsModalRef);

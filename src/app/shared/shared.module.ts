@@ -2,8 +2,6 @@ import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
 
-//import { DataListComponent } from 'src/app/shared/components/data-list/data-list.component';
-//import { PopoverComponent } from 'src/app/shared/components/popover/popover.component';
 import {
   DxCalendarModule,
   DxChartModule,
@@ -25,6 +23,7 @@ import { GraphChartComponent } from './components/chart/graph-chart/graph-chart.
 import { PieChartComponent } from './components/chart/pie-chart/pie-chart.component';
 import { CheckboxListComponent } from './components/checkbox-list/checkbox-list.component';
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
+import { DataListComponent } from './components/data-list/data-list.component';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
 import { DataGridClientSideComponent } from './components/grid/data-grid-client-side/data-grid-client-side.component';
 import { DataGridServerSideComponents } from './components/grid/data-grid-server-side';
@@ -32,6 +31,7 @@ import { DataGridSummeryComponent } from './components/grid/data-grid-server-sid
 import { ModalFooterDirective } from './components/modal/modal-footer.directive';
 import { ModalComponent } from './components/modal/modal.component';
 import { ModalService } from './components/modal/modal.service';
+import { PopoverComponent } from './components/popover/popover.component';
 import { SelectOptionComponent } from './components/select/select-option.component';
 import { SelectComponent } from './components/select/select.component';
 import { StepComponent } from './components/stepper/step.component';
@@ -41,8 +41,6 @@ import { TabTemplateDirective } from './components/tabs/tab-template.directive';
 import { TabComponent } from './components/tabs/tab.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { ButtonIconDirective } from './directives/button-icon/button-icon.directive';
-import { IconBrokenSignDirectionDirective } from './directives/icon-broken-sign/icon-broken-sign.directive';
-import { IconSignDirectionDirective } from './directives/icon-sign-direction/icon-sign-direction.directive';
 
 @NgModule({
   declarations: [
@@ -58,14 +56,12 @@ import { IconSignDirectionDirective } from './directives/icon-sign-direction/ico
     ButtonIconDirective,
     PieChartComponent,
     GraphChartComponent,
-    //DataListComponent,
-    //PopoverComponent,
+    DataListComponent,
+    PopoverComponent,
     TabsComponent,
     TabComponent,
     TabTemplateDirective,
     TabBodyComponent,
-    IconSignDirectionDirective,
-    IconBrokenSignDirectionDirective,
     ...DataGridServerSideComponents,
     StepperComponent,
     StepComponent,
@@ -103,14 +99,12 @@ import { IconSignDirectionDirective } from './directives/icon-sign-direction/ico
     ButtonIconDirective,
     PieChartComponent,
     GraphChartComponent,
-    //DataListComponent,
-    //PopoverComponent,
+    DataListComponent,
+    PopoverComponent,
     TabsComponent,
     TabComponent,
     TabTemplateDirective,
     TabBodyComponent,
-    IconSignDirectionDirective,
-    IconBrokenSignDirectionDirective,
     ...DataGridServerSideComponents,
     StepperComponent,
     StepComponent,
