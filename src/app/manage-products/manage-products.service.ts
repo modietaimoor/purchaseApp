@@ -3,6 +3,7 @@ import { HttpClient, HttpHeaders } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { AppSettings } from '../core/services/app.settings.service';
+import { CategoryModelResponse, ProductModelRequestResponse, ProductPhotoModelResponse, SizeModelResponse } from '@domain/resquest-response/request-response';
 
 @Injectable()
 export class ManageProductService {
@@ -11,19 +12,19 @@ export class ManageProductService {
 
   constructor(private _http: HttpClient) { }
 
-  public getAllSizes(): Observable<any> {
+  public getAllSizes(): Observable<SizeModelResponse[]> {
     return this._http.get<any>(this.backendUrl + "sizes/GetAllSizes");
   }
 
-  public getAllCategories(): Observable<any> {
+  public getAllCategories(): Observable<CategoryModelResponse[]> {
     return this._http.get<any>(this.backendUrl + "categories/GetAllCategories");
   }
 
-  public getAllProducts(): Observable<any> {
+  public getAllProducts(): Observable<ProductModelRequestResponse[]> {
     return this._http.get<any>(this.backendUrl + "products/GetAllProducts");
   }
 
-  public getProductsPhotos(): Observable<any> {
+  public getProductsPhotos(): Observable<ProductPhotoModelResponse[]> {
     return this._http.get<any>(this.backendUrl + "products/GetProductsPhotos");
   }
 
@@ -32,7 +33,7 @@ export class ManageProductService {
     formData.append('productModel', JSON.stringify(product));
     formData.append("file_upload", prodPhoto);
     let headers = new HttpHeaders();
-    headers.append("Content-Type", '');
+    headers.append("Content-Type", undefined);
     return this._http.post<any>(this.backendUrl + "products/SaveProduct", formData, { 'headers': headers });
   }
 
