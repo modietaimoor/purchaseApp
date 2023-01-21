@@ -1,0 +1,28 @@
+:host {
+    margin: 2px;
+  }
+  .pdf-icon {
+    color: red;
+  }
+  .btn-default {
+    border: none !important;
+    border-color: inherit !important;
+  }
+  .csv-btn {
+    color: #047857 !important;
+    background-color: white !important;
+    border: 1px solid #047857 !important;
+    margin-bottom: 3px !important;
+    width: 100px !important;
+    border-radius: 5px !important;
+  }
+  .excel-btn {
+    color: white !important;
+    background-color: #047857 !important;
+    margin-bottom: 3px !important;
+    width: 100px !important;
+    border-radius: 5px !important;
+  }
+  .pointer-event-none {
+    pointer-events: none;
+  }
