@@ -1,5 +1,10 @@
 export {}; // this file needs to be a module
 declare global {
+  interface String {
+    isDate(): boolean;
+    isNumber(): boolean;
+  }
+
   interface Array<T> {
     distinct<K>(predicate: (ob: T) => K): T[];
     clear(): void;
@@ -28,5 +33,13 @@ declare global {
     toMonthDayYear(): string;
     toHoursMins(): string;
     getCurrentTimeZone(): Date;
+  }
+
+  interface Number {
+    formatBits(): string;
+  }
+
+  interface HTMLCollection {
+    toArray(): Element[];
   }
 }

@@ -6,6 +6,10 @@ import {
   BrowserDynamicTestingModule,
   platformBrowserDynamicTesting
 } from '@angular/platform-browser-dynamic/testing';
+import './app/shared/utils/date.utils';
+import './app/shared/utils/string.utils';
+import './app/shared/utils/array.utils';
+import './app/shared/utils/html.utils';
 
 // First, initialize the Angular testing environment.
 getTestBed().initTestEnvironment(
