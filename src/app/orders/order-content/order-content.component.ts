@@ -1,5 +1,6 @@
 import { Component, Input } from "@angular/core";
-import { OrderItems } from "src/app/domain/models/orders";
+import { Column } from "@shared/components/grid/model";
+import { OrderItems } from "@domain/models/orders";
 
 @Component({
   selector: "app-order-content",
@@ -8,6 +9,15 @@ import { OrderItems } from "src/app/domain/models/orders";
 })
 export class OrderContentComponent {
   @Input() orderItems: Array<OrderItems> = [];
+  itemColumns: Column[] = [
+    { dataField: 'quantity', name: 'Qty', alignment: 'center' },
+    { dataField: 'productCode', name: 'Product Code', alignment: 'center' },
+    { dataField: 'productName', name: 'Product Name', alignment: 'center' },
+    { dataField: 'productDescription', name: 'Description', alignment: 'center' },
+    { dataField: 'size', name: 'Size', alignment: 'center' },
+    { dataField: 'productPrice', name: 'Unit Price', alignment: 'right', type: 'currency' },
+    { dataField: 'totalPrice', name: 'Total Price', alignment: 'right', type: 'currency' }
+  ];
   constructor() {}
 
   ngOnInit(): void {}

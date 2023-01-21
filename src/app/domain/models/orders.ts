@@ -1,5 +1,3 @@
-import { SizeModel } from "./products";
-
 export interface Order {
     orderID: number;
     userID?: number;
@@ -8,13 +6,10 @@ export interface Order {
     email: string;
     isMale?: boolean;
     orderDate: Date;
-    status: StatusModel;
-    orderCost: number;
-    orderItems: Array<OrderItems>;
-    selected: boolean;
-    rowExpanded: boolean;
-    editMode: boolean;
-    dropDownOpened: boolean;
+    orderTime: Date;
+    statusID: number;
+    statusName: string;
+    orderCost: number;    
 }
 
 export interface OrderItems {
@@ -24,12 +19,12 @@ export interface OrderItems {
     productName: string;
     productDescription: string;
     productPrice: number;
-    size: SizeModel;
+    totalPrice: number;
+    size: string;
     quantity: number;
 }
 
 export interface StatusModel { 
     statusID: number;
     statusName: string;
-    selected?: boolean;
 }

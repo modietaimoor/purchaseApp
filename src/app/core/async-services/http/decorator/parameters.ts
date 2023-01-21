@@ -19,7 +19,7 @@ export interface PropertyDescriptorMetadata extends PropertyDescriptor {
 export interface ParameterMetadata {
   key: string;
   // eslint-disable-next-line @typescript-eslint/no-explicit-any
-  value: string | undefined | any;
+  value: stringcore | any;
   index: number;
   format: string;
 }
