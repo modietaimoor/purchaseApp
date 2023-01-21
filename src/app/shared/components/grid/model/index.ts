@@ -1,5 +1,5 @@
-import { ButtonType } from 'src/app/shared/components/button/button.component';
-import { SafeAny } from 'src/app/core/safe-any-type';
+import { ButtonType } from '@shared/components/button/button.component';
+import { SafeAny } from '@core/safe-any-type';
 
 export interface DataSource<T> {
   data: T[];
@@ -18,7 +18,6 @@ export type ColumnType =
   | 'button'
   | 'currency'
   | 'date'
-  | 'KB'
   | 'one-decimal-number'
   | 'buttonDropdown'
   | 'customButtonDropdown'
@@ -39,9 +38,10 @@ export interface Column {
   summeryType?: SummeryType;
   filterName?: string;
   type?: ColumnType;
-  format?: 'shortDateShortTime' | 'dd-MM-yyyy' | 'dd-MM-yyyy h:mm a' | 'MMMM y';
+  format?: 'hh:mm a' | 'dd-MM-yyyy' | 'dd-MM-yyyy h:mm a' | 'MMMM y';
   enableButtonBasedOn?: string;
   onClick?: (id: number | string, event?: Event) => void;
+  customizeText?: (evt) => string;
   buttons?: Button[];
   groupButtonGroupProperty?: string;
   nestedColumns?: Column[];

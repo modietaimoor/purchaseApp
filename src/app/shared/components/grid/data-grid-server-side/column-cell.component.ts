@@ -9,11 +9,11 @@ import {
   ViewContainerRef
 } from '@angular/core';
 
-//import { BoldTextColumnComponent } from 'src/app/shared/components/grid/columns/bold-text-column.component';
-//import { CircleSignColumnComponent } from 'src/app/shared/components/grid/columns/circle-sign-column.component';
-//import { CustomButtonDropdownComponent } from 'src/app/shared/components/grid/columns/custom-button-dropdown.component';
+import { BoldTextColumnComponent } from '@shared/components/grid/columns/bold-text-column.component';
+import { CircleSignColumnComponent } from '@shared/components/grid/columns/circle-sign-column.component';
+import { CustomButtonDropdownComponent } from '@shared/components/grid/columns/custom-button-dropdown.component';
 import { formatDate as dxFormatDate } from 'devextreme/localization';
-import { SafeHardAny } from 'src/app/core/safe-any-type';
+import { SafeHardAny } from '@core/safe-any-type';
 
 import { BooleanSignColumnComponent } from '../columns/boolean-sign-column.component';
 import { ButtonColumnComponent } from '../columns/button-column.component';
@@ -43,13 +43,13 @@ export class ColumnCellComponent implements OnChanges {
     ['button', ButtonColumnComponent],
     ['link', LinkColumnComponent],
     ['bool-sign', BooleanSignColumnComponent],
-    //['circle-sign', CircleSignColumnComponent],
+    ['circle-sign', CircleSignColumnComponent],
     ['number', NumberColumnComponent],
     ['custom', CustomColumnComponent],
     ['buttonDropdown', ButtonDropdownColumnComponent],
-    //['customButtonDropdown', CustomButtonDropdownComponent],
-    ['buttons', ButtonsColumnComponent]/*,
-    ['bold-text', BoldTextColumnComponent]*/
+    ['customButtonDropdown', CustomButtonDropdownComponent],
+    ['buttons', ButtonsColumnComponent],
+    ['bold-text', BoldTextColumnComponent]
   ]);
 
   constructor(private viewContainerRef: ViewContainerRef, private resolver: ComponentFactoryResolver) {}

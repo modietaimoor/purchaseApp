@@ -1,15 +1,5 @@
 <div class="row" *ngIf="showExport">
-  <div class="col-md-4">
-    <div class="download-buttons text-left" *ngIf="showUselessButton">
-      <app-button
-        innerText="All"
-        data-testid="export-to-csv"
-        (clickEvent)="exportTable('CSV')"
-        title="All"
-      ></app-button>
-    </div>
-  </div>
-  <div class="col-md-8">
+  <div class="col-md-12">
     <div class="download-buttons text-right">
       <app-button
         innerText="Excel"
@@ -17,16 +7,15 @@
         type="download"
         (clickEvent)="exportTable('Excel')"
         title="Download As Excel File"
-        cssClasses="btn excel-blue"
+        cssClasses="btn excel-btn"
       ></app-button>
-
       <app-button
         innerText="CSV"
         data-testid="export-to-csv"
         type="download"
         (clickEvent)="exportTable('CSV')"
         title="Download As CSV File"
-        cssClasses="btn csv-green"
+        cssClasses="btn csv-btn"
       ></app-button>
     </div>
   </div>
@@ -48,6 +37,7 @@
       (onCellClick)="onCellClick($event)"
       (onRowUpdating)="onRowUpdating($event)"
       [selectedRowKeys]="selectedRows"
+      (onRowExpanded)="onRowExpanded($event)"
       (onSelectionChanged)="onSelectionChanged($event)"
       [columnAutoWidth]="columnAutoWidth"
       columnResizingMode="nextColumn"
@@ -104,6 +94,7 @@
             [caption]="column.name"
             [format]="column.gridFormat"
             [cellTemplate]="column.hasCustomTemplate ? 'custom' : null"
+            [customizeText]="column.customizeText"
             [alignment]="column.alignment"
             [cssClass]="column.cssClass"
             [dataType]="column.gridType"

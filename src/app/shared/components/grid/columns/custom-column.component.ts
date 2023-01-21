@@ -1,6 +1,6 @@
 import { Component, Input, TemplateRef } from '@angular/core';
 
-import { SafeAny } from 'src/app/core/safe-any-type';
+import { SafeAny } from '@core/safe-any-type';
 
 @Component({
   selector: 'app-custom-column',

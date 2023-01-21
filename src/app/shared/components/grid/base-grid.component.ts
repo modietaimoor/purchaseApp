@@ -1,8 +1,9 @@
 import { Component } from '@angular/core';
 
-import { SafeHardAny } from 'src/app/core/safe-any-type';
+import { SafeHardAny } from '@core/safe-any-type';
+import { ColumnComponent } from './columns/column.component';
 
-import { ColumnType } from './model';
+import { Column, ColumnType } from './model';
 
 @Component({
   selector: 'app-base',
@@ -16,7 +17,6 @@ export abstract class BaseGridComponent {
     'circle-sign',
     'custom',
     'number',
-    'KB',
     'buttonDropdown',
     'buttons',
     'text-icon',
@@ -32,10 +32,10 @@ export abstract class BaseGridComponent {
   currencyFormat = {
     type: 'currency',
     precision: 2,
-    currency: 'GBP'
+    currency: 'EGP'
   };
 
-  dateUKFormat = 'dd-MM-yyyy';
+  dateFormat = 'dd-MM-yyyy';
 
   getColumnFormat = (type: ColumnType): SafeHardAny => {
     switch (type) {
@@ -45,7 +45,7 @@ export abstract class BaseGridComponent {
       case 'currency':
         return this.currencyFormat;
       case 'date':
-        return this.dateUKFormat;
+        return this.dateFormat;
 
       default:
         return null;
@@ -94,5 +94,40 @@ export abstract class BaseGridComponent {
           document.getElementsByClassName('dx-apply-button')[1].dispatchEvent(new Event('dxclick'));
       };
     }
+  }
+
+  createColumn(col: ColumnComponent): Column {
+    return {
+      type: col.type,
+      name: col.name,
+      dataField: col.dataField,
+      alignment: col.alignment,
+      hasCustomTemplate: this.hasCustomTemplate(col.type) || col.isLink,
+      gridFormat: this.getColumnFormat(col.type),
+      gridType: this.getColumnGridType(col.type),
+      templateRef: col.templateRef,
+      fixed: col.fixed,
+      fixedPosition: col.fixedPosition,
+      nestedColumns: col.nestedColumns
+        .toArray()
+        ?.filter(r => r !== undefined && r !== null)
+        .map(r => this.createColumn(r)),
+      clickEvent: col.clickEvent,
+      isLink: col.isLink,
+      filterName: col.filterName,
+      allowSorting: col.allowSorting,
+      allowHeaderFiltering: col.allowHeaderFiltering
+    };
+  }
+
+  flattenNestedColumns(columns: Column[]): Column[] {
+    let flattenColumns: Column[] = [];
+    columns.forEach(t => {
+      t.alignment = t.alignment ?? this.getColumnAlignment(t.type);
+      if (t.nestedColumns?.length) flattenColumns.push(...t.nestedColumns);
+      const { nestedColumns, ...d } = t;
+      flattenColumns.push(d);
+    });
+    return flattenColumns;
   }
 }

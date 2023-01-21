@@ -1,6 +1,6 @@
-import { BoldTextColumnComponent } from 'src/app/shared/components/grid/columns/bold-text-column.component';
-import { CircleSignColumnComponent } from 'src/app/shared/components/grid/columns/circle-sign-column.component';
-import { CustomButtonDropdownComponent } from 'src/app/shared/components/grid/columns/custom-button-dropdown.component';
+import { BoldTextColumnComponent } from '@shared/components/grid/columns/bold-text-column.component';
+import { CircleSignColumnComponent } from '@shared/components/grid/columns/circle-sign-column.component';
+import { CustomButtonDropdownComponent } from '@shared/components/grid/columns/custom-button-dropdown.component';
 
 import { BooleanSignColumnComponent } from '../columns/boolean-sign-column.component';
 import { ButtonColumnComponent } from '../columns/button-column.component';

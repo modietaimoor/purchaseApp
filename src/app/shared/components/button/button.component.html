@@ -15,7 +15,6 @@
 <ng-template #normalButton>
   <button
     type="button"
-    [ngClass]="type === 'save' || type === 'loading' ? 'mainBtnInner' : type === 'close' ? 'mainBtnInnerCancel' : ''"
     [disabled]="disabled"
     class="btn btn-default"
     [attr.class]="cssClasses"
@@ -23,7 +22,7 @@
     [title]="title"
     [hidden]="isHiddenButton"
   >
-    <div class="btn-img" [ngClass]="type === 'save' || type === 'loading' ? 'top-0' : type === 'close' ? 'top-0' : ''">
+    <div>
       <em [appButtonIcon]="type" class="pointer-event-none"></em>{{ innerText }}
     </div>
   </button>

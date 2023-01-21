@@ -64,7 +64,7 @@ export class ModalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
 
   ngAfterViewInit(): void {
     this.container.clear();
-    const factory: ComponentFactory<T> = this.resolver.resolveComponentFactory(this.params.content);
+    const factory = this.resolver.resolveComponentFactory(this.params.content);
     this.componentRef = this.container.createComponent(factory);
     this.setComponentInputs();
     this.injectFooter();

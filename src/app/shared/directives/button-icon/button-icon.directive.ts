@@ -1,6 +1,6 @@
 import { Directive, ElementRef, Input, OnChanges, Renderer2 } from '@angular/core';
 
-import { ButtonType } from 'src/app/shared/components/button/button.component';
+import { ButtonType } from '@shared/components/button/button.component';
 
 @Directive({
   selector: '[appButtonIcon]'
@@ -10,7 +10,7 @@ export class ButtonIconDirective implements OnChanges {
   icons: Map<ButtonType, string> = new Map<ButtonType, string>([
     ['pdf', 'far fa-file-pdf fa-2x pdf-icon'],
     ['excel', 'far fa-file-excel fa-2x'],
-    ['download', 'fa fa-download text-color m-r-xs'],
+    ['download', 'fa fa-download text-color mr-2'],
     ['edit', 'fa fa-edit fa-2x'],
     ['info', 'fa fa-info-circle fa-2x main-color'],
     ['setting', 'fa fa-cog fa-2x main-color'],

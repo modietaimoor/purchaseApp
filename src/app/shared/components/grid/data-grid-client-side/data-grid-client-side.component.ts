@@ -1,45 +1,36 @@
 import {
+  AfterContentInit,
   Component,
   ContentChild,
+  ContentChildren,
   EventEmitter,
   Input,
   OnChanges,
   Output,
+  QueryList,
   SimpleChanges,
   TemplateRef,
   ViewChild
 } from '@angular/core';
 
 import { DxDataGridComponent } from 'devextreme-angular';
-import { SafeAny } from 'src/app/core/safe-any-type';
+import { SafeAny } from '@core/safe-any-type';
 
 import { BaseGridComponent } from '../base-grid.component';
 import { DataGridService } from '../data-grid.service';
 import * as Utils from '../grid.utils';
 import { Column, SummeryType } from '../model';
 import { DxFormatter } from './dx-format-data-source';
+import { ColumnComponent } from '../columns/column.component';
+import { startWith } from 'rxjs/operators';
+import { DataGridComponent } from '../data-grid-server-side/data-grid-server-side.component';
 
 @Component({
   selector: 'app-data-grid-client-side',
   templateUrl: './data-grid-client-side.component.html',
-  styles: [
-    `
-      .download-buttons {
-        margin-bottom: 10px;
-      }
-
-      :host::ng-deep.dx-datagrid-headers .dx-datagrid-table .dx-header-row > td {
-        background-color: #005c8d !important;
-      }
-
-      :host::ng-deep.dx-datagrid-headers .dx-header-row > td > .dx-datagrid-text-content {
-        color: #fff !important;
-        font-family: 'Open Sans';
-      }
-    `
-  ]
+  styleUrls: ['./data-grid-client-side.component.css']
 })
-export class DataGridClientSideComponent<T> extends BaseGridComponent implements OnChanges {
+export class DataGridClientSideComponent<T> extends BaseGridComponent implements OnChanges, AfterContentInit {
   @ContentChild(TemplateRef) templateRef: TemplateRef<unknown>;
   @ViewChild(DxDataGridComponent) readonly dxDataGrid: DxDataGridComponent;
   @Input() readonly key: string = '';
@@ -57,8 +48,7 @@ export class DataGridClientSideComponent<T> extends BaseGridComponent implements
   @Input() showPageSizeSelector = true;
   @Input() showPager = true;
   @Input() showFilterRow = true;
-  @Input() columnAutoWidth: boolean = false;
-  @Input() showUselessButton: boolean = false;
+  @Input() columnAutoWidth: boolean = true;
   @Input() selectedRows: number[] = [];
   @Input() hasCustom: boolean = false;
   @Input() showHeaderFilter: boolean = true;
@@ -69,6 +59,9 @@ export class DataGridClientSideComponent<T> extends BaseGridComponent implements
   @Output() readonly rowsSelected: EventEmitter<SafeAny[]> = new EventEmitter<SafeAny[]>();
   @Output() readonly cellClicked: EventEmitter<SafeAny> = new EventEmitter<SafeAny>();
   @Output() readonly rowUpdating: EventEmitter<SafeAny> = new EventEmitter<SafeAny>();
+  @Output() readonly rowExpanded: EventEmitter<SafeAny> = new EventEmitter<SafeAny>();
+  @ContentChildren(ColumnComponent)
+  public columnsComponents!: QueryList<ColumnComponent>;
   selectedValue: string | number;
   isRowSelection: boolean = true;
   summaries: Array<{ name: string; format: string; summeryOperation: string; valueFormat: string }> = [];
@@ -85,7 +78,6 @@ export class DataGridClientSideComponent<T> extends BaseGridComponent implements
   rowAlternationEnabled = true;
   showRowLines = true;
   showColumnLines = true;
-  dateFormat = 'monthAndYear';
   summaryRendered = false;
   // TODO : find another way to stop reformating summary multiple times;
 
@@ -96,7 +88,8 @@ export class DataGridClientSideComponent<T> extends BaseGridComponent implements
   ngOnChanges(changes: SimpleChanges): void {
     const columnsChanged = changes.columns && changes.columns.currentValue !== changes.columns.previousValue;
     if (columnsChanged) {
-      this.flattenNestedColumns();
+      debugger;
+      this.flattenColumns = this.flattenNestedColumns(this.columns);
       this.columns = this.columns.map(col => ({
         ...col,
         name: col.name === '' ? col.dataField : col.name,
@@ -110,17 +103,16 @@ export class DataGridClientSideComponent<T> extends BaseGridComponent implements
     const dataSourceChanged =
       changes.dataSource && changes.dataSource.currentValue !== changes.dataSource.previousValue;
     if (dataSourceChanged) this.summaryRendered = false;
-    setTimeout(() => {
-      this.dxDataGrid.instance.repaint();
-    }, 500);
   }
 
-  private flattenNestedColumns(): void {
-    this.flattenColumns.clear();
-    this.columns.forEach(t => {
-      if (t.nestedColumns?.length) this.flattenColumns.push(...t.nestedColumns);
-      const { nestedColumns, ...d } = t;
-      this.flattenColumns.push(d);
+  ngAfterContentInit(): void {
+    this.columnsComponents.changes.pipe(startWith(true)).subscribe(() => {
+      const columnsComponent = this.columnsComponents.toArray();
+
+      if (columnsComponent.length < 1) return;
+      this.columns = [];
+      columnsComponent.forEach(col => this.columns.push(this.createColumn(col)));
+      this.flattenColumns = this.flattenNestedColumns(this.columns);
     });
   }
 
@@ -205,7 +197,8 @@ export class DataGridClientSideComponent<T> extends BaseGridComponent implements
   }
 
   private reFormatSummary(summaryNumbers: number[], summaryRow: HTMLTableRowElement): void {
-    const summeryFormat: Array<{ summeryFormat: string; summeryNumbers: string }> =
+    if(this.dxDataGrid.summary.totalItems){
+      var summeryFormat: Array<{ summeryFormat: string; summeryNumbers: string }> =
       this.dxDataGrid.summary.totalItems.map((r, index) => {
         return {
           summeryFormat: r.displayFormat,
@@ -213,6 +206,7 @@ export class DataGridClientSideComponent<T> extends BaseGridComponent implements
         };
       });
     summaryRow.innerHTML = this.dataGridService.createSummeryBar(summeryFormat).innerHTML;
+    }
   }
 
   onRowClick(evt: {
@@ -243,6 +237,10 @@ export class DataGridClientSideComponent<T> extends BaseGridComponent implements
 
   onRowUpdating(evt: SafeAny): void {
     this.rowUpdating.emit(evt);
+  }
+
+  onRowExpanded(evt: SafeAny): void {
+    this.rowExpanded.emit(evt);
   }
 
   // TODO:: calling method inside html is marked as bad practice and we need to find a better solution for it

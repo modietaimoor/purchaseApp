@@ -1,7 +1,7 @@
 import { Component, Input, OnInit } from '@angular/core';
 
-import { SafeAny } from 'src/app/core/safe-any-type';
-import { ButtonType } from 'src/app/shared/components/button/button.component';
+import { SafeAny } from '@core/safe-any-type';
+import { ButtonType } from '@shared/components/button/button.component';
 
 import { Column } from '../model';
 
