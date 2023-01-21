@@ -1,3 +1,5 @@
+import { SafeAny } from "@core/safe-any-type";
+
 export interface OrderResponse {
     OrderID: number;
     UserID?: number;
@@ -27,9 +29,31 @@ export interface OrderItemsResponse {
     Quantity: number;
 }
 
+export interface ProductModelRequestResponse {
+    ID: number;
+    CreationDate: Date;
+    ProductCode: string;
+    ProductName: string;
+    ProductDescription: string;
+    ProductPrice: number;
+    ProductPhoto?: SafeAny;
+    ProductSizes: Array<SizeModelResponse>;
+    ProductCategories: Array<CategoryModelResponse>;
+}
+
+export interface ProductPhotoModelResponse {
+    ProductID: number;
+    PhotoBody: SafeAny;
+}
+
 export interface SizeModelResponse {
     SizeCode: string;
     SizeDescription: string;
+}
+
+export interface CategoryModelResponse {
+    CategoryID: number;
+    CategoryName: string;
 }
 
 export interface BulkChangeStatusRequest {

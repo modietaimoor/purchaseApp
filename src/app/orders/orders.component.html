@@ -1,219 +1,32 @@
 <div class="overflow-x-hidden overflow-y-auto h-screen p-4">
     <h1 class="text-4xl font-normal leading-normal m-1 uppercase font-bold w-full">Orders</h1>
     <ng-template [ngIf]="ordersList.length > 0">
-        <div class="row my-6 h-12">
-            <div class="row inline-flex float-right">
-                <label class="uppercase text-blueGray-600 text-sm font-bold p-3">Bulk Update Status</label>
-                <div class="cursor-pointer min-w-48 text-white font-bold uppercase text-sm h-12 rounded shadow mr-4 mb-1 bg-red-500" (click)="toggleDropDown()" type="button">
-                    <div class="absolute z-10 drp" *ngIf="dropDownOpened">
-                        <div class="bg-red-500 text-base float-right py-2 text-left rounded shadow-lg min-w-48">
-                            <a *ngFor="let status of statusLookup" class="text-sm pt-2 w-full block h-8 hover:bg-red-700 whitespace-no-wrap text-center text-white" (click)="setSelection(status)">
-                                {{status.statusName}}
-                            </a>
-                        </div>
-                    </div>
-                    <div class="text-center w-full flex h-12">
-                        <div class="h-12 w-10/12 px-4 pt-3">
-                            {{selectedStatus ? selectedStatus.statusName : 'Select Status'}}
-                        </div>
-                        <div class="h-12 w-1/6 vl pt-4">
-                            <span class="arrow down text-white bg-red-500 pull-left border-white">
-                            </span>
-                        </div>
-                    </div>
+        <div class="my-6 h-12">
+            <div class="inline-flex float-right">
+                <label class="uppercase text-blueGray-600 m-0 font-bold p-3">Bulk Update Status</label>
+                <div class="p-3">
+                    <app-select [(ngModel)]="selectedStatus">
+                        <app-select-option *ngFor="let status of statusLookup" [value]="status.statusName" [key]="status.statusID"> </app-select-option>
+                    </app-select>
                 </div>
-                <button class="text-white bg-emerald-700 font-bold uppercase text-base px-4 rounded mb-1" (click)="bulkUpdateStatus()">Update</button>
+                <div class="p-3">
+                    <button class="text-white bg-emerald-700 font-bold uppercase text-base px-4 rounded h-full" (click)="bulkUpdateStatus()">Update</button>
+                </div>
             </div>
         </div>
-        <!--
-        <div class="w-full p-4 shadow-lg rounded bg-white">    
-            <div class="w-full px-4">
-                <div class="flex flex-wrap">
-                    <div class="w-3-percent bg-blueGray-700 rounded border border-solid border-blueGray-100 h-4">
-                        <div class="text-center p-1 bg-blueGray-700 rounded border border-solid border-blueGray-100 h-4">
-                            <input type="checkbox" [(ngModel)]="selectAll" (change)="toggleSelectAll()" class="p-3 my-1 text-blueGray-700 rounded-full text-xs" />
-                        </div>
-                    </div>
-                    <div class="w-9-percent bg-blueGray-700 rounded border border-solid border-blueGray-100 h-4">
-                        <span class="text-sm text-center block p-3 bg-blueGray-700 text-white">
-                            <strong>Order Number</strong>
-                        </span>
-                    </div>
-                    <div class="w-15-percent bg-blueGray-700 rounded border border-solid border-blueGray-100 h-4">
-                        <span class="text-sm text-center block p-3 text-white">
-                            <strong>Client Name</strong>
-                        </span>
-                    </div>
-                    <div class="w-1/5 bg-blueGray-700 rounded border border-solid border-blueGray-100 h-4">
-                        <span class="text-sm block p-3 text-white">
-                            <strong>Email Address</strong>
-                        </span>
-                    </div>
-                    <div class="w-9-percent bg-blueGray-700 rounded border border-solid border-blueGray-100 h-4">
-                        <span class="text-sm block p-3 text-white">
-                            <strong>Phone Number</strong>
-                        </span>
-                    </div>
-                    <div class="w-9-percent bg-blueGray-700 rounded border border-solid border-blueGray-100 h-4">
-                        <span class="text-sm block p-3 text-white">
-                            <strong>Order Date</strong>
-                        </span>
-                    </div>
-                    <div class="w-7-percent bg-blueGray-700 rounded border border-solid border-blueGray-100 h-4">
-                        <span class="text-sm block p-3 text-white">
-                            <strong>Ordered At</strong>
-                        </span>
-                    </div>
-                    <div class="w-9-percent bg-blueGray-700 rounded border border-solid border-blueGray-100 h-4">
-                        <span class="text-sm text-center block p-3 text-white">
-                            <strong>Order Status</strong>
-                        </span>
-                    </div>
-                    <div class="w-9-percent bg-blueGray-700 rounded border border-solid border-blueGray-100 h-4">
-                        <span class="text-sm text-right block p-3 text-white">
-                            <strong>Order Cost</strong>
-                        </span>
-                    </div>
-                    <div class="w-10-percent bg-blueGray-700 rounded border border-solid border-blueGray-100 h-4">
-                    </div>
-                </div>                             
-            </div>        
-            <div class="w-full px-4" *ngFor="let item of ordersList; let i = index;">
-                <div class="flex flex-wrap">
-                    <div class="w-3-percent rounded border border-solid border-blueGray-100 h-4">
-                        <div class="text-center p-1">
-                            <input type="checkbox" [(ngModel)]="item.selected" (change)="rowCheckChanged()" class="p-3 my-1 text-blueGray-700 rounded-full text-xs"/>
-                        </div>
-                    </div>
-                    <div class="w-9-percent rounded border border-solid border-blueGray-100 h-4">
-                        <span class="text-sm text-center block p-3 text-blueGray-700">
-                            <span class="arrow bg-white text-emerald-200 font-bold uppercase text-xs pull-left mt-1" [ngClass]="item.rowExpanded ? 'down' : 'right'" (click)="getOrderContent(item.orderID, i)">
-                            </span>
-                            {{ item.orderID | number: '5.0' | removeComma }}
-                        </span>
-                    </div>
-                    <div class="w-15-percent rounded border border-solid border-blueGray-100 h-4">
-                        <span class="text-sm text-center block p-3 text-blueGray-700">
-                            {{item.username}}
-                        </span>
-                    </div>
-                    <div class="w-1/5 rounded border border-solid border-blueGray-100 h-4">
-                        <span class="text-sm block p-3 text-blueGray-700">
-                            {{item.email}}
-                        </span>
-                    </div>
-                    <div class="w-9-percent rounded border border-solid border-blueGray-100 h-4">
-                        <span class="text-sm block p-3 text-blueGray-700">
-                            {{item.phoneNumber}}
-                        </span>
-                    </div>
-                    <div class="w-9-percent rounded border border-solid border-blueGray-100 h-4">
-                        <span class="text-sm block p-3 text-blueGray-700">
-                            {{item.orderDate | date: 'dd-MM-yyyy' }}
-                        </span>
-                    </div>
-                    <div class="w-7-percent rounded border border-solid border-blueGray-100 h-4">
-                        <span class="text-sm block p-3 text-blueGray-700">
-                            {{item.orderDate | date: 'hh:mm a' }}
-                        </span>
-                    </div>
-                    <div class="w-9-percent rounded border border-solid border-blueGray-100 h-4">
-                        <span *ngIf="!item.editMode" class="text-sm text-center block p-3 text-blueGray-700">
-                            {{item.status.statusName }}
-                        </span>
-                        <span *ngIf="item.editMode" class="text-sm block">
-                            <div class="absolute w-8-5-percent cursor-pointer text-white font-bold uppercase text-sm rounded shadow bg-red-500" (click)="item.dropDownOpened = !item.dropDownOpened" type="button">
-                                <div class="text-center w-full flex">
-                                    <ng-template ngFor let-stat [ngForOf]="statusLookup">
-                                        <ng-template [ngIf]="stat.selected">
-                                            <div class="h-12 w-10/12 px-4 pt-3">
-                                                {{stat.statusName}}
-                                            </div>
-                                        </ng-template>
-                                    </ng-template>
-                                    <div class="h-12 w-1/6 vl pt-4">
-                                        <span class="arrow down text-white bg-red-500 pull-left border-white">
-                                        </span>
-                                    </div>
-                                </div>
-                                <div class="z-10" *ngIf="item.editMode && item.dropDownOpened">
-                                    <div class="bg-red-500 text-base float-right py-2 text-left rounded shadow-lg w-full">
-                                        <a *ngFor="let status of statusLookup" class="h-12 text-sm pt-3 w-full block hover:bg-red-700 whitespace-no-wrap text-center text-white" (click)="statusSelected(status.statusID)">
-                                            {{status.statusName}}
-                                        </a>
-                                    </div>
-                                </div>
-                            </div>
-                        </span>
-                    </div>
-                    <div class="w-9-percent rounded border border-solid border-blueGray-100 h-4">
-                        <span class="text-sm text-right block p-3 text-blueGray-700">
-                            {{item.orderCost | currency: 'EGP'}}
-                        </span>
-                    </div>
-                    <div class="w-10-percent rounded border border-solid border-blueGray-100 h-4">
-                        <span class="text-sm text-center block p-2 text-blueGray-700">
-                            <i *ngIf="!item.editMode" (click)="item.editMode = true; statusSelected(item.status.statusID)" class="fa fa-edit cursor-pointer i-action"></i>
-                            <i *ngIf="item.editMode" (click)="item.editMode = false; updateOrderStatus(item.orderID);" class="fa fa-save  cursor-pointer i-action"></i>
-                            <i *ngIf="item.editMode" (click)="item.editMode = false; statusSelected(0)" class="fa fa-ban  cursor-pointer i-action"></i>
-                        </span>
-                    </div>
-                </div>  
-                <div class="w-full" *ngIf="item.rowExpanded">
-                    <app-order-content [orderItems]="item.orderItems"></app-order-content>
-                </div>                           
-            </div>
-        </div>-->  
         <div class="w-full p-4 shadow-lg rounded bg-white">
-            <!--<app-data-grid 
+            <app-data-grid-client-side
                 [dataSource]="ordersList"
-                [columns]="columns"
-                [statusLookup]="statusLookup" 
                 selectionMode="multiple"
-                [expandRowDetails]="true"
-            ></app-data-grid>-->
-            <dx-data-grid
-                [dataSource]="ordersList"
-                [height]="600"
-                [showBorders]="true"
-                >
-                <ng-container *ngFor="let column of columns">
-                    <ng-container [ngTemplateOutlet]="column.type === 'multi-header' ? multiHeader : normal"></ng-container>
-            
-                    <ng-template #multiHeader>
-                      <dxi-column [caption]="column.name" [alignment]="column.alignment">
-                        <ng-container *ngFor="let nestedColumn of column.nestedColumns">
-                          <dxi-column
-                            [dataField]="nestedColumn.dataField"
-                            [caption]="nestedColumn.name"
-                            [format]="nestedColumn.gridFormat"
-                            [cssClass]="nestedColumn.cssClass"
-                            [cellTemplate]="nestedColumn.hasCustomTemplate ? 'custom' : null"
-                            [alignment]="nestedColumn.alignment"
-                          >
-                          </dxi-column>
-                        </ng-container>
-                      </dxi-column>
+                nested="true"
+                (rowExpanded)="getOrderContent($event.key.orderID)"
+                [columns]="orderColumns">
+                    <ng-template>
+                        <app-order-content
+                            [orderItems]="orderItems">
+                        </app-order-content>
                     </ng-template>
-            
-                    <ng-template #normal>
-                      <dxi-column
-                        [fixed]="column.fixed"
-                        [fixedPosition]="column.fixedPosition"
-                        [dataField]="column.dataField"
-                        [caption]="column.name"
-                        [format]="column.gridFormat"
-                        [cellTemplate]="column.hasCustomTemplate ? 'custom' : null"
-                        [alignment]="column.alignment"
-                        [cssClass]="column.cssClass"
-                        [dataType]="column.gridType"
-                        [allowHeaderFiltering]="column.allowHeaderFiltering"
-                        [allowEditing]="column.allowUpdating"
-                      >
-                      </dxi-column>
-                    </ng-template>
-                  </ng-container>
-            </dx-data-grid>
+            </app-data-grid-client-side>
         </div>
     </ng-template>
 </div>

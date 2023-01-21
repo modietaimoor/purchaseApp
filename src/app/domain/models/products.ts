@@ -1,6 +1,19 @@
+import { SafeAny } from "@core/safe-any-type";
+
 export interface SizeModel {
     sizeCode: string;
     sizeDescription: string;
+}
+
+export interface ProductPhotoModel {
+    productID: number;
+    photoBody: SafeAny;
+}
+
+export interface NewProductPhoto {
+    link: string; 
+    file: Blob; 
+    name: string;
 }
 
 export interface CategoryModel {
@@ -15,7 +28,7 @@ export interface ProductModel {
     productName: string;
     productDescription: string;
     productPrice: number;
-    productPhoto: any[];
+    productPhoto?: SafeAny;
     productSizes: Array<SizeModel>;
     productCategories: Array<CategoryModel>;
 }

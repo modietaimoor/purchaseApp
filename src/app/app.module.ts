@@ -12,15 +12,16 @@ import { SidebarComponent } from "./sidebar/sidebar.component";
 
 import { ManageProductComponent } from "./manage-products/manage-products.component";
 import { ManageProductService } from "./manage-products/manage-products.service"
-import { ConfigService } from "./core/services/config.service";
+import { ConfigService } from "@core/services/config.service";
 import { AdminComponent } from "./admin/admin.component";
 import { OrderContentComponent } from "./orders/order-content/order-content.component";
 import { OrdersComponent } from "./orders/orders.component";
 import { OrdersService } from "./orders/orders.service";
-import { RemoveCommaPipe } from "./core/pipes/remove-comma.pipe";
-import { CommonModule } from "@angular/common";
-import { SharedModule } from "src/app/shared/shared.module";
+import { RemoveCommaPipe } from "@core/pipes/remove-comma.pipe";
+import { SharedModule } from "@shared/shared.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
+import { FormsModule, ReactiveFormsModule } from "@angular/forms";
+import { AddProductComponent } from "./manage-products/add-product/add-product.component";
 
 
 export function configServiceFactory(config: ConfigService): () => Promise<boolean> {
@@ -37,10 +38,13 @@ export function configServiceFactory(config: ConfigService): () => Promise<boole
     AdminComponent,
     OrdersComponent,
     OrderContentComponent,
+    AddProductComponent,
     RemoveCommaPipe
   ],
   imports: [
     BrowserModule, 
+    FormsModule,
+    ReactiveFormsModule,
     AppRoutingModule, 
     HttpClientModule, 
     RouterModule,
