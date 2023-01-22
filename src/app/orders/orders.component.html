@@ -1,16 +1,16 @@
 <div class="overflow-x-hidden overflow-y-auto h-screen p-4">
-    <h1 class="text-4xl font-normal leading-normal m-1 uppercase font-bold w-full">Orders</h1>
+    <h1 class="text-4xl font-normal leading-normal m-1 font-bold w-full">Orders</h1>
     <ng-template [ngIf]="ordersList.length > 0">
         <div class="my-6 h-12">
             <div class="inline-flex float-right">
-                <label class="uppercase text-blueGray-600 m-0 font-bold p-3">Bulk Update Status</label>
+                <label class="text-blueGray-600 m-0 font-bold p-3">Bulk Update Status</label>
                 <div class="p-3">
                     <app-select [(ngModel)]="selectedStatus">
                         <app-select-option *ngFor="let status of statusLookup" [value]="status.statusName" [key]="status.statusID"> </app-select-option>
                     </app-select>
                 </div>
                 <div class="p-3">
-                    <button class="text-white bg-emerald-700 font-bold uppercase text-base px-4 rounded h-full" (click)="bulkUpdateStatus()">Update</button>
+                    <button class="text-white bg-emerald-700 font-bold text-base px-4 rounded h-full" (click)="bulkUpdateStatus()">Update</button>
                 </div>
             </div>
         </div>

@@ -1,4 +1,4 @@
-import { Component, OnInit, ViewChild } from "@angular/core";
+import { Component, Input, OnInit } from "@angular/core";
 import { NotificationService } from "@shared/service/notification.service";
 import { SafeAny, SafeHardAny } from "@core/safe-any-type";
 import { ModalRef } from "@shared/components/modal/modal.service";
@@ -13,6 +13,7 @@ import { ManageProductService } from "../manage-products.service";
   styleUrls: ["./add-product.component.css"]
 })
 export class AddProductComponent implements OnInit {
+    @Input() createdProductsCodes: string[];
     productFormGroup: UntypedFormGroup = new UntypedFormGroup({
         productCode: new UntypedFormControl('', Validators.required),
         productName: new UntypedFormControl('', Validators.required),
@@ -121,24 +122,22 @@ export class AddProductComponent implements OnInit {
           this._notificationService.error("Please Select At Least One Category");
           return;
         }
-        this._manageProductService.productCodeExists(this.productFormGroup.value.productCode).subscribe(res => {
-          if (res == true) {
+        if(this.createdProductsCodes?.length > 0 && this.createdProductsCodes.any(x => x == this.productFormGroup.value.productCode)){
             this._notificationService.error("Product Code Already Exists");
             return;
-          }
-          let productModel = {
+        }
+        let productModel = {
             ProductCode: this.productFormGroup.value.productCode,
             ProductName: this.productFormGroup.value.productName,
             ProductDescription: this.productFormGroup.value.productDescription,
             ProductPrice: this.productFormGroup.value.productPrice,
             ProductSizes: this.selectedSizes.map(xx => { return { SizeCode: xx.sizeCode, SizeDescription: xx.sizeDescription }}),
             ProductCategories: this.selectedCategories.map(xx => { return { CategoryID: xx.categoryID, CategoryName: xx.categoryName }})
-          }
-    
-          this._manageProductService.saveProduct(productModel, this.imageFile.file).subscribe(res => {
+        }
+
+        this._manageProductService.saveProduct(productModel, this.imageFile.file).subscribe(res => {
             this._notificationService.success("Product saved successfully");
             this.closeModal(true);
-          }, err => console.log(err));
         }, err => console.log(err));
     }
 }

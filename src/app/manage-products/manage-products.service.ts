@@ -49,8 +49,4 @@ export class ManageProductService {
   public deleteProducts(productIDs: number[]): Observable<any> {
     return this._http.post<any>(this.backendUrl + "products/DeleteProducts",  productIDs);
   }
-
-  public productCodeExists(productCode: string): Observable<any> {
-    return this._http.get<any>(this.backendUrl + "products/ProductCodeExists?productCode=" + productCode);
-  }
 }
