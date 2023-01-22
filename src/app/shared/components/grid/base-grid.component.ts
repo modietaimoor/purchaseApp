@@ -1,6 +1,7 @@
 import { Component } from '@angular/core';
 
 import { SafeHardAny } from '@core/safe-any-type';
+import { DxDataGridComponent } from 'devextreme-angular';
 import { ColumnComponent } from './columns/column.component';
 
 import { Column, ColumnType } from './model';
@@ -130,4 +131,13 @@ export abstract class BaseGridComponent {
     });
     return flattenColumns;
   }
+
+  createFileName(name: string): string {
+    const today = new Date();
+    return `${name}_${today.getMonth() + 1}_${today.getFullYear()}`;
+  }
+
+  refresh(grid: DxDataGridComponent): void {
+    if (grid) grid.instance.refresh();}
+    
 }

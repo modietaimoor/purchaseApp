@@ -1,0 +1,158 @@
+::ng-deep .dx-tab {
+    font-size: 1.175rem !important;
+    line-height: 1.175rem !important;
+    padding: 1.175rem !important;
+    border-radius: 10px 10px 0px 0px !important;
+    font-weight: bold !important;
+}
+
+::ng-deep .modal-title {
+    font-size: 1.4rem !important;
+    padding: 0.4rem !important;
+    line-height: 1.4rem !important;
+    font-weight: bold !important;
+}
+
+::ng-deep .dx-tab.dx-tab-selected > .dx-template-wrapper.dx-item-content.dx-tab-content > span {
+    color: white !important;
+}
+
+::ng-deep :not(.dx-tab-selected).dx-tab.BlueGray > .dx-template-wrapper.dx-item-content.dx-tab-content > span {
+    color: #64748B !important;
+}
+
+::ng-deep :not(.dx-tab-selected).dx-tab.Red > .dx-template-wrapper.dx-item-content.dx-tab-content > span {
+    color: #EF4444 !important;
+}
+
+::ng-deep :not(.dx-tab-selected).dx-tab.Orange > .dx-template-wrapper.dx-item-content.dx-tab-content > span {
+    color: #F97316 !important;
+}
+
+::ng-deep :not(.dx-tab-selected).dx-tab.Amber > .dx-template-wrapper.dx-item-content.dx-tab-content > span {
+    color: #F59E0B !important;
+}
+
+::ng-deep :not(.dx-tab-selected).dx-tab.Emerald > .dx-template-wrapper.dx-item-content.dx-tab-content > span {
+    color: #10B981 !important;
+}
+
+::ng-deep :not(.dx-tab-selected).dx-tab.Teal > .dx-template-wrapper.dx-item-content.dx-tab-content > span {
+    color: #14B8A6 !important;
+}
+
+::ng-deep :not(.dx-tab-selected).dx-tab.LightBlue > .dx-template-wrapper.dx-item-content.dx-tab-content > span {
+    color: #0EA5E9 !important;
+}
+
+::ng-deep :not(.dx-tab-selected).dx-tab.Indigo > .dx-template-wrapper.dx-item-content.dx-tab-content > span {
+    color: #6366F1 !important;
+}
+
+::ng-deep :not(.dx-tab-selected).dx-tab.dx-tab.Purple > .dx-template-wrapper.dx-item-content.dx-tab-content > span {
+    color: #A855F7 !important;
+}
+
+::ng-deep :not(.dx-tab-selected).dx-tab.Pink > .dx-template-wrapper.dx-item-content.dx-tab-content > span {
+    color: #EC4899 !important;
+}
+
+::ng-deep .dx-tab.dx-tab-selected.BlueGray {
+    background-color: #64748B !important;
+    color: white !important;
+}
+
+::ng-deep .dx-tab.BlueGray {
+    color: #64748B !important;
+    background-color: white !important;
+}
+
+::ng-deep .dx-tab.dx-tab-selected.Red {
+    background-color: #EF4444 !important;
+    color: white !important;
+}
+
+::ng-deep .dx-tab.Red {
+    color: #EF4444 !important;
+    background-color: white !important;
+}
+
+::ng-deep .dx-tab.dx-tab-selected.Orange {
+    background-color: #F97316 !important;
+    color: white !important;
+}
+
+::ng-deep .dx-tab.Orange {
+    color: #F97316 !important;
+    background-color: white !important;
+}
+
+::ng-deep .dx-tab.dx-tab-selected.Amber {
+    background-color: #F59E0B !important;
+    color: white !important;
+}
+
+::ng-deep .dx-tab.Amber {
+    color: #F59E0B !important;
+    background-color: white !important;
+}
+
+::ng-deep .dx-tab.dx-tab-selected.Emerald {
+    background-color: #10B981 !important;
+    color: white !important;
+}
+
+::ng-deep .dx-tab.Emerald {
+    color: #10B981 !important;
+    background-color: white !important;
+}
+
+::ng-deep .dx-tab.dx-tab-selected.Teal {
+    background-color: #14B8A6 !important;
+    color: white !important;
+}
+
+::ng-deep .dx-tab.Teal {
+    color: #14B8A6 !important;
+    background-color: white !important;
+}
+
+::ng-deep .dx-tab.dx-tab-selected.LightBlue {
+    background-color: #0EA5E9 !important;
+    color: white !important;
+}
+
+::ng-deep .dx-tab.LightBlue {
+    color: #0EA5E9 !important;
+    background-color: white !important;
+}
+
+::ng-deep .dx-tab.dx-tab-selected.Indigo {
+    background-color: #6366F1 !important;
+    color: white !important;
+}
+
+::ng-deep .dx-tab.Indigo {
+    color: #6366F1 !important;
+    background-color: white !important;
+}
+
+::ng-deep .dx-tab.dx-tab-selected.Purple {
+    background-color: #A855F7 !important;
+    color: white !important;
+}
+
+::ng-deep .dx-tab.Purple {
+    color: #A855F7 !important;
+    background-color: white !important;
+}
+
+::ng-deep .dx-tab.dx-tab-selected.Pink {
+    background-color: #EC4899 !important;
+    color: white !important;
+}
+
+::ng-deep .dx-tab.Pink {
+    color: #EC4899 !important;
+    background-color: white !important;
+}

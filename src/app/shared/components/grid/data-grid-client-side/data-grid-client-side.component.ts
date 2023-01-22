@@ -37,7 +37,7 @@ export class DataGridClientSideComponent<T> extends BaseGridComponent implements
   @Input() readonly pageSize: number = 10;
   @Input() readonly dataSource: T[];
   @Input() columns: Column[];
-  @Input() readonly exportName: string;
+  @Input() readonly exportName: string = 'file';
   @Input() readonly selectionMode: 'single' | 'multiple';
   @Input() readonly scrollMode: 'standard' | 'virtual' | 'infinite';
   @Input() nested: boolean;
@@ -88,7 +88,6 @@ export class DataGridClientSideComponent<T> extends BaseGridComponent implements
   ngOnChanges(changes: SimpleChanges): void {
     const columnsChanged = changes.columns && changes.columns.currentValue !== changes.columns.previousValue;
     if (columnsChanged) {
-      debugger;
       this.flattenColumns = this.flattenNestedColumns(this.columns);
       this.columns = this.columns.map(col => ({
         ...col,
@@ -162,11 +161,6 @@ export class DataGridClientSideComponent<T> extends BaseGridComponent implements
 
   onButtonsGroupClick(id: number, func: (id: number | string) => void): void {
     func(id);
-  }
-
-  createFileName(name: string): string {
-    const today = new Date();
-    return `${name}_${today.getMonth() + 1}_${today.getFullYear()}`;
   }
 
 

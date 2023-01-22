@@ -8,10 +8,11 @@
   itemTitleTemplate="title"
   itemTemplate="template"
   (onTitleClick)="selectTab($event)"
+  (onContentReady)="onContentReady($event)"
   [showNavButtons]="showNavButtons"
 >
   <div *dxTemplate="let tab of 'title'">
-    <span>{{ tab.text }}</span>
+    <span [ngClass]="tabColor">{{ tab.text }}</span>
   </div>
   <div *dxTemplate="let tabContent of 'template'">
     <div class="container-fluid">

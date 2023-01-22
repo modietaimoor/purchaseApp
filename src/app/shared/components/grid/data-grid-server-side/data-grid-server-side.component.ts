@@ -159,11 +159,6 @@ export class DataGridComponent<T> extends BaseGridComponent implements OnInit, O
     );
   }
 
-  createFileName(name: string): string {
-    const today = new Date();
-    return `${name}_${today.getMonth() + 1}_${today.getFullYear()}`;
-  }
-
   generateGridSummery(columns: Column[]): void {
     this.summaries = columns
       .filter(r => r.summeryMessage)
@@ -294,10 +289,6 @@ export class DataGridComponent<T> extends BaseGridComponent implements OnInit, O
       }
     );
     summaryRow.innerHTML = this.dataGridService.createSummeryBar(summeryFormat).innerHTML;
-  }
-
-  refresh(): void {
-    if (this.grid) this.grid.instance.refresh();
   }
 
   onRowClick(row: {
