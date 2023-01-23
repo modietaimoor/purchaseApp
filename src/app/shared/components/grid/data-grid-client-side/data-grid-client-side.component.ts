@@ -23,7 +23,6 @@ import { Column, SummeryType } from '../model';
 import { DxFormatter } from './dx-format-data-source';
 import { ColumnComponent } from '../columns/column.component';
 import { startWith } from 'rxjs/operators';
-import { DataGridComponent } from '../data-grid-server-side/data-grid-server-side.component';
 
 @Component({
   selector: 'app-data-grid-client-side',
@@ -48,7 +47,7 @@ export class DataGridClientSideComponent<T> extends BaseGridComponent implements
   @Input() showPageSizeSelector = true;
   @Input() showPager = true;
   @Input() showFilterRow = true;
-  @Input() columnAutoWidth: boolean = true;
+  @Input() columnAutoWidth: boolean = false;
   @Input() selectedRows: number[] = [];
   @Input() hasCustom: boolean = false;
   @Input() showHeaderFilter: boolean = true;

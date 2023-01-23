@@ -20,7 +20,7 @@ const routes: Routes = [
     children: [
       { path: "dashboard", component: DashboardComponent },
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
-      { path: "manageProducts", component: ManageProductComponent },
+      { path: "manage-products", component: ManageProductComponent },
       { path: "orders", component: OrdersComponent }
     ]
   },

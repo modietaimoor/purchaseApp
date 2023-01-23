@@ -13,6 +13,7 @@ export class ModalService {
   // TODO:: remove this array and use only the modalRef
   private bsModalRefs: BsModalRef[] = [];
   private modalRef: Map<string, BsModalRef> = new Map<string, BsModalRef>();
+  private subject = new Subject();
   constructor(private bsModalService: BsModalService, private modalUtils: ModalUtils) {}
 
   create<T, R = SafePropertyAny>(params: ModalParams<T>): ModalRef<R> {
@@ -40,6 +41,14 @@ export class ModalService {
 
   close(): void {
     this.bsModalRefs.pop().hide();
+  }
+
+  closeResult(res: boolean): void {
+    this.subject.next(res);
+  }
+
+  getResult(): Observable<unknown> {
+    return this.subject.asObservable();
   }
 }
 

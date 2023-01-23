@@ -58,6 +58,7 @@ export interface Column {
   allowSorting?: boolean;
   allowHeaderFiltering?: boolean;
   allowUpdating?: boolean;
+  allowSearch?: boolean;
   cssClass?: string;
 }
 
