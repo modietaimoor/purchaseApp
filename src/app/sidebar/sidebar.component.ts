@@ -6,9 +6,16 @@ import { Component } from "@angular/core";
 })
 export class SidebarComponent {
   collapseShow = "hidden";
+  menu = [{
+    menuItem: 'Products',
+    children: [
+      { pageName: 'Manage Products', routerLink: 'admin/manage-products' },
+      { pageName: 'Manage Orders', routerLink: 'admin/orders' }
+    ]
+  }];
   constructor() {}
 
-  toggleCollapseShow(classes: string): void {
-    this.collapseShow = classes;
+  toggleCollapseShow(): void {
+    this.collapseShow = this.collapseShow === '' ? "hidden" : "";
   }
 }

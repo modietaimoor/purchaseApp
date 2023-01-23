@@ -1,106 +1,27 @@
-<nav class="fixed shadow-xl bg-white z-10 px-2 md:w-64">
-  <div
-    class="md:flex-col md:items-stretch md:min-h-full px-0 items-center justify-between w-full mx-auto"
-  >
-    <!-- Brand -->
-    <a
-      [routerLink]="['/']"
-      class="md:block text-center text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm font-bold p-4 px-0"
-    >
+<nav class="shadow-xl bg-white z-10 px-2 w-full h-full">
+  <div class="flex flex-col min-h-full items-center">
+    <a class="block text-center text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm font-bold p-4 px-0">
       <span class="block"> Yomna </span>
     </a>
-    
-    <!-- Collapse -->
-    <div
-      class="md:flex md:flex-col md:items-stretch md:opacity-100 md:relative absolute top-0 left-0 right-0 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded"
-      [ngClass]="collapseShow"
-    >
-      <!-- Collapse header -->
-      <div
-        class="md:min-w-full md:hidden block pb-4 mb-4 border-b border-solid border-blueGray-200"
-      >
-        <div class="flex flex-wrap">
-          <div class="w-6/12">
-            <a
-              [routerLink]="['/']"
-              class="md:block text-left md:pb-2 text-blueGray-600 mr-0 inline-block whitespace-nowrap text-sm font-bold p-4 px-0"
-            >
-              Yomna Project
-            </a>
-          </div>
-          <div class="w-6/12 flex justify-end">
-            <button
-              type="button"
-              class="cursor-pointer text-black opacity-50 md:hidden px-3 py-1 text-xl leading-none bg-transparent rounded border border-solid border-transparent"
-              (click)="toggleCollapseShow('hidden')"
-            >
-              <i class="fa fa-times"></i>
-            </button>
-          </div>
-        </div>
-      </div>
-      <!-- Form -->
-      <form class="mt-6 mb-4 md:hidden">
-        <div class="mb-3 pt-0">
-          <input
-            type="text"
-            placeholder="Search"
-            class="border-0 px-3 py-2 h-12 border border-solid border-blueGray-500 placeholder-blueGray-300 text-blueGray-600 bg-white rounded text-base leading-snug shadow-none outline-none focus:outline-none w-full font-normal"
-          />
-        </div>
-      </form>
-
-      <!-- Divider -->
-      <hr class="my-4 md:min-w-full" />
+    <div class="flex flex-col items-stretch opacity-100 z-40 overflow-y-auto overflow-x-hidden h-auto items-center flex-1 rounded">
       <!-- Heading -->
-      <h6
-        class="md:min-w-full text-blueGray-500 text-xs font-bold block pt-1 pb-4 no-underline"
-      >
-        Products
-      </h6>
+      <h6 class="min-w-full text-blueGray-500 text-xs font-bold block pt-1 pb-4 no-underline">Products</h6>
       <!-- Navigation -->
 
-      <ul class="md:flex-col md:min-w-full flex flex-col list-none">
+      <ul class="flex-col min-w-full flex flex-col list-none">
         <li class="items-center">
-          <a
-            [routerLink]="['/admin/manageProducts']"
-            class="text-xs py-3 font-bold block"
-            routerLinkActive
-            #adminDashboard="routerLinkActive"
-            [ngClass]="
-              adminDashboard.isActive
-                ? 'text-red-600 hover:text-red-700'
-                : 'text-blueGray-700 hover:text-blueGray-500'
-            "
-          >
-            <i
-              class="fa fa-tv mr-2 text-sm"
-              [ngClass]="
-                adminDashboard.isActive ? 'opacity-75' : 'text-blueGray-300'
-              "
-            ></i>
+          <a [routerLink]="['/admin/manage-products']"
+            class="text-xs py-3 font-bold block" routerLinkActive #adminDashboard="routerLinkActive"
+            [ngClass]="adminDashboard.isActive ? 'text-red-600 hover:text-red-700': 'text-blueGray-700 hover:text-blueGray-500'">
+            <i class="fa fa-tv mr-2 text-sm" [ngClass]="adminDashboard.isActive ? 'opacity-75' : 'text-blueGray-300'"></i>
             Manage Products
           </a>
         </li>
 
         <li class="items-center">
-          <a
-            [routerLink]="['/admin/orders']"
-            class="text-xs py-3 font-bold block"
-            routerLinkActive
-            #adminSettings="routerLinkActive"
-            [ngClass]="
-              adminSettings.isActive
-                ? 'text-red-600 hover:text-red-700'
-                : 'text-blueGray-700 hover:text-blueGray-500'
-            "
-          >
-          <i
-            class="fa fa-tv mr-2 text-sm"
-            [ngClass]="
-              adminDashboard.isActive ? 'opacity-75' : 'text-blueGray-300'
-            "
-          ></i>
+          <a [routerLink]="['/admin/orders']" class="text-xs py-3 font-bold block" routerLinkActive #adminSettings="routerLinkActive"
+            [ngClass]="adminSettings.isActive ? 'text-red-600 hover:text-red-700' : 'text-blueGray-700 hover:text-blueGray-500'">
+          <i class="fa fa-tv mr-2 text-sm" [ngClass]="adminDashboard.isActive ? 'opacity-75' : 'text-blueGray-300'"></i>
             Orders
           </a>
         </li>
@@ -124,38 +45,6 @@
               "
             ></i>
             Price List History
-          </a>
-        </li>
-      </ul>
-
-      <!-- Divider -->
-      <hr class="my-4 md:min-w-full" />
-      <!-- Heading -->
-      <h6
-        class="md:min-w-full text-blueGray-500 text-xs font-bold block pt-1 pb-4 no-underline"
-      >
-        Outfits
-      </h6>
-      <!-- Navigation -->
-
-      <ul class="md:flex-col md:min-w-full flex flex-col list-none md:mb-4">
-        <li class="items-center">
-          <a
-            [routerLink]="['/auth/login']"
-            class="text-blueGray-700 hover:text-blueGray-500 text-xs py-3 font-bold block"
-          >
-            <i class="fa fa-fingerprint text-blueGray-300 mr-2 text-sm"></i>
-            Manage Outfits
-          </a>
-        </li>
-
-        <li class="items-center">
-          <a
-            [routerLink]="['/auth/register']"
-            class="text-blueGray-700 hover:text-blueGray-500 text-xs py-3 font-bold block"
-          >
-            <i class="fa fa-clipboard-list text-blueGray-300 mr-2 text-sm"></i>
-            Top Viewed Outfits
           </a>
         </li>
       </ul>

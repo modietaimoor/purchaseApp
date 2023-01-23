@@ -18,7 +18,8 @@ export class ManageProductComponent implements OnInit {
     { dataField: 'productName', name: 'Produt Name', alignment: 'center' },
     { dataField: 'productDescription', name: 'Description', alignment: 'center' },
     { dataField: 'productPrice', name: 'Product Price', alignment: 'right', type: 'currency' },
-    { dataField: 'creationDate', name: 'Creation Date', alignment: 'center', type: 'date', format: 'dd-MM-yyyy' },
+    { dataField: 'creationDate', name: 'Creation Date', alignment: 'center', 
+      type: 'date', format: 'dd-MM-yyyy', allowHeaderFiltering: false, allowSearch: false },
     { dataField: 'productID', name: 'Photo', alignment: 'center', type: 'custom' }
   ];
 
@@ -61,13 +62,16 @@ export class ManageProductComponent implements OnInit {
   showNewProductModal(): void {
     const modal = this._modalService.create<AddProductComponent>({
       content: AddProductComponent,
-      width: 80,
-      title: 'Add New Product'
+      width: 70,
+      title: 'Add New Product',
+      confirmText: 'Save Product',
+      cancelText: 'Cancel'
     });
     modal.onClose.subscribe(x => {
-      if(x.result){
+      console.log(x);
+      /*if(x.result){
         this.getAllProducts();
-      }
+      }*/
     });
   }
 

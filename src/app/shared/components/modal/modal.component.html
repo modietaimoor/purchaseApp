@@ -8,5 +8,6 @@
   <template #container></template>
 </div>
 <div class="modal-footer">
-  <ng-container #footer></ng-container>
+  <button type="button" class="btn btn-secondary" (click)="confirm()">{{params.confirmText}}</button>
+  <button type="button" class="btn btn-secondary" (click)="cancel()">{{params.cancelText}}</button> 
 </div>

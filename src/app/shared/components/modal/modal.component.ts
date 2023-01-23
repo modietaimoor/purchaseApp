@@ -1,7 +1,6 @@
 import {
   AfterViewInit,
   Component,
-  ComponentFactory,
   ComponentFactoryResolver,
   ComponentRef,
   Input,
@@ -12,16 +11,19 @@ import {
   ViewChild,
   ViewContainerRef
 } from '@angular/core';
-import { Subscription } from 'rxjs';
+import { Subject, Subscription } from 'rxjs';
 import { first } from 'rxjs/operators';
 
 import { BsModalRef } from 'ngx-bootstrap/modal';
 
 import { ModalUtils } from './modal-utils';
+import { ModalService } from './modal.service';
 
 export interface ModalParams<T> {
   content: Type<T>;
   title: string;
+  confirmText?: string;
+  cancelText?: string;
   height?: number;
   width?: number;
   componentParams?: Partial<T>;
@@ -46,10 +48,12 @@ export class ModalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   private bsModalRef: BsModalRef;
   footer: TemplateRef<Record<string, unknown>>;
   subscriptions: Subscription[] = [];
+  public onClose: Subject<boolean>;
 
-  constructor(private resolver: ComponentFactoryResolver, private modalUtils: ModalUtils) {}
+  constructor(private resolver: ComponentFactoryResolver, private modalUtils: ModalUtils, private _modalService: ModalService) {}
 
   ngOnInit(): void {
+    this.onClose = new Subject();
     this.subscriptions.push(this.modalUtils.footer$.pipe(first()).subscribe(f => (this.footer = f)));
     this.subscriptions.push(this.modalUtils.bsModalRef$.pipe(first()).subscribe(f => (this.bsModalRef = f)));
   }
@@ -68,6 +72,16 @@ export class ModalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
     this.componentRef = this.container.createComponent(factory);
     this.setComponentInputs();
     this.injectFooter();
+  }
+
+  cancel(): void {
+    this._modalService.closeResult(false);
+    this.bsModalRef.hide();
+  }
+
+  confirm(): void {
+    this._modalService.closeResult(true);
+    this.bsModalRef.hide();
   }
 
   close(): void {

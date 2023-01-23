@@ -32,8 +32,15 @@
       text-align: center;
     }
 
-    .dropdown-menu-custom a.dropdown-item .downloadExcel {width: 35px; height: 35px;}
+    .dropdown-menu-custom a.dropdown-item .downloadExcel {
+      width: 35px; 
+      height: 35px;
+    }
 
     .download-buttons {
       margin-bottom: 10px;
+    }
+
+    ::ng-deep .dx-texteditor-input {
+      padding-left: unset !important;
     }
