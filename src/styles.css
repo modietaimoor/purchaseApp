@@ -1357,6 +1357,11 @@ select {
   background-color: rgba(226, 232, 240, var(--tw-bg-opacity));
 }
 
+.bg-blueGray-500 {
+  --tw-bg-opacity: 1;
+  background-color: rgba(100,116,139,var(--tw-bg-opacity));
+}
+
 .bg-blueGray-600 {
   --tw-bg-opacity: 1;
   background-color: rgba(71, 85, 105, var(--tw-bg-opacity));
@@ -3565,6 +3570,9 @@ select {
 .w-auto {
   width: auto;
 }
+.w-1\/8 {
+  width: 12.5%;
+}
 .w-1\/6 {
   width: 16.666666%;
 }
@@ -3583,20 +3591,27 @@ select {
 .w-2\/3 {
   width: 66.66666666%;
 }
+.w-3\/4 {
+  width: 75%;
+}
+.w-4\/5 {
+  width: 80%;
+}
 .w-5\/12 {
   width: 41.666667%;
 }
 .w-5\/6 {
   width: 83.333333%;
 }
+.w-7\/8 {
+  width: 87.5%;
+}
 .w-full {
   width: 100%;
 }
-
 .z-2 {
   z-index: 2;
 }
-
 .z-3 {
   z-index: 3;
 }
