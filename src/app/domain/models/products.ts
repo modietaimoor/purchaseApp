@@ -1,34 +1,54 @@
-import { SafeAny } from "@core/safe-any-type";
-
-export interface SizeModel {
-    sizeCode: string;
-    sizeDescription: string;
-}
-
-export interface ProductPhotoModel {
-    productID: number;
-    photoBody: SafeAny;
-}
-
-export interface NewProductPhoto {
-    link: string; 
-    file: Blob; 
+export interface PhotoModel {
+    imageSrc: string; 
     name: string;
+    file: File;
 }
 
-export interface CategoryModel {
+export interface ProductGridModel {
+    productID: number;
+    creationDate: Date;
+    productName: string;
     categoryID: number;
     categoryName: string;
+    productPrice: number;
+    isByWeight: boolean;
 }
 
-export interface ProductModel {
+export enum QuantityType {
+    ByQuantity,
+    ByWeight
+}
+
+export enum ProductValidationResult {
+    Valid,
+    Invalid
+}
+
+export enum ValidationErrorType {
+    Error,
+    Warning
+}
+
+export enum ProductValidationEntity{
+    ProductName, 
+    ProductPrice, 
+    QuantityType, 
+    ProductCategory, 
+    SpecField
+}
+
+export interface QuantityTypeModel {
     id: number;
-    creationDate: Date;
-    productCode: string;
-    productName: string;
-    productDescription: string;
-    productPrice: number;
-    productPhoto?: SafeAny;
-    productSizes: Array<SizeModel>;
-    productCategories: Array<CategoryModel>;
+    name: string
+}
+
+export interface ProductValidationModel {
+    result: ProductValidationResult;
+    invalidData?: Array<InvalidDataEntity>;
+}
+
+export interface InvalidDataEntity {
+    specFieldID?: number;
+    dataEntityType: ProductValidationEntity;
+    errorType: ValidationErrorType;
 }

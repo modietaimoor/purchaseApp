@@ -1,52 +1,87 @@
 import { Injectable } from '@angular/core';
-import { HttpClient, HttpHeaders } from '@angular/common/http';
-
+import { CategoryModel, ProductSpecValues } from '@domain/models/categories';
+import { PhotoModel, ProductGridModel, ProductValidationEntity, ProductValidationModel, ProductValidationResult, QuantityType, ValidationErrorType } from '@domain/models/products';
+import { DeleteProductsUsecase } from '@domain/repositories/usecases/products/delete-products.usecase';
+import { GetAllProductsUsecase } from '@domain/repositories/usecases/products/get-all-products.usecase';
+import { SaveProductUsecase } from '@domain/repositories/usecases/products/save-product.usecase';
+import { ProductModelRequest } from '@domain/resquest-response/request/products-request';
 import { Observable } from 'rxjs';
-import { AppSettings } from '../core/services/app.settings.service';
-import { CategoryModelResponse, ProductModelRequestResponse, ProductPhotoModelResponse, SizeModelResponse } from '@domain/resquest-response/request-response';
 
 @Injectable()
 export class ManageProductService {
+  constructor(private _saveProductUsecase: SaveProductUsecase, 
+    private _deleteProductsUsecase: DeleteProductsUsecase,
+    private _getAllProductsUsecase: GetAllProductsUsecase) { }
 
-  private backendUrl = AppSettings.configuration.api.baseUrl;  // URL to web api
-
-  constructor(private _http: HttpClient) { }
-
-  public getAllSizes(): Observable<SizeModelResponse[]> {
-    return this._http.get<any>(this.backendUrl + "sizes/GetAllSizes");
+  public validateProductData(productName: string, 
+    productPrice: number, 
+    productCategory: CategoryModel, 
+    quantityType: number, 
+    specValues: ProductSpecValues[]): ProductValidationModel {
+    let validationModel: ProductValidationModel = { result: ProductValidationResult.Invalid, invalidData: [] };
+    if(!productName) {
+      validationModel.invalidData.push({ 
+        dataEntityType: ProductValidationEntity.ProductName, errorType: ValidationErrorType.Error 
+      });
+    }
+    if(!productCategory) {
+      validationModel.invalidData.push({ 
+        dataEntityType: ProductValidationEntity.ProductCategory, errorType: ValidationErrorType.Error 
+      });
+    }
+    if(!productPrice || productPrice <= 0) {
+      validationModel.invalidData.push({ 
+        dataEntityType: ProductValidationEntity.ProductPrice, errorType: ValidationErrorType.Error 
+      });
+    }
+    if(!quantityType) {
+      validationModel.invalidData.push({ 
+        dataEntityType: ProductValidationEntity.QuantityType, errorType: ValidationErrorType.Error 
+      });
+    }
+    if(specValues?.length > 0) {
+      productCategory?.specFields?.forEach(x => {
+        if(!specValues.any(y => y.specFieldID === x.specFieldID)){
+          validationModel.invalidData.push({ 
+            dataEntityType: ProductValidationEntity.ProductName, 
+            specFieldID: x.specFieldID, 
+            errorType: x.isMandatory ? ValidationErrorType.Error : ValidationErrorType.Warning });
+        }
+      });
+    }
+    if(!(validationModel.invalidData?.length > 0)){
+      validationModel.result = ProductValidationResult.Valid;
+    }
+    return validationModel;
   }
 
-  public getAllCategories(): Observable<CategoryModelResponse[]> {
-    return this._http.get<any>(this.backendUrl + "categories/GetAllCategories");
+  public saveProduct(productName: string, 
+    productPrice: number, 
+    productCategory: CategoryModel, 
+    quantityType: number, 
+    photos?: PhotoModel[],
+    specValues?: ProductSpecValues[]): Observable<void> {
+      let productModel: ProductModelRequest = {
+        ProductName: productName,
+        CategoryID: productCategory.categoryID,
+        ProductPrice: productPrice,
+        IsByWeight: quantityType == QuantityType.ByWeight,
+        Photos: photos?.map(x => { return x.file}),
+        ProductSpecs: specValues?.map(x => {
+            return {
+                SpecID: x.specFieldID,
+                SpecValue: x.specValue
+            }
+        })
+    };
+    return this._saveProductUsecase.execute(productModel);
   }
 
-  public getAllProducts(): Observable<ProductModelRequestResponse[]> {
-    return this._http.get<any>(this.backendUrl + "products/GetAllProducts");
+  public deleteProducts(productIDs: number[]): Observable<void> {
+    return this._deleteProductsUsecase.execute(productIDs);
   }
 
-  public getProductsPhotos(): Observable<ProductPhotoModelResponse[]> {
-    return this._http.get<any>(this.backendUrl + "products/GetProductsPhotos");
-  }
-
-  public saveProduct(product: any, prodPhoto: any): Observable<any> {
-    var formData = new FormData();
-    formData.append('productModel', JSON.stringify(product));
-    formData.append("file_upload", prodPhoto);
-    let headers = new HttpHeaders();
-    headers.append("Content-Type", undefined);
-    return this._http.post<any>(this.backendUrl + "products/SaveProduct", formData, { 'headers': headers });
-  }
-
-  public updateProduct(product: any, prodPhoto: any): Observable<any> {
-    var formData = new FormData();
-    formData.append('productModel', JSON.stringify(product));
-    formData.append("file_upload", prodPhoto);
-    let headers = new HttpHeaders();
-    headers.append("Content-Type", '');
-    return this._http.post<any>(this.backendUrl + "products/UpdateProduct", formData, { 'headers': headers });
-  }
-
-  public deleteProducts(productIDs: number[]): Observable<any> {
-    return this._http.post<any>(this.backendUrl + "products/DeleteProducts",  productIDs);
+  public getAllProducts(): Observable<ProductGridModel[]> {
+    return this._getAllProductsUsecase.execute();
   }
 }
