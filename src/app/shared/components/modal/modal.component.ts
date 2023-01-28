@@ -27,6 +27,7 @@ export interface ModalParams<T> {
   height?: number;
   width?: number;
   componentParams?: Partial<T>;
+  checkBeforeSubmit?: boolean;
 }
 
 @Component({
@@ -48,7 +49,8 @@ export class ModalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   private bsModalRef: BsModalRef;
   footer: TemplateRef<Record<string, unknown>>;
   subscriptions: Subscription[] = [];
-  public onClose: Subject<boolean>;
+  public onClose: Subject<void>;
+  public canSubmit: Subject<boolean>;
 
   constructor(private resolver: ComponentFactoryResolver, private modalUtils: ModalUtils, private _modalService: ModalService) {}
 
@@ -82,6 +84,10 @@ export class ModalComponent<T> implements OnInit, AfterViewInit, OnDestroy {
   confirm(): void {
     this._modalService.closeResult(true);
     this.bsModalRef.hide();
+  }
+
+  requestClose(): void {
+    this._modalService.requestClose();
   }
 
   close(): void {

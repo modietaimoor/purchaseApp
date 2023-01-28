@@ -1,0 +1,27 @@
+<dx-drop-down-box
+    [(value)]="value"
+    [(opened)]="opened"
+    [dataSource]="dataSource"
+    [valueExpr]="valueExpr"
+    [displayExpr]="displayExpr"
+    [showClearButton]="true"
+    (onValueChanged)="checkForClear($event)">
+    <div *dxTemplate="let data of 'content'">
+        <ng-container [ngTemplateOutlet]="TreeView">
+            <ng-template #TreeView>
+                <app-tree-view
+                    [dataSource]="dataSource"
+                    [keyExpr]="ID"
+                    [parentIdExpr]="parentIdExpr"
+                    [displayExpr]="displayExpr"
+                    (onItemClick)="setTreeSelection($event)">
+                </app-tree-view>
+            </ng-template>
+            <ng-template #GridView>
+                <app-data-grid-client-side
+                    [dataSource]="dataSource">
+                </app-data-grid-client-side>
+            </ng-template>
+        </ng-container>
+    </div>
+</dx-drop-down-box>

@@ -1,0 +1,15 @@
+<div class="form">
+    <dx-tree-view
+      [dataSource]="dataSource"
+      dataStructure="plain"
+      selectionMode="single"
+      [displayExpr]="displayExpr"
+      [searchExpr]="searchExpr"
+      [keyExpr]="keyExpr"
+      [parentIdExpr]="parentIdExpr"
+      [selectByClick]="true"
+      [width]="size.width"
+      [height]="size.height"
+      (onItemClick)="selectItem($event)"
+    ></dx-tree-view>
+</div>

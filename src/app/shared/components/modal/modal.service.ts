@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { Observable, Subject } from 'rxjs';
 
 import { Guid } from '@shared/utils/guid';
@@ -14,6 +14,8 @@ export class ModalService {
   private bsModalRefs: BsModalRef[] = [];
   private modalRef: Map<string, BsModalRef> = new Map<string, BsModalRef>();
   private subject = new Subject();
+  closeRequest = new EventEmitter();
+  canSubmitResult = new EventEmitter();
   constructor(private bsModalService: BsModalService, private modalUtils: ModalUtils) {}
 
   create<T, R = SafePropertyAny>(params: ModalParams<T>): ModalRef<R> {
@@ -35,7 +37,6 @@ export class ModalService {
       this.modalRef.get(data.id).hide();
       this.modalRef.delete(data.id);
     });
-
     return ref;
   }
 
@@ -49,6 +50,10 @@ export class ModalService {
 
   getResult(): Observable<unknown> {
     return this.subject.asObservable();
+  }
+
+  requestClose(): void {
+    this.closeRequest.emit();
   }
 }
 

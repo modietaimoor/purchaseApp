@@ -23,12 +23,11 @@ import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
 })
 export class DatePickerComponent implements ControlValueAccessor, AfterContentChecked {
   @Input() readonly disabled: boolean;
-  @Input() readonly max: Date;
-  @Input() readonly min: Date;
+  @Input() readonly max: Date | undefined;
+  @Input() readonly min: Date | undefined;
   @Input() readonly showDays: boolean = false;
   @Input() readonly dateType: 'date' | 'datetime' = 'date';
   public value: Date | null = null;
-
   public onChangeFn = (_: any): void => {};
   public onTouchedFn = (): void => {};
   constructor(private cdr: ChangeDetectorRef) {}

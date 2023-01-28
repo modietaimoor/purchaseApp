@@ -1,3 +1,7 @@
+::ng-host {
+    display: contents;
+}
+
 ::ng-deep .dx-tab {
     font-size: 1.175rem !important;
     line-height: 1.175rem !important;

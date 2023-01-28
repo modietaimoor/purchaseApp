@@ -1,16 +1,51 @@
-import { Component, Input } from '@angular/core';
-import { UntypedFormControl } from '@angular/forms';
+import { AfterContentChecked, ChangeDetectionStrategy, ChangeDetectorRef, Component, forwardRef, Input } from '@angular/core';
+import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SafeAny } from '@core/safe-any-type';
 
 @Component({
   selector: 'app-checkbox',
   templateUrl: './checkbox.component.html',
-  styleUrls: ['./checkbox.component.css']
+  styleUrls: ['./checkbox.component.css'],
+  changeDetection: ChangeDetectionStrategy.OnPush,
+  providers: [
+    {
+      provide: NG_VALUE_ACCESSOR,
+      useExisting: forwardRef(() => CheckboxComponent),
+      multi: true
+    }
+  ]
 })
-export class CheckboxComponent {
-  @Input() control: UntypedFormControl;
-  constructor() {}
+export class CheckboxComponent implements ControlValueAccessor, AfterContentChecked {
+  @Input() text: string;
+  @Input() iconSize: number;
+  @Input() enableThreeStateBehavior: boolean = false;
+  @Input() elementAttr: SafeAny;
+  public value: boolean | null = null;
+  public onChangeFn = (_: any): void => {};
+  public onTouchedFn = (): void => {};
+  constructor(private cdr: ChangeDetectorRef) {}
 
-  changeValue(event: { target: { checked: boolean } }): void {
-    this.control.setValue({ ...this.control.value, checked: event.target.checked });
+  ngAfterContentChecked(): void {
+    this.cdr.detectChanges();
+  }
+
+  writeValue(modelValue: boolean): void {
+    if (this.value != modelValue) {
+      this.value = modelValue;
+      console.log(this.value);
+      this.cdr.markForCheck();
+    }
+  }
+
+  registerOnChange(fn: any): void {
+    this.onChangeFn = fn;
+  }
+
+  registerOnTouched(fn: any): void {
+    this.onTouchedFn = fn;
+  }
+
+  onValueChange(e: any): void {
+    this.onChangeFn(e);
   }
 }

@@ -7,6 +7,8 @@
   [swipeEnabled]="false"
   itemTitleTemplate="title"
   itemTemplate="template"
+  width="100%"
+  height="100%"
   (onTitleClick)="selectTab($event)"
   (onContentReady)="onContentReady($event)"
   [showNavButtons]="showNavButtons"
@@ -15,7 +17,7 @@
     <span [ngClass]="tabColor">{{ tab.text }}</span>
   </div>
   <div *dxTemplate="let tabContent of 'template'">
-    <div class="container-fluid">
+    <div class="h-full overflow-y-auto overflow-x-hidden px-2">
       <div class="row m-t-md m-b-md">
         <div class="tabpanel-item col-lg-12">
           <div
