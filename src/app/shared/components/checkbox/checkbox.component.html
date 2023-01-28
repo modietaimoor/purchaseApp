@@ -1,5 +1,7 @@
-<label class="cbxContainer">
-  {{ control.value.name }}
-  <input type="checkbox" class="hidden" [checked]="control.value.checked" (change)="changeValue($event)" />
-  <span class="checkmark"></span>
-</label>
+<dx-check-box
+  [iconSize]="iconSize"
+  [text]="text"
+  [elementAttr]="elementAttr"
+  [enableThreeStateBehavior]="enableThreeStateBehavior"
+  (valueChange)="onValueChange($event)">
+</dx-check-box>
