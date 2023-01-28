@@ -15,12 +15,12 @@ export interface Order {
 export interface OrderItems {
     orderID: number;
     productID: number;
-    productCode: string;
+    categoryID: number;
+    categoryName: string;
     productName: string;
-    productDescription: string;
+    isByWeight: boolean;
     productPrice: number;
     totalPrice: number;
-    size: string;
     quantity: number;
 }
 

@@ -5,6 +5,11 @@ import { Order, OrderItems, StatusModel } from "@domain/models/orders";
 import { DataGridClientSideComponent } from "@shared/components/grid/data-grid-client-side/data-grid-client-side.component";
 import { Column } from "@shared/components/grid/model";
 import { OrdersService } from "./orders.service";
+import { GetStatusLookupUsecase } from "@domain/repositories/usecases/orders/get-status-lookup.usecase";
+import { GetOrdersListUsecase } from "@domain/repositories/usecases/orders/get-orders-list.usecase";
+import { GetOrderContentUsecase } from "@domain/repositories/usecases/orders/get-order-content.usecase";
+import { BulkChangeOrderStatusUsecase } from "@domain/repositories/usecases/orders/bulk-change-order-status.usecase";
+import { ChangeOrderStatusUsecase } from "@domain/repositories/usecases/orders/change-order-status.usecase";
 
 @Component({
   selector: "app-orders",
@@ -34,6 +39,11 @@ export class OrdersComponent implements OnInit {
   ];
 
   constructor(private _ordersService: OrdersService,
+    private _getStatusLookupUsecase: GetStatusLookupUsecase,
+    private _getOrderContentUsecase: GetOrderContentUsecase,
+    private _bulkChangeOrderStatusUsecase: BulkChangeOrderStatusUsecase,
+    private _changeOrderStatusUsecase: ChangeOrderStatusUsecase,
+    private _getOrdersListUsecase: GetOrdersListUsecase,
     private _notificationService: NotificationService) {}
 
   ngOnInit(): void {
@@ -42,51 +52,15 @@ export class OrdersComponent implements OnInit {
   }
 
   getOrders(): void{
-    this._ordersService.getOrdersList().subscribe(x => {
-      this.ordersList = x.map(y => { return {
-        orderID: y.OrderID,
-        orderDate: y.OrderDate,
-        orderTime: y.OrderDate,
-        userID: y.UserID,
-        username: y.Username,
-        phoneNumber: y.PhoneNumber,
-        email: y.Email,
-        isMale: y.IsMale,
-        statusID: y.Status.StatusID, 
-        statusName: y.Status.StatusName,
-        orderCost: y.OrderCost,
-        orderItems: []
-      }});
-    });
+    this._getOrdersListUsecase.execute().subscribe(res => (this.ordersList = res), err => console.log(err));
   }
 
   getStatusList(): void {
-    this._ordersService.getStatusLookup().subscribe(x => {
-      this.statusLookup = x.map(y => {
-        return {
-          statusID: y.StatusID,
-          statusName: y.StatusName
-        }
-      });
-    });
+    this._getStatusLookupUsecase.execute().subscribe(x => (this.statusLookup = x), err => console.log(err));
   }
 
   getOrderContent(orderID: number): void{
-    this._ordersService.getOrderContent(orderID).subscribe(x => {
-      this.orderItems = x.map(m => { 
-          return {
-            orderID: m.OrderID,
-            productID: m.ProductID,
-            productCode: m.ProductCode,
-            productName: m.ProductName,
-            productDescription: m.ProductDescription,
-            productPrice: m.ProductPrice,
-            totalPrice: m.ProductPrice * m.Quantity,
-            size: m.Size.SizeDescription,
-            quantity: m.Quantity
-        }
-      });
-    });
+    this._getOrderContentUsecase.execute(orderID).subscribe(x => (this.orderItems = x), err => console.log(err));
   }
 
   bulkUpdateStatus(): void {
@@ -99,7 +73,7 @@ export class OrdersComponent implements OnInit {
       this._notificationService.error('Please select at least one order');
       return;
     }
-    this._ordersService.bulkChangeOrderStatus({
+    this._bulkChangeOrderStatusUsecase.execute({
       Orders: selectedRows.map(x => {
         return x.orderID
       }),
@@ -112,7 +86,7 @@ export class OrdersComponent implements OnInit {
 
   updateOrderStatus(orderID: number): void {
     let statusID = 0;
-    this._ordersService.changeOrderStatus(orderID, statusID).subscribe(_=> {
+    this._changeOrderStatusUsecase.execute(orderID, statusID).subscribe(_=> {
       this._notificationService.success('Order status updated successfully.');
       this.getOrders();
     });
