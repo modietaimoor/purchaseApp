@@ -1,5 +1,8 @@
 import { Component, OnInit } from "@angular/core";
-import { ProductModel } from "@domain/models/products";
+import { CategoryModel } from "@domain/models/categories";
+import { ProductGridModel } from "@domain/models/products";
+import { GetAllCategoriesUsecase } from "@domain/repositories/usecases/categories/get-all-categories.usecase";
+import { GetAllProductsUsecase } from "@domain/repositories/usecases/products/get-all-products.usecase";
 import { Column } from "@shared/components/grid/model";
 import { ModalService } from "@shared/components/modal/modal.service";
 import { NotificationService } from "@shared/service/notification.service";
@@ -11,74 +14,62 @@ import { ManageProductService } from "./manage-products.service";
   templateUrl: "./manage-products.component.html"
 })
 export class ManageProductComponent implements OnInit {
-  productsList: ProductModel[];
-  selectedProducts: ProductModel[];
+  productsList: ProductGridModel[];
+  selectedProducts: ProductGridModel[];
+  categories: CategoryModel[];
   productColumns: Column[] = [
-    { dataField: 'productCode', name: 'Product Number', alignment: 'center'},
-    { dataField: 'productName', name: 'Produt Name', alignment: 'center' },
-    { dataField: 'productDescription', name: 'Description', alignment: 'center' },
-    { dataField: 'productPrice', name: 'Product Price', alignment: 'right', type: 'currency' },
+    { dataField: 'productName', name: 'Product Name', alignment: 'center' },
+    { dataField: 'categoryName', name: 'Product Category', alignment: 'center' },
+    { dataField: 'productPrice', name: 'Price', alignment: 'right', type: 'currency' },
     { dataField: 'creationDate', name: 'Creation Date', alignment: 'center', 
-      type: 'date', format: 'dd-MM-yyyy', allowHeaderFiltering: false, allowSearch: false },
-    { dataField: 'productID', name: 'Photo', alignment: 'center', type: 'custom' }
+      type: 'date', format: 'dd-MM-yyyy', allowHeaderFiltering: false, allowSearch: false }
   ];
 
-  constructor(private _manageProductService: ManageProductService, 
+  constructor(private _getAllProductsUsecase: GetAllProductsUsecase,     
     private _notificationService: NotificationService,
+    private _getAllCategoriesUsecase: GetAllCategoriesUsecase,
+    private _manageProductsService: ManageProductService,
     private _modalService: ModalService) {}
 
   ngOnInit() {
     this.getAllProducts();
+    this.getAllCategories();
   }
 
-  selectedRows(rows: ProductModel[]) {
+  selectedRows(rows: ProductGridModel[]) {
     this.selectedProducts = rows;
   }
 
   getAllProducts() {
-    this._manageProductService.getAllProducts().subscribe(res => {
-      this.productsList = res.map(x => {
-        return {
-          id: x.ID,
-          productName: x.ProductName,
-          productDescription: x.ProductDescription,
-          productCode: x.ProductCode,
-          creationDate: x.CreationDate,
-          productPrice: x.ProductPrice,
-          productSizes: x.ProductSizes.map(y => { return {
-            sizeCode: y.SizeCode,
-            sizeDescription: y.SizeDescription
-          }}),
-          productCategories: x.ProductCategories.map(y => { return {
-            categoryID: y.CategoryID,
-            categoryName: y.CategoryName
-          }}),    
-          productPhoto: x.ProductPhoto        
-        }
-      });
-    }, err => console.log(err));
+    this.productsList = [];
+    this._manageProductsService.getAllProducts().subscribe(res => (this.productsList = res), err => console.log(err));
   }
+
+  getAllCategories() {
+    this._getAllCategoriesUsecase.execute().subscribe(res => (this.categories = res), err => console.log(err));
+}
 
   showNewProductModal(): void {
     const modal = this._modalService.create<AddProductComponent>({
       content: AddProductComponent,
       width: 70,
+      height: 600,
       title: 'Add New Product',
       confirmText: 'Save Product',
-      cancelText: 'Cancel'
-    });
+      cancelText: 'Cancel',
+      checkBeforeSubmit: true,
+      componentParams: { categories: this.categories }
+    });    
     modal.onClose.subscribe(x => {
-      console.log(x);
-      /*if(x.result){
+      if(x.result){
         this.getAllProducts();
-      }*/
+      }
     });
   }
 
   deleteSelectedProducts(): void {
-    this._manageProductService.deleteProducts(this.selectedProducts.map(x => { return x.id})).subscribe(res => {
+    this._manageProductsService.deleteProducts(this.selectedProducts.map(x => { return x.productID})).subscribe(res => {
       this._notificationService.success("Product deleted successfully");
-      this.productsList = [];
       this.getAllProducts();
     }, err => console.log(err));
   }

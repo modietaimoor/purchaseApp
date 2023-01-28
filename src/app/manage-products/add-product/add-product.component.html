@@ -1,133 +1,95 @@
-<form [formGroup]="productFormGroup" (ngSubmit)="saveProduct()">
-    <app-tabs [(selectTabIndex)]="selectTabIndex" tabColor="BlueGray">
-        <app-tab title="Basic Information" [index]="0">
-            <ng-template app-tab>
-                <div class="block">
-                    <h6 class="text-blueGray-400 text-base mt-3 mb-6 font-bold">Product Information</h6>
-                    <div class="flex flex-wrap">
-                        <div class="row w-full">
-                            <div class="w-5/12">
-                                <div class="dx-fieldset mt-0">
-                                    <div class="dx-field">
-                                        <div class="dx-field-label">Name</div>
-                                        <div class="dx-field-value">
-                                            <input type="text" formControlName="productName" class="w-full flex-1 text-blueGray-600 bg-white rounded input-text shadow focus:outline-none focus:ring" />
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-1/3">
-                                <div class="dx-fieldset mt-0">
-                                    <div class="dx-field">
-                                        <div class="dx-field-label">Code</div>
-                                        <div class="dx-field-value">
-                                            <input type="text" formControlName="productCode" class="w-full flex-1 text-blueGray-600 bg-white rounded input-text shadow focus:outline-none focus:ring" />
-                                        </div>
-                                    </div>                                
-                                </div>
-                            </div>
-                            <div class="w-1/4">
-                                <div class="dx-fieldset mt-0">
-                                    <div class="dx-field">
-                                        <div class="dx-field-label">Price</div>
-                                        <div class="dx-field-value">
-                                            <input type="number" min="0.00" step="0.01" formControlName="productPrice" class="w-full flex-1 text-blueGray-600 bg-white rounded input-text shadow focus:outline-none focus:ring w-1/5" />
-                                        </div>
+
+<app-tabs [(selectTabIndex)]="selectTabIndex" tabColor="Emerald">
+    <app-tab title="Basic Information" [index]="0">
+        <ng-template app-tab>
+            <div class="block">
+                <h6 class="text-blueGray-400 text-base mt-3 mb-6 font-bold">Product Information</h6>
+                <div class="flex flex-wrap">
+                    <div class="row w-full">
+                        <div class="w-1/2">
+                            <div class="dx-fieldset mt-0">
+                                <div class="dx-field">
+                                    <div class="dx-field-label">Product Name</div>
+                                    <div class="dx-field-value">
+                                        <input type="text" [(ngModel)]="productName" class="w-full flex-1 text-blueGray-600 bg-white rounded input-text shadow focus:outline-none focus:ring" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row w-full">
-                            <div class="w-1/2">
-                                <div class="dx-fieldset mt-0">
-                                    <div class="dx-field">
-                                        <div class="dx-field-label">Categories</div>
-                                        <div class="dx-field-value">
-                                            <app-tag-box [dataSource]="categories" valueExpr="categoryID" displayExpr="categoryName"></app-tag-box>
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-                            <div class="w-1/2">
-                                <div class="dx-fieldset mt-0">
-                                    <div class="dx-field">
-                                        <div class="dx-field-label">Sizes</div>
-                                        <div class="dx-field-value">
-                                            <app-tag-box [dataSource]="sizes" valueExpr="sizeCode" displayExpr="sizeDescription"></app-tag-box>
-                                        </div>
+                        <div class="w-1/2">
+                            <div class="dx-fieldset mt-0">
+                                <div class="dx-field">
+                                    <div class="dx-field-label">Product Price</div>
+                                    <div class="dx-field-value">
+                                        <input type="number" min="0.00" step="0.01" [(ngModel)]="productPrice" class="w-full flex-1 text-blueGray-600 bg-white rounded input-text shadow focus:outline-none focus:ring w-1/5" />
                                     </div>
                                 </div>
                             </div>
                         </div>
-                        <div class="row w-full">
-                            <div class="w-full">
-                                <div class="dx-fieldset mt-0">
-                                    <div class="dx-field">
-                                        <div class="dx-field-label">Description</div>
-                                        <div class="dx-field-value">
-                                            <input type="text" formControlName="productDescription" class="w-full flex-1 text-blueGray-600 bg-white shadow rounded rounded input-text resize-none" />
-                                        </div>
+                        <div class="w-1/2">
+                            <div class="dx-fieldset mt-0">
+                                <div class="dx-field">
+                                    <div class="dx-field-label">Quantity Type</div>
+                                    <div class="dx-field-value">
+                                        <app-select [(ngModel)]="quantityType">
+                                            <app-select-option 
+                                                *ngFor="let qtype of quantityTypes" 
+                                                [value]="qtype.name" 
+                                                [key]="qtype.id">
+                                            </app-select-option>
+                                        </app-select>
                                     </div>
-                                </div>
+                                </div>                                
                             </div>
                         </div>
-                        <div class="row w-full">
-                            <div class="w-full">
-                                <div class="dx-fieldset mt-0">
-                                    <div class="dx-field">
-                                        <div class="dx-field-label">Picture</div>
-                                        <div class="dx-field-value">
-                                            <input type="file" (change)="uploadPhoto($event)" class="border-0 p-3 text-blueGray-600 bg-white rounded text-sm shadow w-full" accept="image/*" #imgComp />
-                                        </div>
+                        <div class="w-1/2">
+                            <div class="dx-fieldset mt-0">
+                                <div class="dx-field">
+                                    <div class="dx-field-label">Produt Category</div>
+                                    <div class="dx-field-value">
+                                        <app-dropdown-box 
+                                            [dataSource]="categories"
+                                            valueExpr="categoryID"
+                                            displayExpr="categoryName"
+                                            parentIdExpr="parentID"
+                                            [templateViewType]="templateViewType"
+                                            (valueChanged)="updateProductCategory($event)">
+                                        </app-dropdown-box>
                                     </div>
                                 </div>
-                            </div>
-                        </div>
-                        <div class="row w-full" *ngIf="imageFile?.link">
-                            <div class="w-full">
-                                <div class="dx-fieldset mt-0">
-                                    <div class="dx-field">
-                                        <img src="../../assets/imgs/closeicon.png" alt="Remove Photo" class="cursor-pointer" (click)="imgComp.value = ''; removePhoto()" style="height: 20px; width:20px; left:180px" />
-                                        <img [src]="imageFile.link" style="height: 200px; width:200px;" />
-                                    </div>
-                                </div>
-                            </div>
-                        </div>
-                    </div>
-                    <hr class="mt-6 border-b-1 border-blueGray-300" />
-                    <div class="flex flex-wrap">
-                        <button class="text-red-500 background-transparent font-bold px-6 py-2 text-sm m-1" type="button" (click)="closeModal(false)">
-                            Cancel
-                        </button>
-                        <button class="bg-emerald-500 text-white font-bold text-sm p-3 rounded shadow m-1" type="submit" [disabled]="!productFormGroup.valid">
-                            Save Product
-                        </button>
-                    </div>
-                </div>                     
-            </ng-template>
-        </app-tab>
-        <app-tab title="Other" [index]="1">
-            <ng-template app-tab>
-                <div class="block pt-4">
-                    <h6 class="text-blueGray-400 text-base mb-6 font-bold">Photo</h6>
-                    <div class="flex flex-wrap">
-                        <div class="w-full px-4">
-                            <div class="w-full mb-3">
-                            <label class="block text-blueGray-600 text-sm font-bold mb-2 w-full">Select Product Photo</label>
-                            <div class="w-full flex">
-                                <div class="w-1/2">
-                                <input type="file" (change)="uploadPhoto($event)" class="border-0 p-3 text-blueGray-600 bg-white rounded text-sm shadow w-full" accept="image/*" #imgComp />
-                                </div>
-                                <div class="mb-3 ml-4 shadow-md rounded-lg" *ngIf="ImageSelected" style="width:200px">
-                                <img src="../../assets/imgs/closeicon.png" alt="Remove Photo" class="cursor-pointer" (click)="imgComp.value = ''; removePhoto()" style="height: 20px; width:20px; left:180px" />
-                                <img [src]="imageFile.link" style="height: 200px; width:200px;" />
-                                </div>
-                            </div>
                             </div>
                         </div>
                     </div>
                 </div>
-            </ng-template>
-        </app-tab>
-    </app-tabs>
-</form>
+                <ng-template [ngIf]="productCategory?.specFields.length > 0">
+                    <div class="w-full flex flex-wrap">
+                        <hr class="mt-6 border-b-1 border-blueGray-300 w-full" />
+                        <div class="h-full w-full">
+                            <app-product-specs [category]="productCategory"></app-product-specs>
+                        </div>
+                    </div>
+                </ng-template>
+            </div> 
+        </ng-template>
+    </app-tab>
+    <app-tab title="Product Pictures" [index]="1">
+        <ng-template app-tab>
+            <div class="block h-full">
+                <div class="flex flex-wrap">
+                    <div class="w-1/3">
+                        <h6 class="text-blueGray-400 text-base mt-3 mb-6 font-bold">Upload Product Picture(s)</h6>
+                        <app-file-uploader                                            
+                            [allowedFileExtensions]="allowedFileExtensions"
+                            [multiple]="true"
+                            accept="image/*"
+                            (valueChanged)="updateProductPhotos($event)">                                            
+                        </app-file-uploader>
+                    </div>
+                    <div class="w-2/3 h-full p-4">
+                        <app-gallery [dataSource]="imageFiles"></app-gallery>
+                    </div>
+                </div>
+            </div>
+        </ng-template>
+    </app-tab>
+</app-tabs>
