@@ -3,7 +3,6 @@ import { HttpClient } from '@angular/common/http';
 
 import { Observable } from 'rxjs';
 import { AppSettings } from '../core/services/app.settings.service';
-import { BulkChangeStatusRequest, OrderItemsResponse, OrderResponse, StatusModelResponse } from '../domain/resquest-response/request-response';
 
 @Injectable()
 export class OrdersService {
@@ -11,7 +10,7 @@ export class OrdersService {
   private backendUrl = AppSettings.configuration.api.baseUrl;  // URL to web api
 
   constructor(private _http: HttpClient) { }
-
+  /*
   public getStatusLookup(): Observable<StatusModelResponse[]> {
     return this._http.get<any>(this.backendUrl + "orders/GetStatusLookup");
   }
@@ -35,4 +34,5 @@ export class OrdersService {
   public bulkChangeOrderStatus(orderModel: BulkChangeStatusRequest): Observable<any> {
     return this._http.post<any>(this.backendUrl + "orders/BulkChangeOrderStatus", orderModel);
   }
+  */
 }
