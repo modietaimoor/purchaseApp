@@ -3,7 +3,7 @@ import { ParameterMetadata } from '../decorator/parameters';
 export function buildBody(
   bodyMetadata: ParameterMetadata[],
   plainBodyMetadata: ParameterMetadata[]
-): stringcore {
+): string | undefined {
   const metadata = bodyMetadata || plainBodyMetadata;
   const plain = (plainBodyMetadata && plainBodyMetadata.length > 0) || metadata[0]?.value instanceof FormData;
 

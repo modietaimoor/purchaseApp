@@ -4,6 +4,7 @@ import { Routes, RouterModule } from "@angular/router";
 import { AdminComponent } from "./admin/admin.component";
 import { DashboardComponent } from "./dashboard/dashboard.component";
 import { LoginComponent } from "./login/login.component";
+import { ManageCategoriesComponent } from "./manage-categories/manage-categories.component";
 
 import { ManageProductComponent } from './manage-products/manage-products.component';
 import { OrdersComponent } from "./orders/orders.component";
@@ -21,7 +22,8 @@ const routes: Routes = [
       { path: "dashboard", component: DashboardComponent },
       { path: "", redirectTo: "dashboard", pathMatch: "full" },
       { path: "manage-products", component: ManageProductComponent },
-      { path: "orders", component: OrdersComponent }
+      { path: "manage-orders", component: OrdersComponent },
+      { path: "manage-categories", component: ManageCategoriesComponent }
     ]
   },
   { path: "", redirectTo: "/auth/login", pathMatch: "full" },

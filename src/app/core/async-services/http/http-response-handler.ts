@@ -2,10 +2,9 @@ import { HttpErrorResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable, throwError as observableThrowError } from 'rxjs';
 
-import { AuthService } from '@core/auth.service';
-import { RouteService } from '@core/service/route.service';
 import { AppInjector } from '@shared/service/app-Injector.service';
 import { NotificationService } from '@shared/service/notification.service';
+import { RouteService } from '@core/services/route.service';
 
 @Injectable({
   providedIn: 'root'
@@ -65,8 +64,8 @@ export class HttpResponseHandler {
   //  * Shows notification errors when server response status is 401 and redirects user to login page
   //  */
   private handleUnauthorized(): void {
-    AppInjector.getInjector().get(AuthService).logout();
-    AppInjector.getInjector().get(RouteService).navigateToLogin();
+    //AppInjector.getInjector().get(AuthService).logout();
+    //AppInjector.getInjector().get(RouteService).navigateToLogin();
   }
 
   // /**
