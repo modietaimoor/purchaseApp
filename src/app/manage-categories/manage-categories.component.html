@@ -1,0 +1,142 @@
+<div class="wrapper">
+    <div class="overflow-x-hidden overflow-y-auto h-screen p-4">
+      <h1 class="text-4xl font-normal leading-normal mx-1 mb-12 font-bold w-full">Manage Categories</h1>
+      <div class="flex flex-wrap px-4 mt-0">
+        <div class="w-1/2">
+          <div class="dx-fieldset">
+            <div class="dx-field">
+              <div class="dx-field-label">Category Name</div>
+              <div class="dx-field-value">
+                <input type="text" [(ngModel)]="categoryName" class="w-full flex-1 text-blueGray-600 bg-white rounded input-text shadow focus:outline-none focus:ring" />
+              </div>
+            </div>
+          </div>
+        </div>
+        <div class="w-1/2">
+          <div class="dx-fieldset">
+            <div class="dx-field">
+              <button class="text-white bg-blueGray-500 font-bold text-base py-2 px-3 rounded" (click)="addNewCategory()">Add</button>
+            </div>
+          </div>
+        </div>
+      </div>
+      <div class="flex flex-wrap">
+        <div class="w-full px-4">
+          <app-tabs [(selectTabIndex)]="selectTabIndex" tabColor="BlueGray">
+              <app-tab title="Tree View" [index]="0">
+                  <ng-template app-tab>
+                    <div class="overflow-x-hidden overflow-y-auto h-screen p-4">
+                      <div class="flex flex-wrap h-full">
+                        <div class="w-1/5 px-4 border">
+                          <h6 class="text-blueGray-500 text-base my-1 font-bold p-3">Categories</h6>
+                          <app-tree-view
+                            [dataSource]="categories"
+                            keyExpr="categoryID"
+                            parentIdExpr="parentID"
+                            displayExpr="categoryName"
+                            (onItemClick)="selectedNode($event)">
+                          </app-tree-view>
+                        </div>
+                        <ng-template [ngIf]="selectedCategory">
+                          <div class="w-4/5 px-2 border">
+                            <h6 class="text-blueGray-500 text-base my-1 font-bold p-3">Add Child Category</h6>
+                            <div class="flex flex-wrap">
+                              <div class="w-2/3">
+                                <div class="dx-fieldset mt-0">
+                                  <div class="dx-field">
+                                    <div class="dx-field-label">Child Category Name</div>
+                                    <div class="dx-field-value">
+                                      <input type="text" [(ngModel)]="categoryName" class="w-full flex-1 text-blueGray-600 bg-white rounded input-text shadow focus:outline-none focus:ring" />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="w-1/3">
+                                <div class="dx-fieldset mt-0">
+                                  <div class="dx-field">
+                                    <button class="text-white bg-blueGray-500 font-bold text-base py-2 px-3 rounded" (click)="addNewCategory(selectedCategory.categoryID)">Add</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <h6 class="text-blueGray-500 text-base my-1 font-bold p-3">Add Category Products Specifications</h6>
+                            <div class="flex flex-wrap">
+                              <div class="w-1/3">
+                                <div class="dx-fieldset mt-0">
+                                  <div class="dx-field">
+                                    <div class="dx-field-label">Name</div>
+                                    <div class="dx-field-value">
+                                      <input type="text" [(ngModel)]="fieldName" class="w-full flex-1 text-blueGray-600 bg-white rounded input-text shadow focus:outline-none focus:ring" />
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="w-1/3">
+                                <div class="dx-fieldset mt-0">
+                                  <div class="dx-field">
+                                    <div class="dx-field-label">Type</div>
+                                    <div class="dx-field-value">
+                                      <app-select [(ngModel)]="fieldType">
+                                        <app-select-option *ngFor="let type of types" [value]="type" [key]="type"></app-select-option>
+                                      </app-select>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="w-1/6">
+                                <div class="dx-fieldset mt-0">
+                                  <div class="dx-field">
+                                    <app-checkbox [control]="isMandatory"></app-checkbox>
+                                  </div>
+                                </div>
+                              </div>
+                              <div class="w-1/6">
+                                <div class="dx-fieldset mt-0">
+                                  <div class="dx-field">
+                                    <button class="text-white bg-blueGray-500 font-bold text-base py-2 px-3 rounded" (click)="addNewCategorySpecField()">Save</button>
+                                  </div>
+                                </div>
+                              </div>
+                            </div>
+                            <ng-template [ngIf]="selectedCategory?.specFields">
+                              <h6 class="text-blueGray-500 text-base my-1 font-bold p-3">{{selectedCategory.categoryName}} Specifications</h6>
+                              <div class="dx-fieldset w-1/2" *ngFor="let spec of selectedCategory?.specFields">
+                                <div class="dx-field">
+                                  <div class="dx-field-label"><strong>Name: </strong>{{spec.fieldName}}</div>
+                                  <div class="dx-field-value pt-0">
+                                    <div class="flex flex-wrap">
+                                      <div class="w-1/3">
+                                        <strong>Type: </strong>{{spec.fieldType}}
+                                      </div>
+                                      <div class="w-1/3" [ngClass]="spec.isMandatory ? 'visible' : 'invisible'"><strong>Required</strong></div>
+                                      <div class="w-1/3">
+                                        <button class="text-white bg-blueGray-500 font-bold text-base py-2 px-3 rounded" (click)="addNewCategory(spec.specFieldID)">Remove</button>
+                                      </div>
+                                    </div>
+                                  </div>
+                                </div>
+                              </div>
+                            </ng-template>
+                          </div>
+                        </ng-template>
+                      </div>
+                    </div>
+                  </ng-template>
+              </app-tab>
+              <app-tab title="Grid View" [index]="1">
+                  <ng-template app-tab>
+                    <div class="overflow-x-hidden overflow-y-auto h-screen p-4">
+                      <app-data-grid-client-side 
+                        [dataSource]="categories"
+                        selectionMode="multiple"
+                        [columns]="categoryColumns"
+                        (rowsSelected)="selectedRows($event)">                                            
+                      </app-data-grid-client-side> 
+                    </div>
+                  </ng-template>
+              </app-tab>
+          </app-tabs>
+        </div>
+      </div>
+    </div>
+</div>
