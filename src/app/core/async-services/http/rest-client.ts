@@ -2,13 +2,11 @@ import { HttpClient, HttpRequest, HttpResponse } from '@angular/common/http';
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 import { catchError, map } from 'rxjs/operators';
-
-import { AuthService } from '@core/auth.service';
-import { AppSettings } from '@core/service/app.settings.service';
 import { AppInjector } from '@shared/service/app-Injector.service';
 
 import { HttpAdapter } from './http-adapter';
 import { HttpResponseHandler } from './http-response-handler';
+import { AppSettings } from '@core/services/app.settings.service';
 
 @Injectable({
   providedIn: 'root'
@@ -40,7 +38,7 @@ export class RestClient {
 
   public requestInterceptor(request: HttpRequest<string>): HttpRequest<string> {
     // TODO: find a better solution to handle endpoints headers
-    if (
+    /*if (
       !request.url.includes('GetLogin') &&
       !request.url.includes('ValidateNewAccount') &&
       !request.url.includes('SendResetPasswordEmail') &&
@@ -59,7 +57,7 @@ export class RestClient {
     // TODO: find a better solution to handle endpoints headers
     if (request.url.includes('SaveRouter') || request.url.includes('EditRouter')) {
       request = request.clone({ headers: request.headers.delete('Content-Type') });
-    }
+    }*/
     return request;
   }
 

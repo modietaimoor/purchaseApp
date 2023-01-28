@@ -22,6 +22,8 @@ import { SharedModule } from "@shared/shared.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AddProductComponent } from "./manage-products/add-product/add-product.component";
+import { ManageCategoriesComponent } from "./manage-categories/manage-categories.component";
+import { ProductSpecificationsComponent } from "./manage-products/add-product/product-specifications/product-specifications.component";
 
 
 export function configServiceFactory(config: ConfigService): () => Promise<boolean> {
@@ -39,6 +41,8 @@ export function configServiceFactory(config: ConfigService): () => Promise<boole
     OrdersComponent,
     OrderContentComponent,
     AddProductComponent,
+    ManageCategoriesComponent,
+    ProductSpecificationsComponent,
     RemoveCommaPipe
   ],
   imports: [
