@@ -1,7 +1,0 @@
-<form [formGroup]="form">
-  <app-checkbox
-    formArrayName="checkboxes"
-    *ngFor="let checkbox of checkboxesFormArray?.controls; let i = index"
-    [control]="checkbox"
-  ></app-checkbox>
-</form>
