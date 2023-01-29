@@ -1,5 +1,3 @@
-import { SafeAny } from "@core/safe-any-type";
-
 export interface CategoryModel {
     categoryID: number;
     categoryName: string;
@@ -17,7 +15,10 @@ export interface SpecFields {
 
 export interface ProductSpecValues {
     specFieldID: number;
-    specValue: SafeAny
+    fieldName: string;
+    fieldType: string;
+    isMandatory: boolean;
+    specValue: unknown;
 }
 
 export enum CategoryFieldType {

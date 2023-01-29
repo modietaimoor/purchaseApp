@@ -1,31 +1,21 @@
 import { Component, OnInit } from "@angular/core";
-import { FormControl } from "@angular/forms";
 import { CategoryFieldType, CategoryModel } from "@domain/models/categories";
-import { AddCategorySpecFieldUsecase } from "@domain/repositories/usecases/categories/add-category-spec-fields.usecase";
-import { AddNewCategoryUsecase } from "@domain/repositories/usecases/categories/add-new-category.usecase";
-import { DeleteCategorySpecFieldsUsecase } from "@domain/repositories/usecases/categories/delete-category-spec-fields.usecase";
-import { GetAllCategoriesUsecase } from "@domain/repositories/usecases/categories/get-all-categories.usecase";
 import { Column } from "@shared/components/grid/model";
 import { NotificationService } from "@shared/service/notification.service";
+import { ManageCategoryService } from "./manage-categories.service";
 
 @Component({
   selector: "app-manage-categories",
   templateUrl: "./manage-categories.component.html",
 })
 export class ManageCategoriesComponent implements OnInit {
-  constructor(private _getAllCategoriesUsecase: GetAllCategoriesUsecase,
-    private _addNewCategoryUsecase: AddNewCategoryUsecase,
-    private _addCategorySpecFieldUsecase: AddCategorySpecFieldUsecase,
-    private _deleteCategorySpecFieldsUsecase: DeleteCategorySpecFieldsUsecase,  
+  constructor(private _manageCategoryService: ManageCategoryService,
     private _notificationService: NotificationService) {}
   categoryName: string;
   subCategoryName: string;
   fieldName: string;
   fieldType: string = 'Text';
-  isMandatory: FormControl = new FormControl({
-    checked: false,
-    name: 'Required'
-  });
+  isMandatory: boolean = false;
   types = [CategoryFieldType.Text, 
     CategoryFieldType.Year, 
     CategoryFieldType.MonthYear, 
@@ -49,7 +39,7 @@ export class ManageCategoriesComponent implements OnInit {
   }
 
   getAllCategories() : void {
-    this._getAllCategoriesUsecase.execute().subscribe(x => {
+    this._manageCategoryService.getAllCategories().subscribe(x => {
       this.categories = x;
       if(this.selectedCategory) {
         this.selectedCategory = this.categories.find(x => x.categoryID === this.selectedCategory.categoryID)
@@ -71,7 +61,7 @@ export class ManageCategoriesComponent implements OnInit {
         this._notificationService.error("Please enter category name");
         return;
     }
-    this._addNewCategoryUsecase.execute(this.categoryName).subscribe(() => {
+    this._manageCategoryService.addNewCategory(this.categoryName).subscribe(() => {
         this._notificationService.success("Category added successfully");
         this.categoryName = null;
         this.getAllCategories();
@@ -83,7 +73,7 @@ export class ManageCategoriesComponent implements OnInit {
         this._notificationService.error("Please enter category name");
         return;
     }
-    this._addNewCategoryUsecase.execute(this.subCategoryName, parentID).subscribe(() => {
+    this._manageCategoryService.addNewCategory(this.subCategoryName, parentID).subscribe(() => {
         this._notificationService.success("Child Category added successfully");
         this.categoryName = null;
         this.getAllCategories();
@@ -103,14 +93,15 @@ export class ManageCategoriesComponent implements OnInit {
         this._notificationService.error("Type is missing");
         return;
     }
-    this._addCategorySpecFieldUsecase.execute(this.selectedCategory.categoryID, this.fieldName, this.fieldType, this.isMandatory.value.checked).subscribe(() => {
+    this._manageCategoryService.addCategorySpecField(this.selectedCategory.categoryID, this.fieldName, this.fieldType, this.isMandatory)
+    .subscribe(() => {
         this._notificationService.success("Category Product Specification added successfully");
         this.getAllCategories();
     });
   }
 
   deleteCategorySpecField(specFieldID: number): void {
-    this._deleteCategorySpecFieldsUsecase.execute([specFieldID]).subscribe(() =>{
+    this._manageCategoryService.deleteCategorySpecFields([specFieldID]).subscribe(() =>{
       this._notificationService.success('Category Product Specification deleted successfully');
       this.getAllCategories();
     });

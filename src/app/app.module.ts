@@ -24,6 +24,7 @@ import { FormsModule, ReactiveFormsModule } from "@angular/forms";
 import { AddProductComponent } from "./manage-products/add-product/add-product.component";
 import { ManageCategoriesComponent } from "./manage-categories/manage-categories.component";
 import { ProductSpecificationsComponent } from "./manage-products/add-product/product-specifications/product-specifications.component";
+import { ManageCategoryService } from "./manage-categories/manage-categories.service";
 
 
 export function configServiceFactory(config: ConfigService): () => Promise<boolean> {
@@ -56,6 +57,7 @@ export function configServiceFactory(config: ConfigService): () => Promise<boole
     BrowserAnimationsModule],
   providers: [
     ManageProductService, 
+    ManageCategoryService,
     OrdersService,
     ConfigService,
     {

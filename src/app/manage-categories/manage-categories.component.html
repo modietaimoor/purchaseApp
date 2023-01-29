@@ -86,7 +86,10 @@
                               <div class="w-1/6">
                                 <div class="dx-fieldset mt-0">
                                   <div class="dx-field">
-                                    <app-checkbox [control]="isMandatory"></app-checkbox>
+                                    <app-checkbox 
+                                      [(ngModel)]="isMandatory"
+                                      text="Required">
+                                    </app-checkbox>
                                   </div>
                                 </div>
                               </div>
