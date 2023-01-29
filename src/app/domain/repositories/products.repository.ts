@@ -5,7 +5,6 @@ import { Observable } from 'rxjs';
 import { Body } from '@core/async-services/http/decorator/parameters';
 import { GET, POST } from '@core/async-services/http/decorator/request-methods';
 import { RestClient } from '@core/async-services/http/rest-client';
-import { ProductModelRequest } from '@domain/resquest-response/request/products-request';
 import { ProductsGridModelResponse } from '@domain/resquest-response/response/products-response';
 
 @Injectable({
@@ -13,7 +12,7 @@ import { ProductsGridModelResponse } from '@domain/resquest-response/response/pr
 })
 export class ProductsRepository extends RestClient {
   @POST('Products/SaveProduct')
-  SaveProduct(@Body product: ProductModelRequest): Observable<void> {
+  SaveProduct(@Body product: FormData): Observable<void> {
     return null;
   }
 

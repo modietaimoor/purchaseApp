@@ -42,11 +42,11 @@ export class ManageProductComponent implements OnInit {
 
   getAllProducts() {
     this.productsList = [];
-    this._manageProductsService.getAllProducts().subscribe(res => (this.productsList = res), err => console.log(err));
+    this._manageProductsService.getAllProducts().subscribe(res => (this.productsList = res), err => this._notificationService.error(err));
   }
 
   getAllCategories() {
-    this._getAllCategoriesUsecase.execute().subscribe(res => (this.categories = res), err => console.log(err));
+    this._getAllCategoriesUsecase.execute().subscribe(res => (this.categories = res), err => this._notificationService.error(err));
 }
 
   showNewProductModal(): void {
@@ -71,6 +71,6 @@ export class ManageProductComponent implements OnInit {
     this._manageProductsService.deleteProducts(this.selectedProducts.map(x => { return x.productID})).subscribe(res => {
       this._notificationService.success("Product deleted successfully");
       this.getAllProducts();
-    }, err => console.log(err));
+    }, err => this._notificationService.error(err));
   }
 }

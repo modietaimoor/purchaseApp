@@ -52,15 +52,15 @@ export class OrdersComponent implements OnInit {
   }
 
   getOrders(): void{
-    this._getOrdersListUsecase.execute().subscribe(res => (this.ordersList = res), err => console.log(err));
+    this._getOrdersListUsecase.execute().subscribe(res => (this.ordersList = res), err => this._notificationService.error(err));
   }
 
   getStatusList(): void {
-    this._getStatusLookupUsecase.execute().subscribe(x => (this.statusLookup = x), err => console.log(err));
+    this._getStatusLookupUsecase.execute().subscribe(x => (this.statusLookup = x), err => this._notificationService.error(err));
   }
 
   getOrderContent(orderID: number): void{
-    this._getOrderContentUsecase.execute(orderID).subscribe(x => (this.orderItems = x), err => console.log(err));
+    this._getOrderContentUsecase.execute(orderID).subscribe(x => (this.orderItems = x), err => this._notificationService.error(err));
   }
 
   bulkUpdateStatus(): void {
