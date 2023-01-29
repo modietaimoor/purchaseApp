@@ -17,10 +17,12 @@ import { startWith } from 'rxjs/operators';
 import { DxSelectBoxComponent } from 'devextreme-angular';
 
 import { SelectOptionComponent } from './select-option.component';
+import { SafeAny } from '@core/safe-any-type';
 
 @Component({
   selector: 'app-select',
   templateUrl: './select.component.html',
+  styleUrls: ['./select.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
@@ -40,6 +42,7 @@ export class SelectComponent implements AfterContentInit, ControlValueAccessor, 
   @Input() showClearButton: boolean;
   public optionList: SelectOptionComponent[] = [];
   public value: number | null = null;
+  elementAttr: SafeAny = { class: 'text-blueGray-600 bg-white rounded input-text shadow focus:outline-none focus:ring select-box' };
 
   public onChangeFn = (_: any): void => {};
   public onTouchedFn = (): void => {};

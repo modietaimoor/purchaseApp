@@ -4,7 +4,8 @@ import { Size } from '@shared/size';
 
 @Component({
   selector: 'app-gallery',
-  templateUrl: './gallery.component.html'
+  templateUrl: './gallery.component.html',
+  styleUrls: ['./gallery.component.css']
 })
 export class GalleryComponent {
   @Input() dataSource: PhotoModel[];

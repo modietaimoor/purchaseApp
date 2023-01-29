@@ -8,10 +8,12 @@ import {
   Input
 } from '@angular/core';
 import { ControlValueAccessor, NG_VALUE_ACCESSOR } from '@angular/forms';
+import { SafeAny } from '@core/safe-any-type';
 
 @Component({
   selector: 'app-date-picker',
   templateUrl: './date-picker.component.html',
+  styleUrls: ['./date-picker.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush,
   providers: [
     {
@@ -27,6 +29,7 @@ export class DatePickerComponent implements ControlValueAccessor, AfterContentCh
   @Input() readonly min: Date | undefined;
   @Input() readonly showDays: boolean = false;
   @Input() readonly dateType: 'date' | 'datetime' = 'date';
+  elementAttr: SafeAny = { class: 'text-blueGray-600 bg-white rounded input-text shadow focus:outline-none focus:ring date-box' };
   public value: Date | null = null;
   public onChangeFn = (_: any): void => {};
   public onTouchedFn = (): void => {};

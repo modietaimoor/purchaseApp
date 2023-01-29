@@ -19,7 +19,7 @@ export class CheckboxComponent implements ControlValueAccessor, AfterContentChec
   @Input() text: string;
   @Input() iconSize: number;
   @Input() enableThreeStateBehavior: boolean = false;
-  @Input() elementAttr: SafeAny;
+  elementAttr: SafeAny = { class: 'font-bold' };
   public value: boolean | null = null;
   public onChangeFn = (_: any): void => {};
   public onTouchedFn = (): void => {};
@@ -32,7 +32,6 @@ export class CheckboxComponent implements ControlValueAccessor, AfterContentChec
   writeValue(modelValue: boolean): void {
     if (this.value != modelValue) {
       this.value = modelValue;
-      console.log(this.value);
       this.cdr.markForCheck();
     }
   }

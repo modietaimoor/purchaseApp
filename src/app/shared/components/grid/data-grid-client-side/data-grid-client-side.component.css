@@ -44,3 +44,7 @@
     ::ng-deep .dx-texteditor-input {
       padding-left: unset !important;
     }
+
+    ::ng-deep .dx-datagrid-header-panel {
+      display: none !important;
+    }

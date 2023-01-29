@@ -6,7 +6,8 @@ import { DropDownTemplateType} from './template-type';
 
 @Component({
   selector: 'app-dropdown-box',
-  templateUrl: './dropdown-box.component.html'
+  templateUrl: './dropdown-box.component.html',
+  styleUrls: ['./dropdown-box.component.css']
 })
 export class DropdownBoxComponent<T> {
   @Input() size: Size =  { height: '100%', width: '100%' };
@@ -17,6 +18,7 @@ export class DropdownBoxComponent<T> {
   @Input() templateViewType: DropDownTemplateType = DropDownTemplateType.TreeView;
   @ViewChild(DxDropDownBoxComponent) dropDown: DxDropDownBoxComponent;
   @Output() readonly valueChanged: EventEmitter<T> = new EventEmitter<T>();
+  elementAttr: SafeAny = { class: 'text-blueGray-600 bg-white rounded input-text shadow focus:outline-none focus:ring drop-box' };
   value: T;
   opened = false;
 
