@@ -4,6 +4,7 @@
     [dataSource]="dataSource"
     [valueExpr]="valueExpr"
     [displayExpr]="displayExpr"
+    [elementAttr]="elementAttr"
     [showClearButton]="true"
     (onValueChanged)="checkForClear($event)">
     <div *dxTemplate="let data of 'content'">

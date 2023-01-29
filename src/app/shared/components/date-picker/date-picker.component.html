@@ -5,6 +5,7 @@
     [value]="value"
     [min]="min"
     [max]="max"
+    [elementAttr]="elementAttr"
     displayFormat="monthAndYear"
     (valueChange)="onValueChange($event)"
   >
@@ -15,6 +16,7 @@
   *ngIf="showDays; else monthAndYear"
   [value]="value"
   [type]="dateType"
+  [elementAttr]="elementAttr"
   displayFormat="dd/MM/yyyy"
   type="date"
   [min]="min"
