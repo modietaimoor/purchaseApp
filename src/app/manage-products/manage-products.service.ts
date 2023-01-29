@@ -34,22 +34,20 @@ export class ManageProductService {
         dataEntityType: ProductValidationEntity.ProductPrice, errorType: ValidationErrorType.Error 
       });
     }
-    if(!quantityType) {
+    if(quantityType !== QuantityType.ByQuantity && quantityType !== QuantityType.ByWeight) {
       validationModel.invalidData.push({ 
         dataEntityType: ProductValidationEntity.QuantityType, errorType: ValidationErrorType.Error 
       });
     }
-    if(specValues?.length > 0) {
-      productCategory?.specFields?.forEach(x => {
-        if(!specValues.any(y => y.specFieldID === x.specFieldID)){
-          validationModel.invalidData.push({ 
-            dataEntityType: ProductValidationEntity.ProductName, 
-            specFieldID: x.specFieldID, 
-            errorType: x.isMandatory ? ValidationErrorType.Error : ValidationErrorType.Warning });
-        }
-      });
-    }
-    if(!(validationModel.invalidData?.length > 0)){
+    specValues?.forEach(x => {
+      if(x.isMandatory && x.specValue === null){
+        validationModel.invalidData.push({ 
+          dataEntityType: ProductValidationEntity.ProductName, 
+          specFieldID: x.specFieldID, 
+          errorType: x.isMandatory ? ValidationErrorType.Error : ValidationErrorType.Warning });
+      }
+    });
+    if(!validationModel.invalidData?.any(x => x.errorType === ValidationErrorType.Error)){
       validationModel.result = ProductValidationResult.Valid;
     }
     return validationModel;
@@ -66,15 +64,19 @@ export class ManageProductService {
         CategoryID: productCategory.categoryID,
         ProductPrice: productPrice,
         IsByWeight: quantityType == QuantityType.ByWeight,
-        Photos: photos?.map(x => { return x.file}),
         ProductSpecs: specValues?.map(x => {
-            return {
-                SpecID: x.specFieldID,
-                SpecValue: x.specValue
-            }
-        })
-    };
-    return this._saveProductUsecase.execute(productModel);
+              return {
+                  SpecID: x.specFieldID,
+                  SpecValue: x.specValue
+              }
+          })
+      };
+      const result = new FormData();
+      result.append('productModel', JSON.stringify(productModel));
+      photos?.forEach((file, index) => {
+        result.append(`img${index}`, file.file);
+      });      
+      return this._saveProductUsecase.execute(result);
   }
 
   public deleteProducts(productIDs: number[]): Observable<void> {
@@ -83,5 +85,16 @@ export class ManageProductService {
 
   public getAllProducts(): Observable<ProductGridModel[]> {
     return this._getAllProductsUsecase.execute();
+  }
+
+  public generateErrorMessageFromValidationBody(objBody: ProductValidationModel): string {
+    if(objBody.result === ProductValidationResult.Valid) {
+      return null;
+    }
+    let strErrorMsg = 'Please make sure to fill the following fields: ';
+    for(let i = 0; i < objBody.invalidData?.length; i++){
+      strErrorMsg += objBody.invalidData[i].dataEntityType + ','; 
+    }
+    return strErrorMsg;
   }
 }

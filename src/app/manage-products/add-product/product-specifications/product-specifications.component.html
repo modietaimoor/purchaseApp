@@ -1,7 +1,7 @@
-<h6 class="text-blueGray-500 text-base my-1 font-bold p-3">Product Specifications</h6>
+<h6 class="text-blueGray-500 text-base my-1 font-bold px-3 py-2">Product Specifications</h6>
 <div class="w-full hu-full overflow-y-auto">
     <div class="flex flex-wrap">
-        <div class="dx-fieldset w-1/2 mt-0 mx-0 px-4" *ngFor="let spec of category?.specFields; let i = index;">
+        <div class="dx-fieldset w-1/2 mt-0 mx-0 px-4" *ngFor="let spec of specFieldsValues">
             <div class="dx-field">
                 <ng-container [ngTemplateOutlet]="spec.fieldType === CategoryFieldType.YesNo ? checkBoxField : normalField">
                     <ng-template #normalField>
@@ -12,43 +12,39 @@
                     <ng-template #checkBoxField>
                         <div [ngClass]="{ 'required' : spec.isMandatory }">
                             <app-checkbox 
-                                [(ngModel)]="specFieldsValues[i].specValue" 
-                                [elementAttr]="elementAttr"
+                                [(ngModel)]="spec.specValue" 
                                 [text]="spec.fieldName">
                             </app-checkbox>
                         </div>
                     </ng-template>
                 </ng-container>
                 <div class="dx-field-value pt-0">
-                    <ng-template [ngIf]="specFieldsValues?.length === category?.specFields.length">
-                        <ng-container [ngSwitch]="spec.fieldType">
-                            <ng-template [ngSwitchCase]="CategoryFieldType.Text">
-                                <input type="text" [(ngModel)]="specFieldsValues[i].specValue" class="w-full flex-1 text-blueGray-600 bg-white rounded input-text shadow focus:outline-none focus:ring" />
-                            </ng-template>
-                            <ng-template [ngSwitchCase]="CategoryFieldType.Number">
-                                <input type="number" [(ngModel)]="specFieldsValues[i].specValue" class="w-full flex-1 text-blueGray-600 bg-white rounded input-text shadow focus:outline-none focus:ring" />
-                            </ng-template>                        
-                            <ng-template [ngSwitchCase]="CategoryFieldType.DayMonthYear">
-                                <app-date-picker
-                                    name="prodSpecs{{spec.specFieldID}}"
-                                    [(ngModel)]="specFieldsValues[i].specValue"
-                                    dateType="date"
-                                    showDays="true">
-                                </app-date-picker>
-                            </ng-template>
-                            <ng-template [ngSwitchCase]="CategoryFieldType.MonthYear">
-                                <app-date-picker
-                                    [(ngModel)]="specFieldsValues[i].specValue"
-                                    dateType="date">
-                                </app-date-picker>
-                            </ng-template>
-                            <ng-template [ngSwitchCase]="CategoryFieldType.Year">
-                                <app-select [(ngModel)]="specFieldsValues[i].specValue">
-                                    <app-select-option *ngFor="let year of yearsArray" [key]="year" [value]="year"></app-select-option>
-                                </app-select>
-                            </ng-template>
-                        </ng-container>  
-                    </ng-template>
+                    <ng-container [ngSwitch]="spec.fieldType">
+                        <ng-template [ngSwitchCase]="CategoryFieldType.Text">
+                            <input type="text" [(ngModel)]="spec.specValue" class="w-full flex-1 text-blueGray-600 bg-white rounded input-text shadow focus:outline-none focus:ring" />
+                        </ng-template>
+                        <ng-template [ngSwitchCase]="CategoryFieldType.Number">
+                            <input type="number" [(ngModel)]="spec.specValue" class="w-full flex-1 text-blueGray-600 bg-white rounded input-text shadow focus:outline-none focus:ring" />
+                        </ng-template>                        
+                        <ng-template [ngSwitchCase]="CategoryFieldType.DayMonthYear">
+                            <app-date-picker
+                                [(ngModel)]="spec.specValue"
+                                dateType="date"
+                                showDays="true">
+                            </app-date-picker>
+                        </ng-template>
+                        <ng-template [ngSwitchCase]="CategoryFieldType.MonthYear">
+                            <app-date-picker
+                                [(ngModel)]="spec.specValue"
+                                dateType="date">
+                            </app-date-picker>
+                        </ng-template>
+                        <ng-template [ngSwitchCase]="CategoryFieldType.Year">
+                            <app-select [(ngModel)]="spec.specValue">
+                                <app-select-option *ngFor="let year of yearsArray" [key]="year" [value]="year"></app-select-option>
+                            </app-select>
+                        </ng-template>
+                    </ng-container>  
                 </div>
             </div>
         </div>

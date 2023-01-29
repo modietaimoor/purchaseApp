@@ -53,11 +53,11 @@ export class RestClient {
           AuthorizationHeader: serverToken
         }
       });
-    }
-    // TODO: find a better solution to handle endpoints headers
-    if (request.url.includes('SaveRouter') || request.url.includes('EditRouter')) {
-      request = request.clone({ headers: request.headers.delete('Content-Type') });
     }*/
+    // TODO: find a better solution to handle endpoints headers
+    if (request.url.includes('SaveProduct')) {
+      request = request.clone({ headers: request.headers.delete('Content-Type') });
+    }
     return request;
   }
 
