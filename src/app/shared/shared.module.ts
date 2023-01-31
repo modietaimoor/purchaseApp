@@ -21,7 +21,8 @@ import {
   DxMenuModule,
   DxTreeViewModule,
   DxDropDownBoxModule,
-  DxCheckBoxModule
+  DxCheckBoxModule,
+  DxDrawerModule
 } from 'devextreme-angular';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
@@ -31,12 +32,15 @@ import { PieChartComponent } from './components/chart/pie-chart/pie-chart.compon
 import { CheckboxComponent } from './components/checkbox/checkbox.component';
 import { DataListComponent } from './components/data-list/data-list.component';
 import { DatePickerComponent } from './components/date-picker/date-picker.component';
+import { DrawerContentDirective } from './components/drawer/drawer-content.directive';
+import { DrawerComponent } from './components/drawer/drawer.component';
 import { DropdownBoxComponent } from './components/dropdown-box/dropdown-box.component';
 import { FileUploaderComponent } from './components/file-uploader/file-uploader.component';
 import { GalleryComponent } from './components/gallery/gallery.component';
 import { DataGridClientSideComponent } from './components/grid/data-grid-client-side/data-grid-client-side.component';
 import { DataGridServerSideComponents } from './components/grid/data-grid-server-side';
 import { DataGridSummeryComponent } from './components/grid/data-grid-server-side/data-grid-summery/data-grid-summery.component';
+import { ListComponent } from './components/list/list.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { ModalFooterDirective } from './components/modal/modal-footer.directive';
 import { ModalComponent } from './components/modal/modal.component';
@@ -82,7 +86,10 @@ import { ButtonIconDirective } from './directives/button-icon/button-icon.direct
     FileUploaderComponent,
     MenuComponent,
     TreeViewComponent,
-    DropdownBoxComponent
+    DropdownBoxComponent,
+    ListComponent,
+    DrawerComponent,
+    DrawerContentDirective
   ],
   imports: [
     FormsModule,
@@ -94,7 +101,6 @@ import { ButtonIconDirective } from './directives/button-icon/button-icon.direct
     DxSelectBoxModule,
     DxChartModule,
     DxPieChartModule,
-    DxListModule,
     DxPopoverModule,
     DxDropDownButtonModule,
     DxTabPanelModule,
@@ -107,6 +113,8 @@ import { ButtonIconDirective } from './directives/button-icon/button-icon.direct
     DxTreeViewModule,
     DxDropDownBoxModule,
     DxCheckBoxModule,
+    DxListModule,
+    DxDrawerModule,
     ModalModule.forChild()
   ],
   providers: [ModalService],
@@ -137,7 +145,10 @@ import { ButtonIconDirective } from './directives/button-icon/button-icon.direct
     FileUploaderComponent,
     MenuComponent,
     TreeViewComponent,
-    DropdownBoxComponent
+    DropdownBoxComponent,
+    ListComponent,
+    DrawerComponent,
+    DrawerContentDirective
   ]
 })
 export class SharedModule {}
