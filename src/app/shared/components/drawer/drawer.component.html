@@ -1,0 +1,25 @@
+<dx-drawer
+  [openedStateMode]="openedStateMode"
+  [position]="position"
+  [revealMode]="revealMode"
+  template="template"
+  [(opened)]="opened"
+  [height]="height"
+  [closeOnOutsideClick]="closeOnOutsideClick">
+  <div *dxTemplate="let data of 'template'" style="width: 200px !important; height: 100% !important">
+    <dx-list
+      class="panel-list"
+      [elementAttr]="elementAttr"
+      [dataSource]="dataSource"
+      [keyExpr]="keyExpr"
+      [displayExpr]="displayExpr"
+      [hoverStateEnabled]="false"
+      [activeStateEnabled]="false"
+      [focusStateEnabled]="false"
+      (onItemClick)="itemClicked($event)">
+    </dx-list>
+  </div>
+  <ng-template drawer-content class="height: 100% !important"></ng-template>
+</dx-drawer>
+
+

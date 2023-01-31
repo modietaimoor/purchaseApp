@@ -14,4 +14,8 @@ export class LoginComponent implements OnInit {
   goToAdminDashboard(): void {
     this.router.navigate(['/admin/dashboard']);
   }
+
+  goToPortal(): void {
+    this.router.navigate(['/portal/homepage']);
+  }
 }

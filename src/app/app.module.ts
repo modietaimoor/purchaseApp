@@ -6,25 +6,10 @@ import { AppRoutingModule } from "./app-routing.module";
 import { AppComponent } from "./app.component";
 import { HttpClientModule } from '@angular/common/http';
 
-import { LoginComponent } from "./login/login.component";
-import { DashboardComponent } from "./dashboard/dashboard.component";
-import { SidebarComponent } from "./sidebar/sidebar.component";
-
-import { ManageProductComponent } from "./manage-products/manage-products.component";
-import { ManageProductService } from "./manage-products/manage-products.service"
 import { ConfigService } from "@core/services/config.service";
-import { AdminComponent } from "./admin/admin.component";
-import { OrderContentComponent } from "./orders/order-content/order-content.component";
-import { OrdersComponent } from "./orders/orders.component";
-import { OrdersService } from "./orders/orders.service";
-import { RemoveCommaPipe } from "@core/pipes/remove-comma.pipe";
-import { SharedModule } from "@shared/shared.module";
 import { BrowserAnimationsModule } from '@angular/platform-browser/animations';
 import { FormsModule, ReactiveFormsModule } from "@angular/forms";
-import { AddProductComponent } from "./manage-products/add-product/add-product.component";
-import { ManageCategoriesComponent } from "./manage-categories/manage-categories.component";
-import { ProductSpecificationsComponent } from "./manage-products/add-product/product-specifications/product-specifications.component";
-import { ManageCategoryService } from "./manage-categories/manage-categories.service";
+import { LoginComponent } from "./pages/login/login.component";
 
 
 export function configServiceFactory(config: ConfigService): () => Promise<boolean> {
@@ -34,17 +19,7 @@ export function configServiceFactory(config: ConfigService): () => Promise<boole
 @NgModule({
   declarations: [
     AppComponent,
-    LoginComponent,
-    ManageProductComponent,
-    DashboardComponent,
-    SidebarComponent,
-    AdminComponent,
-    OrdersComponent,
-    OrderContentComponent,
-    AddProductComponent,
-    ManageCategoriesComponent,
-    ProductSpecificationsComponent,
-    RemoveCommaPipe
+    LoginComponent,    
   ],
   imports: [
     BrowserModule, 
@@ -53,12 +28,8 @@ export function configServiceFactory(config: ConfigService): () => Promise<boole
     AppRoutingModule, 
     HttpClientModule, 
     RouterModule,
-    SharedModule,
     BrowserAnimationsModule],
   providers: [
-    ManageProductService, 
-    ManageCategoryService,
-    OrdersService,
     ConfigService,
     {
       provide: APP_INITIALIZER,

@@ -1,4 +1,4 @@
-import { Injectable } from '@angular/core';
+import { EventEmitter, Injectable } from '@angular/core';
 import { CategoryModel } from '@domain/models/categories';
 import { AddCategorySpecFieldUsecase } from '@domain/repositories/usecases/categories/add-category-spec-fields.usecase';
 import { AddNewCategoryUsecase } from '@domain/repositories/usecases/categories/add-new-category.usecase';
@@ -13,6 +13,7 @@ export class ManageCategoryService {
     private _addCategorySpecFieldUsecase: AddCategorySpecFieldUsecase,
     private _deleteCategorySpecFieldsUsecase: DeleteCategorySpecFieldsUsecase) { }
 
+    updateCategory: EventEmitter<CategoryModel> = new EventEmitter<CategoryModel>();
     public getAllCategories(): Observable<CategoryModel[]> {
         return this._getAllCategoriesUsecase.execute();
     }
@@ -27,5 +28,9 @@ export class ManageCategoryService {
 
     public deleteCategorySpecFields(specFieldIDs: number[]): Observable<void> {
         return this._deleteCategorySpecFieldsUsecase.execute(specFieldIDs);
+    }
+    
+    public updateSelectedCategory(category: CategoryModel) : void {
+        this.updateCategory.emit(category);
     }
 }

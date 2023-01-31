@@ -1,0 +1,13 @@
+<app-drawer opened="true"
+  [drawItem]="drawItem"
+  [dataSource]="menu"
+  [elementAttr]="elementAttr"
+  (itemClick)="navigate($event)"
+  keyExpr="url"
+  displayExpr="title">
+  <ng-template drawer-content>
+    <div class="w-full h-full">
+      <router-outlet></router-outlet>
+    </div>
+  </ng-template>
+</app-drawer>
