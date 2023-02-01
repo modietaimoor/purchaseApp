@@ -1,13 +1,17 @@
-<app-drawer opened="true"
-  [drawItem]="drawItem"
-  [dataSource]="menu"
-  [elementAttr]="elementAttr"
-  (itemClick)="navigate($event)"
-  keyExpr="url"
-  displayExpr="title">
-  <ng-template drawer-content>
-    <div class="w-full h-full">
-      <router-outlet></router-outlet>
+<div class="flex flex-wrap overflow-y-hidden">
+  <div [ngClass]="{ 'w-1/5' : !collapsed, 'w-1/12' : collapsed }">
+    <app-list [dataSource]="menu"
+      [elementAttr]="elementAttr"
+      [selectedItemKeys]="selectedItemKeys"
+      (itemClick)="navigate($event)"
+      keyExpr="url"
+      displayExpr="title">
+    </app-list>
+  </div>
+  <div [ngClass]="{ 'w-4/5' : !collapsed, 'w-11/12' : collapsed }">
+    <div class="w-full p-2 bg-gray-100">
+      <app-toolbar [(items)]="toolbarItems"></app-toolbar>
     </div>
-  </ng-template>
-</app-drawer>
+    <router-outlet></router-outlet>
+  </div>
+</div>

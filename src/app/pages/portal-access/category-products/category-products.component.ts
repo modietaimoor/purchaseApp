@@ -13,13 +13,13 @@ export class CategoryProductsComponent implements OnInit, OnDestroy {
   constructor(private _manageCategoryService: ManageCategoryService) {}
   
   ngOnInit(): void {
-    this._manageCategoryService.updateCategory.subscribe(x => {
+    this.categoryUpdate = this._manageCategoryService.updateCategory.subscribe(x => {
         this.category = x;
         console.log(this.category);
     });
   }
 
   ngOnDestroy(): void {
-      this.categoryUpdate.unsubscribe();
+      this.categoryUpdate?.unsubscribe();
   }
 }

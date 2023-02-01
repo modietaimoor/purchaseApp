@@ -1,3 +1,4 @@
+<!--
 <ng-template [ngIf]="drawItem?.component">
   <app-drawer opened="true"
     [drawItem]="drawItem"
@@ -12,4 +13,22 @@
       </div>
     </ng-template>
   </app-drawer>
-</ng-template>
+</ng-template>-->
+
+<div class="flex flex-wrap overflow-y-hidden">
+  <div [ngClass]="{ 'w-1/5' : !collapsed, 'w-1/12' : collapsed }">
+    <app-list [dataSource]="categories"
+      [elementAttr]="elementAttr"
+      [selectedItemKeys]="selectedItemKeys"
+      (itemClick)="navigate($event)"
+      grouped="true" 
+      collapsibleGroups="true">
+    </app-list>
+  </div>
+  <div [ngClass]="{ 'w-4/5' : !collapsed, 'w-11/12' : collapsed }">
+    <div class="w-full p-2 bg-gray-100">
+      <app-toolbar [(items)]="toolbarItems"></app-toolbar>
+    </div>
+    <router-outlet></router-outlet>
+  </div>
+</div>

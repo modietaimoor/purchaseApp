@@ -26,17 +26,22 @@ export class DrawerComponent implements OnInit {
   constructor() {}
 
   ngOnInit(): void { 
+    this.drawContent();    
+  }
+
+  itemClicked(e: SafeAny): void {
+    this.itemClick.emit(e);
+  }
+
+  drawContent() : void {
     const contentContainerRef = this.content.viewContainerRef;
     contentContainerRef.clear();
+    console.log(this.drawItem);
     const contentComponentRef = contentContainerRef.createComponent<DynamicComponent>(this.drawItem.component);
     for (let key in this.drawItem.data) {
         (contentComponentRef.instance as unknown)[key] = this.drawItem.data[key];
     }
     contentComponentRef.changeDetectorRef.detectChanges();
-  }
-
-  itemClicked(e: SafeAny): void {
-    this.itemClick.emit(e);
   }
 }
 
