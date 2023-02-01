@@ -1,9 +1,15 @@
 <dx-list
     class="panel-list dx-theme-accent-as-background-color"
     [dataSource]="dataSource"
+    [elementAttr]="elementAttr"
+    [selectionMode]="selectionMode"
+    [selectedItemKeys]="selectedItemKeys"
     [keyExpr]="keyExpr"
     [displayExpr]="displayExpr"
     [hoverStateEnabled]="hoverStateEnabled"
     [activeStateEnabled]="activeStateEnabled"
-    [focusStateEnabled]="focusStateEnabled">
+    [focusStateEnabled]="focusStateEnabled"
+    [grouped]="grouped"
+    [collapsibleGroups]="collapsibleGroups"
+    (onItemClick)="itemClicked($event)">
 </dx-list>

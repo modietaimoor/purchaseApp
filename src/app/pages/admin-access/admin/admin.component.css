@@ -1,4 +1,41 @@
 :host {
     display: block;
     width: 100% !important;
+    overflow-y: hidden !important;
+}
+
+::ng-deep span.collapsed-item {
+    height: 6rem !important;
+    display: block;
+    width: 6rem !important;
+    padding: 1.5rem;
+    border-radius: 9999px;
+}
+
+::ng-deep span.collapsed-item > i {
+    margin-left: -3px !important;
+    margin-top: -3px !important;
+    text-align: center;
+    font-size: 3rem !important;
+    line-height: 3rem !important;
+}
+
+::ng-deep .dx-item.dx-list-item > .dx-item-content.dx-list-item-content >
+span.collapsed-item {
+    border: 3px solid white !important;     
+}
+
+::ng-deep .dx-item.dx-list-item > .dx-item-content.dx-list-item-content >
+span.collapsed-item > i {
+    color: white !important;
+}
+
+::ng-deep .dx-item.dx-list-item.dx-list-item-selected > .dx-item-content.dx-list-item-content >
+span.collapsed-item {
+    border: 3px solid#F2BE35 !important;
+}
+
+::ng-deep .dx-item.dx-list-item.dx-list-item-selected > .dx-item-content.dx-list-item-content >
+span.collapsed-item > i {
+    color: #F2BE35 !important;
 }

@@ -1,29 +1,33 @@
-import { ChangeDetectorRef, Component, Input, OnChanges, OnInit, SimpleChanges } from "@angular/core";
+import { Component, EventEmitter, Input, Output, ViewChild } from "@angular/core";
 import { SafeAny } from "@core/safe-any-type";
+import { DxListComponent } from "devextreme-angular";
 
 @Component({
   selector: "app-list",
-  templateUrl: "./list.component.html"
+  templateUrl: "./list.component.html",
+  styleUrls: ["./list.component.css"]
 })
-export class ListComponent<T> implements OnInit, OnChanges {
+export class ListComponent<T> {
+  @ViewChild(DxListComponent) dxList: DxListComponent;
   @Input() dataSource: Array<T> = [];
+  @Input() selectedItemKeys: Array<SafeAny> = [];
   @Input() hoverStateEnabled: boolean = false;
   @Input() activeStateEnabled: boolean = false;
   @Input() focusStateEnabled: boolean = false;
+  @Input() grouped: boolean = false;
+  @Input() collapsibleGroups: boolean = false;
   @Input() keyExpr: string | null = null;
   @Input() displayExpr: string | null = null;
-  constructor(private _changeDetectorRef: ChangeDetectorRef) {}
+  @Input() elementAttr: SafeAny = { class: 'panel-list' };
+  @Input() selectionMode: 'none' | 'single' | 'multiple' | 'all' = 'single';
+  @Output() itemClick: EventEmitter<SafeAny> = new EventEmitter<SafeAny>();
+  constructor() {}
 
-  ngOnInit(): void { 
-    console.log(this.dataSource);
-    console.log(this.keyExpr);
-    console.log(this.displayExpr);
+  itemClicked(e: SafeAny): void {
+    this.itemClick.emit(e);
   }
 
-  ngOnChanges(changes: SimpleChanges): void {
-    this._changeDetectorRef.detectChanges();
-    console.log(this.dataSource);
-    console.log(this.keyExpr);
-    console.log(this.displayExpr);
+  refresh(): void {
+    this.dxList.instance?.repaint();
   }
 }

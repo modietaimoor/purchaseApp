@@ -1,0 +1,27 @@
+::ng-deep .panel-list .dx-list-item {
+    color: #fff;
+    border-top: 1px solid rgba(221, 221, 221, 0.2);
+}
+  
+::ng-deep .panel-list .dx-list-item .dx-icon {
+    color: #fff !important;
+}
+
+::ng-deep .dx-item.dx-list-item.dx-list-item-selected {
+    background-color: #337ab7 !important ;
+    color: #F2BE35 !important;
+}
+
+::ng-deep .dx-item.dx-list-item.dx-list-item-selected > .dx-item-content.dx-list-item-content >
+.dx-list-item-icon-container > .dx-icon {
+    color: #F2BE35 !important;
+}
+
+::ng-deep .dx-item.dx-list-item:hover {
+    background-color: rgba(0,0,0,.1) !important ;
+}
+
+::ng-deep .dx-item.dx-list-item.dx-list-item-selected {
+    background-color: #337ab7 !important ;
+    color: #F2BE35 !important;
+}

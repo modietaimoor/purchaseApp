@@ -22,7 +22,8 @@ import {
   DxTreeViewModule,
   DxDropDownBoxModule,
   DxCheckBoxModule,
-  DxDrawerModule
+  DxDrawerModule,
+  DxToolbarModule
 } from 'devextreme-angular';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
@@ -55,6 +56,7 @@ import { TabTemplateDirective } from './components/tabs/tab-template.directive';
 import { TabComponent } from './components/tabs/tab.component';
 import { TabsComponent } from './components/tabs/tabs.component';
 import { TagBoxComponent } from './components/tag-box/tag-box.component';
+import { ToolbarComponent } from './components/toolbar/toolbar.component';
 import { TreeViewComponent } from './components/tree-view/tree-view.component';
 import { ButtonIconDirective } from './directives/button-icon/button-icon.directive';
 
@@ -89,7 +91,8 @@ import { ButtonIconDirective } from './directives/button-icon/button-icon.direct
     DropdownBoxComponent,
     ListComponent,
     DrawerComponent,
-    DrawerContentDirective
+    DrawerContentDirective,
+    ToolbarComponent
   ],
   imports: [
     FormsModule,
@@ -115,6 +118,7 @@ import { ButtonIconDirective } from './directives/button-icon/button-icon.direct
     DxCheckBoxModule,
     DxListModule,
     DxDrawerModule,
+    DxToolbarModule,
     ModalModule.forChild()
   ],
   providers: [ModalService],
@@ -148,7 +152,8 @@ import { ButtonIconDirective } from './directives/button-icon/button-icon.direct
     DropdownBoxComponent,
     ListComponent,
     DrawerComponent,
-    DrawerContentDirective
+    DrawerContentDirective,
+    ToolbarComponent
   ]
 })
 export class SharedModule {}
