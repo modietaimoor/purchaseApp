@@ -50,3 +50,18 @@ export enum AdminPage {
 export enum PortalPage {
   Products = 'products'
 }
+
+export const AdPopuplist = [
+  {
+    id: 'point-gifts',
+    text: 'Buy though our app and get usable free points in all our stores'
+  },
+  {
+    id: 'discounts',
+    text: 'We always have amazing discounts on our products all year long'
+  },
+  {
+    id: 'multi-national',
+    text: 'We have the best quality products from international brands from all over the world'
+  }
+];

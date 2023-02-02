@@ -1,6 +1,6 @@
 import { Component, EventEmitter, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
-import { BaseURL, Menu, PortalPage } from "@core/constants";
+import { AdPopuplist, BaseURL, Menu, PortalPage } from "@core/constants";
 import { SafeAny, SafeObjectAny } from "@core/safe-any-type";
 import { CategoryModel } from "@domain/models/categories";
 import { GroupedListItem } from "@shared/components/list/list";
@@ -10,33 +10,44 @@ import { ManageCategoryService } from "../../admin-access/manage-categories/mana
 @Component({
   selector: "app-homepage",
   templateUrl: "./homepage.component.html",
+  styleUrls: ["./homepage.component.css"]
 })
 export class HomepageComponent implements OnInit {
   categories: CategoryModel[];
   selectedItemKeys: number[];
   menu: GroupedListItem[];
-  collapsed: boolean = false;
+  popoverShow = false;
+  position = 'bottom';
   elementAttr: SafeAny = { class: 'bg-teal-500' };
-  toolbarItems: ToolbarItem[] = [{
-    widget: 'dxButton',
-    location: 'before',
-    options: {
-      icon: 'hidepanel',
-      onClick:(e: SafeObjectAny) => { 
-        this.collapsed = !this.collapsed;
-        e.component.option('icon', this.collapsed ? "showpanel" : "hidepanel");
-        this.initializeList();
+  itemsCount = 99;
+  popupText = '';
+  searchText = '';
+  searchToolBarItmes: ToolbarItem[] = [
+    {
+      widget: 'dxTextBox',
+      location: 'center',
+      options: {
+        showClearButton: true,
+        placeholder: 'Search Products...',
+        valueChangeEvent: "keyup",
+        onValueChanged:(e: SafeAny) => {
+          this.searchText = e.value?.toString();
+        },
+        elementAttr: { class: 'w-search text-blueGray-600 bg-white rounded input-text shadow'}
       }
     },
-  }, 
-  {
-    widget: 'dxButton',
-    location: 'after',
-    options: {
-      icon: 'fa fa-sign-out',
-      onClick:() => this.backToLogin()
-    },
-  }];
+    {
+      widget: 'dxButton',
+      location: 'center',
+      options: {
+        icon: 'search',
+        onClick:() => this.searchProducts()
+      }
+    }];
+    
+  public hoverText: string;
+  target: string;
+  popoverDetails = AdPopuplist;
   categoryUpdate: EventEmitter<CategoryModel> = new EventEmitter<CategoryModel>();
   constructor(private _router: Router, private _manageCategoryService: ManageCategoryService) {}
 
@@ -49,10 +60,31 @@ export class HomepageComponent implements OnInit {
           items: x.filter(h => h.parentID === y.categoryID)
         }
       });
-      //this.selectedItemKeys = [this.categories[0].categoryID];
       this._router.navigate([BaseURL.PortalURL + '/' + PortalPage.Products]);
       this.updateCategory(this.categories[0]);
     });
+  }
+
+  searchProducts(): void {
+    console.log(this.searchText);
+  }
+
+  textChanged(e: SafeAny) : void {
+    console.log(e);
+  }
+
+  showCartDetails() : void {
+
+  }
+
+  showPopup(e: MouseEvent): void {
+    this.target = '#' + e.target['id'];
+     this.popupText = this.popoverDetails.find(x => x.id == e.target['id']).text;
+    this.popoverShow = true;
+  }
+
+  hidePopup() : void {
+    this.popoverShow = false;
   }
 
   navigate(e: { itemData: CategoryModel }): void {
@@ -65,17 +97,6 @@ export class HomepageComponent implements OnInit {
 
   backToLogin(): void{
     this._router.navigate([BaseURL.LoginPage]);
-  }
-
-  initializeList(): void {
-    /*this.menu.forEach(x => {
-      x.icon = this.collapsed ? '' : this.getIconById(x.id);
-      x.html = this.collapsed ? this.getHtmlById(x.id) : x.title;
-    });
-    this.selectedItemKeys = this.menu.filter(x => x.active === true).map(x => {
-      return x.url
-    });
-    this.listComponent?.refresh();*/
   }
 
   getIconById(id: number): string {
