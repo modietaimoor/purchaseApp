@@ -1,4 +1,4 @@
-import { SafeAny } from "@core/safe-any-type";
+import { SafeAny, SafeHardAny } from "@core/safe-any-type";
 
 export class ToolbarItem {
     widget?:  'dxAutocomplete' | 
@@ -12,8 +12,13 @@ export class ToolbarItem {
     | 'dxButtonGroup' 
     | 'dxDropDownButton' = 'dxButton';
     location: 'after' | 'before' | 'center' = 'before';
-    options: {
-        icon?: string;
-        onClick?: (event?: SafeAny) => void;
-    }
+    options: SafeHardAny; 
+    // {
+    //     icon?: string;
+    //     text?: string;
+    //     elementAttr?: SafeAny;
+    //     onClick?: (event?: SafeAny) => void;
+    //     mouseenter?: (event?: MouseEvent) => void;
+    //     mouseleave?: (event?: MouseEvent) => void;
+    // }
 }

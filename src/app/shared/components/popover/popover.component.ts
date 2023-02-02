@@ -1,4 +1,4 @@
-import { Component, ContentChild, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
+import { ChangeDetectionStrategy, Component, ContentChild, EventEmitter, Input, Output, TemplateRef } from '@angular/core';
 
 @Component({
   selector: 'app-popover',
@@ -14,7 +14,7 @@ export class PopoverComponent {
   @Input() closeOnMouseOut: boolean = true;
   @Input() position: string = 'right';
   @Input() showCloseButton: boolean = false;
-  @Input() attr = {};
+  @Input() wrapperAttr = {};
   @Output() readonly visibleChange = new EventEmitter<boolean>();
   @ContentChild(TemplateRef) templateRef: TemplateRef<unknown>;
   constructor() {}
@@ -26,7 +26,5 @@ export class PopoverComponent {
     });
   }
 
-  onHidden(): void {
-    this.visibleChange.emit(false);
-  }
+
 }

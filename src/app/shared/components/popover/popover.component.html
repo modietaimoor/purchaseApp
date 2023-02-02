@@ -5,12 +5,10 @@
   [title]="title"
   [(visible)]="visible"
   (onContentReady)="onContentReady($event)"
-  (onHidden)="onHidden()"
   [height]="height"
   [width]="width"
-  [wrapperAttr]="attr"
-  [showCloseButton]="showCloseButton"
->
+  [wrapperAttr]="wrapperAttr"
+  [showCloseButton]="showCloseButton">
   <div *dxTemplate="let data of 'content'">
     <ng-template [ngTemplateOutlet]="templateRef" [ngTemplateOutletContext]="{ $implicit: data }"></ng-template>
   </div>
