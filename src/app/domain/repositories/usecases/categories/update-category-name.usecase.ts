@@ -5,10 +5,10 @@ import { CategoriesRepository } from '@domain/repositories/categories.repository
 @Injectable({
   providedIn: 'root'
 })
-export class AddCategorySpecFieldUsecase {
+export class UpdateCategoryNameUsecase {
   constructor(private _categoriesRepository: CategoriesRepository) {}
 
-  execute(categoryID: number, fieldName: string, fieldType: string, isMandatory: boolean): Observable<void> {
-    return this._categoriesRepository.AddCategorySpecField(categoryID, fieldName, fieldType, isMandatory);
+  execute(categoryID: number, name: string): Observable<void> {
+    return this._categoriesRepository.UpdateCategoryName(categoryID, name);
   }
 }

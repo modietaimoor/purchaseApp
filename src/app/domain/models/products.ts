@@ -1,3 +1,5 @@
+import { SafeAny } from "@core/safe-any-type";
+
 export interface PhotoModel {
     imageSrc: string; 
     name: string;
@@ -12,6 +14,13 @@ export interface ProductGridModel {
     categoryName: string;
     productPrice: number;
     isByWeight: boolean;
+}
+
+export interface ProductSpecValues {
+    specFieldID: number;
+    fieldName: string;
+    fieldType: string;
+    specValue?: SafeAny;
 }
 
 export enum QuantityType {

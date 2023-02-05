@@ -2,7 +2,7 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Body } from '@core/async-services/http/decorator/parameters';
+import { Body, Query } from '@core/async-services/http/decorator/parameters';
 import { GET, POST } from '@core/async-services/http/decorator/request-methods';
 import { RestClient } from '@core/async-services/http/rest-client';
 import { ProductsGridModelResponse } from '@domain/resquest-response/response/products-response';
@@ -18,6 +18,11 @@ export class ProductsRepository extends RestClient {
 
   @GET('Products/GetAllProducts')
   GetAllProducts(): Observable<ProductsGridModelResponse[]> {
+    return null;
+  }
+
+  @GET('Products/GetCategoryProducts')
+  GetCategoryProducts(@Query('categoryID') categoryID: number): Observable<ProductsGridModelResponse[]> {
     return null;
   }
 

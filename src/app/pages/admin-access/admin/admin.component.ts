@@ -16,54 +16,71 @@ export class AdminComponent implements OnInit {
     this._router.navigate([BaseURL.LoginPage]);
   };
 
+  menu: MenuListItem[];
+  currentPage: string;
   collapsed: boolean = false;
-  menu: MenuListItem[] = Menu.map(x => ({
-    id: x.id,
-    url: x.url,
-    title: x.title,
-    active: x.active,
-    icon: x.icon,
-    html: x.title
-  }));;
   selectedItemKeys: string[];
-  toolbarItems: ToolbarItem[] = [{
-    widget: 'dxButton',
-    location: 'before',
-    options: {
-      icon: 'hidepanel',
-      onClick:(e: SafeObjectAny) => { 
-        this.collapsed = !this.collapsed;
-        e.component.option('icon', this.collapsed ? "showpanel" : "hidepanel");
-        this.initializeList();
-      }
-    },
-  }, 
-  {
-    widget: 'dxButton',
-    location: 'after',
-    options: {
-      icon: 'fa fa-sign-out',
-      onClick:() => this.logout()
-    },
-  }];  
+  toolbarItems: ToolbarItem[];
   @ViewChild(ListComponent) listComponent: ListComponent<MenuItem>;
   elementAttr: SafeAny = { class: 'bg-blueGray-500 text-white overflow-y-hidden' };
+
   constructor(private _router: Router) {}
   
   ngOnInit() {
-    this.initializeList();
+    this.initializeListAndToolbar();
     this._router.navigate([this.menu[0].url]);
   }
 
-  initializeList(): void {
+  initializeListAndToolbar(): void {
+    this.menu = Menu.map(x => ({
+      id: x.id,
+      url: x.url,
+      title: x.title,
+      active: x.active,
+      icon: x.icon,
+      html: x.title
+    }));
     this.menu.forEach(x => {
       x.icon = this.collapsed ? '' : this.getIconById(x.id);
       x.html = this.collapsed ? this.getHtmlById(x.id) : x.title;
     });
+    this.currentPage = this.menu[0].title;
+    this.initializeToolbar();
     this.selectedItemKeys = this.menu.filter(x => x.active === true).map(x => {
       return x.url
     });
     this.listComponent?.refresh();
+  }
+
+  initializeToolbar(): void {
+    this.toolbarItems = [{
+      widget: 'dxButton',
+      location: 'before',
+      options: {
+        icon: 'hidepanel',
+        onClick:(e: SafeObjectAny) => { 
+          this.collapsed = !this.collapsed;
+          e.component.option('icon', this.collapsed ? "showpanel" : "hidepanel");
+          this.initializeListAndToolbar();
+        }
+      },
+    },
+    {
+      widget: 'dxButton',
+      location: 'before',
+      options: {
+        icon: 'dragvertical',
+        text: this.currentPage
+      },
+    }, 
+    {
+      widget: 'dxButton',
+      location: 'after',
+      options: {
+        icon: 'fa fa-sign-out',
+        onClick:() => this.logout()
+      },
+    }]; 
   }
 
   getIconById(id: number): string {
@@ -75,6 +92,8 @@ export class AdminComponent implements OnInit {
   }
 
   navigate(e: { itemData: SafeAny }): void {
+    this.currentPage = e.itemData.title as string;
+    this.initializeToolbar();
     this.menu.forEach(x => x.active = x.url === e.itemData.url);
     this._router.navigate([e.itemData.url]);
   }

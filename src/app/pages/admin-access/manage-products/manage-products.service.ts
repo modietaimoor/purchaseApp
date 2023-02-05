@@ -1,8 +1,9 @@
 import { Injectable } from '@angular/core';
-import { CategoryModel, ProductSpecValues } from '@domain/models/categories';
-import { PhotoModel, ProductGridModel, ProductValidationEntity, ProductValidationModel, ProductValidationResult, QuantityType, ValidationErrorType } from '@domain/models/products';
+import { Category } from '@domain/models/categories';
+import { PhotoModel, ProductGridModel, ProductSpecValues, ProductValidationEntity, ProductValidationModel, ProductValidationResult, QuantityType, ValidationErrorType } from '@domain/models/products';
 import { DeleteProductsUsecase } from '@domain/repositories/usecases/products/delete-products.usecase';
 import { GetAllProductsUsecase } from '@domain/repositories/usecases/products/get-all-products.usecase';
+import { GetCategoryProductsUsecase } from '@domain/repositories/usecases/products/get-category-products.usecase';
 import { SaveProductUsecase } from '@domain/repositories/usecases/products/save-product.usecase';
 import { ProductModelRequest } from '@domain/resquest-response/request/products-request';
 import { Observable } from 'rxjs';
@@ -11,13 +12,13 @@ import { Observable } from 'rxjs';
 export class ManageProductService {
   constructor(private _saveProductUsecase: SaveProductUsecase, 
     private _deleteProductsUsecase: DeleteProductsUsecase,
+    private _getCategoryProductsUsecae: GetCategoryProductsUsecase,
     private _getAllProductsUsecase: GetAllProductsUsecase) { }
 
   public validateProductData(productName: string, 
     productPrice: number, 
-    productCategory: CategoryModel, 
-    quantityType: number, 
-    specValues: ProductSpecValues[]): ProductValidationModel {
+    productCategory: Category, 
+    quantityType: number): ProductValidationModel {
     let validationModel: ProductValidationModel = { result: ProductValidationResult.Invalid, invalidData: [] };
     if(!productName) {
       validationModel.invalidData.push({ 
@@ -39,14 +40,6 @@ export class ManageProductService {
         dataEntityType: ProductValidationEntity.QuantityType, errorType: ValidationErrorType.Error 
       });
     }
-    specValues?.forEach(x => {
-      if(x.isMandatory && x.specValue === null){
-        validationModel.invalidData.push({ 
-          dataEntityType: ProductValidationEntity.ProductName, 
-          specFieldID: x.specFieldID, 
-          errorType: x.isMandatory ? ValidationErrorType.Error : ValidationErrorType.Warning });
-      }
-    });
     if(!validationModel.invalidData?.any(x => x.errorType === ValidationErrorType.Error)){
       validationModel.result = ProductValidationResult.Valid;
     }
@@ -55,7 +48,7 @@ export class ManageProductService {
 
   public saveProduct(productName: string, 
     productPrice: number, 
-    productCategory: CategoryModel, 
+    productCategory: Category, 
     quantityType: number, 
     photos?: PhotoModel[],
     specValues?: ProductSpecValues[]): Observable<void> {
@@ -85,6 +78,10 @@ export class ManageProductService {
 
   public getAllProducts(): Observable<ProductGridModel[]> {
     return this._getAllProductsUsecase.execute();
+  }
+
+  public getCategoryProducts(categoryID: number): Observable<ProductGridModel[]> {
+    return this._getCategoryProductsUsecae.execute(categoryID);
   }
 
   public generateErrorMessageFromValidationBody(objBody: ProductValidationModel): string {

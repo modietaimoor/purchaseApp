@@ -52,8 +52,7 @@
                                             valueExpr="categoryID"
                                             displayExpr="categoryName"
                                             parentIdExpr="parentID"
-                                            [templateViewType]="templateViewType"
-                                            (valueChanged)="updateProductCategory($event)">
+                                            [templateViewType]="templateViewType">
                                         </app-dropdown-box>
                                     </div>
                                 </div>
@@ -61,14 +60,12 @@
                         </div>
                     </div>
                 </div>
-                <ng-template [ngIf]="productCategory?.specFields.length > 0">
-                    <div class="w-full flex flex-wrap">
-                        <hr class="mt-6 border-b-1 border-blueGray-300 w-full" />
-                        <div class="h-full w-full">
-                            <app-product-specs [specFieldsValues]="productSpecValues"></app-product-specs>
-                        </div>
+                <div class="w-full flex flex-wrap">
+                    <hr class="mt-6 border-b-1 border-blueGray-300 w-full" />
+                    <div class="h-full w-full">
+                        <app-product-specs [specFieldsValues]="productSpecValues"></app-product-specs>
                     </div>
-                </ng-template>
+                </div>
             </div> 
         </ng-template>
     </app-tab>

@@ -1,0 +1,50 @@
+<div class="wrapper">
+    <div class="overflow-x-hidden overflow-y-auto h-screen px-4 pt-4 pb-20">
+      <h1 class="text-4xl font-normal leading-normal mx-1 mb-12 font-bold w-full">Specification Fields</h1>
+      <form [formGroup]="specFieldForm" (ngSubmit)="addNewSpecField()">
+        <div class="flex flex-wrap px-4 mt-0">
+            <div class="w-5/12">
+                <div class="dx-fieldset">
+                    <div class="dx-field">
+                        <div class="dx-field-label">Field Name</div>
+                        <div class="dx-field-value">
+                            <input type="text" formControlName="fieldName" class="w-full flex-1 text-blueGray-600 bg-white rounded input-text shadow focus:outline-none focus:ring" />
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-5/12">
+                <div class="dx-fieldset">
+                    <div class="dx-field">
+                        <div class="dx-field-label">Field Type</div>
+                        <div class="dx-field-value">
+                            <app-select formControlName="fieldType">
+                                <app-select-option *ngFor="let type of types" [value]="type" [key]="type"></app-select-option>
+                            </app-select>
+                        </div>
+                    </div>
+                </div>
+            </div>
+            <div class="w-1/6">
+                <div class="dx-fieldset">
+                    <div class="dx-field">
+                        <button class="text-white bg-blueGray-500 font-bold text-base py-2 px-3 rounded" type="submit" [disabled]="specFieldForm.invalid">Add</button>
+                    </div>
+                </div>
+            </div>
+        </div>
+      </form>
+      <div class="flex flex-wrap">
+        <div class="w-full px-4">
+            <app-data-grid-client-side
+                [dataSource]="specFields"
+                [columns]="columns"
+                [allowUpdating]="true"
+                [allowDeleting]="true"
+                (rowUpdating)="updateSpecField($event)"
+                (rowDeleting)="deleteSpecField($event)">                
+            </app-data-grid-client-side>
+        </div>
+      </div>
+    </div>
+</div>

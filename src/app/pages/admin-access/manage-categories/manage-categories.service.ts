@@ -1,20 +1,22 @@
-import { EventEmitter, Injectable } from '@angular/core';
-import { CategoryModel } from '@domain/models/categories';
-import { AddCategorySpecFieldUsecase } from '@domain/repositories/usecases/categories/add-category-spec-fields.usecase';
+import { Injectable } from '@angular/core';
+import { Category } from '@domain/models/categories';
+import { UpdateCategoryNameUsecase } from '@domain/repositories/usecases/categories/update-category-name.usecase';
 import { AddNewCategoryUsecase } from '@domain/repositories/usecases/categories/add-new-category.usecase';
-import { DeleteCategorySpecFieldsUsecase } from '@domain/repositories/usecases/categories/delete-category-spec-fields.usecase';
 import { GetAllCategoriesUsecase } from '@domain/repositories/usecases/categories/get-all-categories.usecase';
+import { DeleteCategoryUsecase } from '@domain/repositories/usecases/categories/delete-category-spec-fields.usecase';
 import { Observable } from 'rxjs';
+import { GetCategoryChildrenUsecase } from '@domain/repositories/usecases/categories/get-category-children.usecase';
+
 
 @Injectable()
 export class ManageCategoryService {
   constructor(private _getAllCategoriesUsecase: GetAllCategoriesUsecase,
     private _addNewCategoryUsecase: AddNewCategoryUsecase,
-    private _addCategorySpecFieldUsecase: AddCategorySpecFieldUsecase,
-    private _deleteCategorySpecFieldsUsecase: DeleteCategorySpecFieldsUsecase) { }
+    private _updateCategoryNameUsecase: UpdateCategoryNameUsecase,
+    private _deleteCategoryUsecase: DeleteCategoryUsecase,
+    private _getCategoryChildrenUsecase: GetCategoryChildrenUsecase) { }
 
-    updateCategory: EventEmitter<CategoryModel> = new EventEmitter<CategoryModel>();
-    public getAllCategories(): Observable<CategoryModel[]> {
+    public getAllCategories(): Observable<Category[]> {
         return this._getAllCategoriesUsecase.execute();
     }
 
@@ -22,15 +24,15 @@ export class ManageCategoryService {
         return this._addNewCategoryUsecase.execute(categoryName, parentID);
     }
 
-    public addCategorySpecField(categoryID: number, fieldName: string, fieldType: string, isMandatory: boolean): Observable<void> {
-        return this._addCategorySpecFieldUsecase.execute(categoryID, fieldName, fieldType, isMandatory);
+    public updateCategoryName(categoryID: number, name: string): Observable<void> {
+        return this._updateCategoryNameUsecase.execute(categoryID, name);
     }
 
-    public deleteCategorySpecFields(specFieldIDs: number[]): Observable<void> {
-        return this._deleteCategorySpecFieldsUsecase.execute(specFieldIDs);
+    public deleteCategory(categoryID: number): Observable<void> {
+        return this._deleteCategoryUsecase.execute(categoryID);
     }
-    
-    public updateSelectedCategory(category: CategoryModel) : void {
-        this.updateCategory.emit(category);
+
+    public getCategoryChildren(categoryID: number): Observable<Category[]> {
+        return this._getCategoryChildrenUsecase.execute(categoryID);
     }
 }

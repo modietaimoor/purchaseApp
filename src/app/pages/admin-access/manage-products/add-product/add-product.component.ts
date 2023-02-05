@@ -1,14 +1,15 @@
 import { ChangeDetectorRef, Component, Input, OnDestroy, OnInit, ViewChild } from "@angular/core";
 import { NotificationService } from "@shared/service/notification.service";
 import { ModalRef, ModalService } from "@shared/components/modal/modal.service";
-import { PhotoModel, ProductValidationModel, ProductValidationResult, QuantityType, QuantityTypeModel } from "@domain/models/products";
+import { PhotoModel, ProductSpecValues, ProductValidationModel, ProductValidationResult, QuantityType, QuantityTypeModel } from "@domain/models/products";
 import { ManageProductService } from "../manage-products.service";
 import { Subscription } from "rxjs";
-import { CategoryFieldType, CategoryModel, ProductSpecValues } from "@domain/models/categories";
+import { CategoryFieldType, Category } from "@domain/models/categories";
 import { FileUploaderComponent } from "@shared/components/file-uploader/file-uploader.component";
 import { GalleryComponent } from "@shared/components/gallery/gallery.component";
 import { DropDownTemplateType } from "@shared/components/dropdown-box/template-type";
 import { ProductSpecificationsComponent } from "./product-specifications/product-specifications.component";
+import { SpecField } from "@domain/models/specfields";
 
 
 @Component({
@@ -20,8 +21,9 @@ export class AddProductComponent implements OnInit, OnDestroy {
     @ViewChild(FileUploaderComponent) fileUploader: FileUploaderComponent;
     @ViewChild(GalleryComponent) gallery: GalleryComponent;
     @ViewChild(ProductSpecificationsComponent) specsController: ProductSpecificationsComponent;
-    @Input() categories: CategoryModel[];
-    productCategory: CategoryModel;
+    @Input() categories: Category[];
+    @Input() specFields: SpecField[];
+    productCategory: Category;
     allowedFileExtensions = ['.jpg', '.jpeg', '.gif', '.png'];
     size = { height: '60%', width: '60%' };
     quantityType: number;
@@ -47,6 +49,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
         private _modalService: ModalService) {}
 
     ngOnInit(): void {
+        this.productSpecValues = this.specFields?.map(x => ({ specFieldID: x.id, fieldName: x.name, fieldType: x.type }));
         this.resSubscription = this._modalService.getResult().subscribe(() => {});
         this.closeReqSubscription = this._modalService.closeRequest.subscribe(() => this.saveProduct());
     }
@@ -65,22 +68,6 @@ export class AddProductComponent implements OnInit, OnDestroy {
         }
     }
 
-    updateProductCategory(e: number): void {
-        this.productCategory = null;
-        this._changeDetectorRef.detectChanges();
-        this.productSpecValues = this.categories.find(x => x.categoryID == e)?.specFields.map(x => {
-            return {
-              specFieldID: x.specFieldID,
-              fieldName: x.fieldName,
-              fieldType: x.fieldType,
-              isMandatory: x.isMandatory,
-              specValue: x.fieldType === CategoryFieldType.YesNo ? false : null
-            }
-          });
-        console.log(this.productSpecValues);
-        this.productCategory = this.categories.find(x => x.categoryID == e);
-    }
-
     closeModal(res: boolean): void {
         this._modalRef.close(res);
     }
@@ -93,8 +80,7 @@ export class AddProductComponent implements OnInit, OnDestroy {
         this.validateProdObj = this._manageProductService.validateProductData(this.productName, 
             this.productPrice, 
             this.productCategory, 
-            this.quantityType, 
-            this.productSpecValues);
+            this.quantityType);
         if(this.validateProdObj.result === ProductValidationResult.Invalid){
             let errorMsg = this._manageProductService.generateErrorMessageFromValidationBody(this.validateProdObj);
             this._notificationService.error(errorMsg);
