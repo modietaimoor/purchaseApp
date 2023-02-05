@@ -1,24 +1,9 @@
-export interface CategoryModel {
+export interface Category {
     categoryID: number;
     categoryName: string;
     parentID: number;
     parentName: string;
-    specFields: Array<SpecFields>;
-}
-
-export interface SpecFields {
-    specFieldID: number;
-    fieldName: string;
-    fieldType: string;
-    isMandatory: boolean;
-}
-
-export interface ProductSpecValues {
-    specFieldID: number;
-    fieldName: string;
-    fieldType: string;
-    isMandatory: boolean;
-    specValue: unknown;
+    creationDate: Date;
 }
 
 export enum CategoryFieldType {
@@ -27,5 +12,6 @@ export enum CategoryFieldType {
     DayMonthYear = 'Day-Month-Year',
     MonthYear = 'Month-Year',
     Year = 'Year',
-    YesNo = 'Yes/No'
+    YesNo = 'Yes/No',
+    Country = 'Country'
 }

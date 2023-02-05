@@ -4,10 +4,10 @@
     <span aria-hidden="true" class="visually-hidden">&times;</span>
   </button>
 </div>
-<div class="modal-body" class="p-3" [style.height]="params.height + 'px'">
+<div class="modal-body" class="p-3 overflow-y-auto" [style.height]="params?.height ? params.height + 'px' : 'unset'">
   <template #container></template>
 </div>
 <div class="modal-footer">
-  <button type="button" class="btn btn-secondary" (click)="params.checkBeforeSubmit ? requestClose() : confirm()">{{params.confirmText}}</button>
+  <button type="button" *ngIf="params.showConfirmButton" class="btn btn-secondary" (click)="params.checkBeforeSubmit ? requestClose() : confirm()">{{params.confirmText}}</button>
   <button type="button" class="btn btn-cancel" (click)="cancel()">{{params.cancelText}}</button> 
 </div>

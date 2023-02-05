@@ -6,10 +6,10 @@ import { CategoriesRepository } from '@domain/repositories/categories.repository
 @Injectable({
   providedIn: 'root'
 })
-export class DeleteCategorySpecFieldsUsecase {
+export class DeleteCategoryUsecase {
   constructor(private _categoriesRepository: CategoriesRepository) {}
 
-  execute(specFieldIDs: number[]): Observable<void> {
-    return this._categoriesRepository.DeleteCategorySpecFields(specFieldIDs);
+  execute(categoryID: number): Observable<void> {
+    return this._categoriesRepository.DeleteCategory(categoryID);
   }
 }

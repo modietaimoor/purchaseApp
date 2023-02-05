@@ -7,11 +7,11 @@ import { Category } from '@domain/models/categories';
 @Injectable({
   providedIn: 'root'
 })
-export class GetAllCategoriesUsecase {
+export class GetCategoryChildrenUsecase {
   constructor(private _categoriesRepository: CategoriesRepository) {}
 
-  execute(): Observable<Category[]> {
-    return this._categoriesRepository.GetAllCategories().pipe(map(res => 
+  execute(categoryID: number): Observable<Category[]> {
+    return this._categoriesRepository.GetCategoryChildren(categoryID).pipe(map(res => 
       res.map(x => {
           return {
             categoryID: x.CategoryID,

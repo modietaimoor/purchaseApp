@@ -11,9 +11,7 @@
                     </ng-template>
                     <ng-template #checkBoxField>
                         <div [ngClass]="{ 'required' : spec.isMandatory }">
-                            <app-checkbox 
-                                [(ngModel)]="spec.specValue" 
-                                [text]="spec.fieldName">
+                            <app-checkbox [(ngModel)]="spec.specValue"  [text]="spec.fieldName">
                             </app-checkbox>
                         </div>
                     </ng-template>
@@ -27,21 +25,21 @@
                             <input type="number" [(ngModel)]="spec.specValue" class="w-full flex-1 text-blueGray-600 bg-white rounded input-text shadow focus:outline-none focus:ring" />
                         </ng-template>                        
                         <ng-template [ngSwitchCase]="CategoryFieldType.DayMonthYear">
-                            <app-date-picker
-                                [(ngModel)]="spec.specValue"
-                                dateType="date"
-                                showDays="true">
+                            <app-date-picker [(ngModel)]="spec.specValue" dateType="date" showDays="true">
                             </app-date-picker>
                         </ng-template>
                         <ng-template [ngSwitchCase]="CategoryFieldType.MonthYear">
-                            <app-date-picker
-                                [(ngModel)]="spec.specValue"
-                                dateType="date">
+                            <app-date-picker [(ngModel)]="spec.specValue" dateType="date">
                             </app-date-picker>
                         </ng-template>
                         <ng-template [ngSwitchCase]="CategoryFieldType.Year">
                             <app-select [(ngModel)]="spec.specValue">
-                                <app-select-option *ngFor="let year of yearsArray" [key]="year" [value]="year"></app-select-option>
+                                <app-select-option *ngFor="let year of yearsArray" searchEnabled="true" [key]="year" [value]="year"></app-select-option>
+                            </app-select>
+                        </ng-template>
+                        <ng-template [ngSwitchCase]="CategoryFieldType.Country">
+                            <app-select [(ngModel)]="spec.specValue">
+                                <app-select-option *ngFor="let Country of Countries" searchEnabled="true" [key]="Country" [value]="Country"></app-select-option>
                             </app-select>
                         </ng-template>
                     </ng-container>  

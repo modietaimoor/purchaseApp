@@ -1,5 +1,5 @@
 import { Component, Input, OnDestroy, OnInit } from "@angular/core";
-import { CategoryModel } from "@domain/models/categories";
+import { Category } from "@domain/models/categories";
 import { Subscription } from "rxjs";
 import { ManageCategoryService } from "../../admin-access/manage-categories/manage-categories.service";
 
@@ -8,15 +8,11 @@ import { ManageCategoryService } from "../../admin-access/manage-categories/mana
   templateUrl: "./category-products.component.html"
 })
 export class CategoryProductsComponent implements OnInit, OnDestroy {
-  @Input() category: CategoryModel;
+  @Input() category: Category;
   categoryUpdate: Subscription;
   constructor(private _manageCategoryService: ManageCategoryService) {}
   
   ngOnInit(): void {
-    this.categoryUpdate = this._manageCategoryService.updateCategory.subscribe(x => {
-        this.category = x;
-        console.log(this.category);
-    });
   }
 
   ngOnDestroy(): void {

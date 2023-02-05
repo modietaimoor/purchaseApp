@@ -1,7 +1,6 @@
 import { CommonModule } from '@angular/common';
 import { NgModule } from '@angular/core';
 import { FormsModule, ReactiveFormsModule } from '@angular/forms';
-import { RemoveCommaPipe } from '@core/pipes/remove-comma.pipe';
 
 import { SharedModule } from '@shared/shared.module';
 import { AdminRoutingModule } from './admin.routing';
@@ -17,6 +16,8 @@ import { ManageProductService } from './manage-products/manage-products.service'
 import { OrderContentComponent } from './orders/order-content/order-content.component';
 import { OrdersComponent } from './orders/orders.component';
 import { OrdersService } from './orders/orders.service';
+import { SpecificationFieldsComponent } from './specification-fields/specification-fields.components';
+import { SpecificationFieldsService } from './specification-fields/specification-fields.service';
 
 @NgModule({
   declarations: [ManageProductComponent,
@@ -27,10 +28,9 @@ import { OrdersService } from './orders/orders.service';
     AddProductComponent,
     ManageCategoriesComponent,
     ProductSpecificationsComponent,
-    RemoveCommaPipe
-    ],
+    SpecificationFieldsComponent],
   imports: [CommonModule, FormsModule, ReactiveFormsModule, SharedModule, AdminRoutingModule],
-  providers: [ManageProductService, ManageCategoryService, OrdersService],
+  providers: [ManageProductService, ManageCategoryService, OrdersService, SpecificationFieldsService],
   exports: [ManageProductComponent,
     DashboardComponent,
     AdminComponent,
@@ -38,6 +38,7 @@ import { OrdersService } from './orders/orders.service';
     OrderContentComponent,
     AddProductComponent,
     ManageCategoriesComponent,
-    ProductSpecificationsComponent]
+    ProductSpecificationsComponent,
+    SpecificationFieldsComponent]
 })
 export class AdminModule {}

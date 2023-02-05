@@ -2,17 +2,17 @@
 import { Injectable } from '@angular/core';
 import { Observable } from 'rxjs';
 
-import { Query, Body } from '@core/async-services/http/decorator/parameters';
-import { GET, POST } from '@core/async-services/http/decorator/request-methods';
+import { Query } from '@core/async-services/http/decorator/parameters';
+import { GET } from '@core/async-services/http/decorator/request-methods';
 import { RestClient } from '@core/async-services/http/rest-client';
-import { Category } from '@domain/resquest-response/response/categories-response';
+import { CategoryResponse } from '@domain/resquest-response/response/categories-response';
 
 @Injectable({
   providedIn: 'root'
 })
 export class CategoriesRepository extends RestClient {
   @GET('Categories/GetAllCategories')
-  GetAllCategories(): Observable<Category> {
+  GetAllCategories(): Observable<CategoryResponse[]> {
     return null;
   }
 
@@ -21,16 +21,18 @@ export class CategoriesRepository extends RestClient {
     return null;
   }
 
-  @POST('Categories/DeleteCategorySpecFields')
-  DeleteCategorySpecFields(@Body specIDs: number[]): Observable<void> {
+  @GET('Categories/DeleteCategory')
+  DeleteCategory(@Query('categoryID') categoryID: number): Observable<void> {
     return null;
   }
 
-  @GET('Categories/AddCategorySpecField')
-  AddCategorySpecField(@Query('categoryID') categoryID: number, 
-  @Query('fieldName') fieldName: string,
-  @Query('fieldType') fieldType: string,
-  @Query('isMandatory') isMandatory: boolean): Observable<void> {
+  @GET('Categories/UpdateCategoryName')
+  UpdateCategoryName(@Query('categoryID') categoryID: number, @Query('name') name: string): Observable<void> {
+    return null;
+  }
+
+  @GET('Categories/GetCategoryChildren')
+  GetCategoryChildren(@Query('categoryID') categoryID: number): Observable<CategoryResponse[]> {
     return null;
   }
 }

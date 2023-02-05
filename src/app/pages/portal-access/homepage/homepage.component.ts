@@ -2,7 +2,7 @@ import { Component, EventEmitter, OnInit } from "@angular/core";
 import { Router } from "@angular/router";
 import { AdPopuplist, BaseURL, Menu, PortalPage } from "@core/constants";
 import { SafeAny, SafeObjectAny } from "@core/safe-any-type";
-import { CategoryModel } from "@domain/models/categories";
+import { Category } from "@domain/models/categories";
 import { GroupedListItem } from "@shared/components/list/list";
 import { ToolbarItem } from "@shared/components/toolbar/toolbar";
 import { ManageCategoryService } from "../../admin-access/manage-categories/manage-categories.service";
@@ -13,7 +13,7 @@ import { ManageCategoryService } from "../../admin-access/manage-categories/mana
   styleUrls: ["./homepage.component.css"]
 })
 export class HomepageComponent implements OnInit {
-  categories: CategoryModel[];
+  categories: Category[];
   selectedItemKeys: number[];
   menu: GroupedListItem[];
   popoverShow = false;
@@ -48,21 +48,9 @@ export class HomepageComponent implements OnInit {
   public hoverText: string;
   target: string;
   popoverDetails = AdPopuplist;
-  categoryUpdate: EventEmitter<CategoryModel> = new EventEmitter<CategoryModel>();
   constructor(private _router: Router, private _manageCategoryService: ManageCategoryService) {}
 
   ngOnInit(): void {
-    this._manageCategoryService.getAllCategories().subscribe(x => {
-      this.categories = x;
-      this.menu = x.filter(y => y.parentID <= 0).map(y => {
-        return {
-          key: y.categoryName,
-          items: x.filter(h => h.parentID === y.categoryID)
-        }
-      });
-      this._router.navigate([BaseURL.PortalURL + '/' + PortalPage.Products]);
-      this.updateCategory(this.categories[0]);
-    });
   }
 
   searchProducts(): void {
@@ -87,12 +75,12 @@ export class HomepageComponent implements OnInit {
     this.popoverShow = false;
   }
 
-  navigate(e: { itemData: CategoryModel }): void {
+  navigate(e: { itemData: Category }): void {
     this.updateCategory(e.itemData);
   }
 
-  updateCategory(category: CategoryModel) : void {
-    this._manageCategoryService.updateSelectedCategory(category);
+  updateCategory(category: Category) : void {
+    //this._manageCategoryService.updateSelectedCategory(category);
   }
 
   backToLogin(): void{

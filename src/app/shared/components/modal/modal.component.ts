@@ -28,6 +28,7 @@ export interface ModalParams<T> {
   width?: number;
   componentParams?: Partial<T>;
   checkBeforeSubmit?: boolean;
+  showConfirmButton: boolean;
 }
 
 @Component({
@@ -37,6 +38,13 @@ export interface ModalParams<T> {
     `
       ::ng-deep .modal {
         background: rgba(0, 0, 0, 0.2);
+      }
+
+      ::ng-deep .btn-cancel {
+        color: #64748B !important;
+        background-color: white !important;
+        border: 1px solid #64748B !important;
+        border-radius: 5px !important;
       }
     `
   ]

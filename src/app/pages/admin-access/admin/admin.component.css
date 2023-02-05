@@ -39,3 +39,11 @@ span.collapsed-item {
 span.collapsed-item > i {
     color: #F2BE35 !important;
 }
+
+::ng-deep body {
+    overflow-y: hidden !important;
+    width: 100% !important;
+    position: fixed !important;
+    top: 0 !important;
+    height: 100vh !important;
+}
