@@ -35,4 +35,9 @@ export class CategoriesRepository extends RestClient {
   GetCategoryChildren(@Query('categoryID') categoryID: number): Observable<CategoryResponse[]> {
     return null;
   }
+
+  @GET('Categories/GetAncestorCategories')
+  GetAncestorCategories(): Observable<CategoryResponse[]> {
+    return null;
+  }
 }

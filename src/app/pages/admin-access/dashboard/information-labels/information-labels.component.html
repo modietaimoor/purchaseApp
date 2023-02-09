@@ -1,0 +1,10 @@
+<div class="cards-column">
+    <a class="w-1/2 card card-green px-2 mx-2">
+      <span class="card-multi-main-title">Total Sales ({{ rptDate }})</span>
+      <span class="card-multi-sub-title">{{ cost | currency: 'EGP' }}</span>
+    </a>
+    <a class="w-1/2 card card-blue px-2 mx-2">
+      <span class="card-multi-main-title">Number of Products ({{ rptDate }})</span>
+      <span class="card-multi-sub-title">{{ count?.toLocaleString('en-US') }}</span>
+    </a>  
+</div>

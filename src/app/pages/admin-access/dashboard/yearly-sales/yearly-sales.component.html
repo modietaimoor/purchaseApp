@@ -1,0 +1,18 @@
+<app-graph-chart
+    [size]="size"
+    [titleFont]="22"
+    rotateXAxisValue="true"
+    type="Bar"
+    dateFormat="yyyy"
+    xAxisDateTickInterval="year"
+    xAxisType="datetime"
+    [customizeYAxisText]="customizeYAxisText"
+    [customizeTooltip]="customizeTooltip"
+    [valueAxisLabelFormat]="valueAxis.label"
+    [onPointClick]="pointClicked"
+    [valueAxis]="valueAxis"
+    [seriesList]="seriesList"
+    [dataSource]="dataSource"
+    [title]="title">
+</app-graph-chart>
+<app-load-panel [loadingVisible]="loadingVisible"></app-load-panel>

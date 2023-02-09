@@ -23,7 +23,8 @@ import {
   DxDropDownBoxModule,
   DxCheckBoxModule,
   DxDrawerModule,
-  DxToolbarModule
+  DxToolbarModule,
+  DxLoadPanelModule
 } from 'devextreme-angular';
 import { ModalModule } from 'ngx-bootstrap/modal';
 
@@ -42,6 +43,7 @@ import { DataGridClientSideComponent } from './components/grid/data-grid-client-
 import { DataGridServerSideComponents } from './components/grid/data-grid-server-side';
 import { DataGridSummeryComponent } from './components/grid/data-grid-server-side/data-grid-summery/data-grid-summery.component';
 import { ListComponent } from './components/list/list.component';
+import { LoadPanelComponent } from './components/load-panel/load-panel.component';
 import { MenuComponent } from './components/menu/menu.component';
 import { ModalFooterDirective } from './components/modal/modal-footer.directive';
 import { ModalComponent } from './components/modal/modal.component';
@@ -92,7 +94,8 @@ import { ButtonIconDirective } from './directives/button-icon/button-icon.direct
     ListComponent,
     DrawerComponent,
     DrawerContentDirective,
-    ToolbarComponent
+    ToolbarComponent,
+    LoadPanelComponent
   ],
   imports: [
     FormsModule,
@@ -119,6 +122,7 @@ import { ButtonIconDirective } from './directives/button-icon/button-icon.direct
     DxListModule,
     DxDrawerModule,
     DxToolbarModule,
+    DxLoadPanelModule,
     ModalModule.forChild()
   ],
   providers: [ModalService],
@@ -153,7 +157,8 @@ import { ButtonIconDirective } from './directives/button-icon/button-icon.direct
     ListComponent,
     DrawerComponent,
     DrawerContentDirective,
-    ToolbarComponent
+    ToolbarComponent,
+    LoadPanelComponent
   ]
 })
 export class SharedModule {}

@@ -82,7 +82,7 @@ export enum SummeryType {
   Minute = 'Min',
   MegaByte = 'MB',
   GgByte = 'GB',
-  Currency = '£'
+  Currency = 'EGP'
 }
 
 export interface GridFilterGroup {

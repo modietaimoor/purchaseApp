@@ -3,6 +3,7 @@
   [dataSource]="dataSource"
   [barGroupPadding]="barGroupPadding"
   (onPointClick)="onPointClick($event)"
+  [valueAxis]="valueAxis"
   [size]="size"
 >
   <dxo-export [enabled]="enableExport" [printingEnabled]="false"> </dxo-export>
@@ -10,7 +11,7 @@
     <dxo-font color="black" family="Segoe UI Light" opacity="1" [size]="titleFont" weight="900"> </dxo-font>
   </dxo-title>
   <dxi-series
-    *ngFor="let series of seriesList.toArray()"
+    *ngFor="let series of seriesList"
     [valueField]="series.valueField"
     [type]="series.type"
     [name]="series.name"
@@ -34,7 +35,7 @@
   <dxo-series-template *ngIf="nameField" [nameField]="nameField"> </dxo-series-template>
 
   <dxi-value-axis [title]="yAxisTitle" [visualRange]="visualRange" [tickInterval]="tickInterval">
-    <dxo-label [customizeText]="customizeYAxisText"></dxo-label>
+    <dxo-label [format]="valueAxisLabelFormat" [customizeText]="customizeYAxisText"></dxo-label>
   </dxi-value-axis>
 
   <dxi-value-axis *ngIf="secondaryYAxisName" [name]="secondaryYAxisName" position="right">

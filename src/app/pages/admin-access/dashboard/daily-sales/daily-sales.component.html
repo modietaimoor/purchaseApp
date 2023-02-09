@@ -1,0 +1,20 @@
+<app-graph-chart
+    [size]="size"
+    [titleFont]="22"
+    rotateXAxisValue="true"
+    argumentField="reportDate"
+    valueField="ordersCost"
+    type="Bar"
+    dateFormat="dd - MM - yyyy"
+    xAxisDateTickInterval="day"
+    xAxisType="datetime"
+    [valueAxis]="valueAxis"
+    [valueAxisLabelFormat]="valueAxis.label"
+    [customizeYAxisText]="customizeYAxisText"
+    [onPointClick]="pointClicked"
+    [customizeTooltip]="customizeTooltip"
+    [seriesList]="seriesList"
+    [dataSource]="dataSource"
+    [title]="title">
+</app-graph-chart>
+<app-load-panel [loadingVisible]="loadingVisible"></app-load-panel>
