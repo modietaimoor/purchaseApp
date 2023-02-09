@@ -1,7 +1,7 @@
 export interface ChartSeries {
   valueField?: string;
   argumentField: string;
-  type: string;
+  type?: string;
   name?: string;
   id?: string;
   axis?: string;

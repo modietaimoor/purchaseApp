@@ -1,0 +1,18 @@
+<div class="flex flex-wrap h-full">
+    <div class="w-full">
+        <app-info-labels [cost]="cost" [count]="count" [reportDate]="monthData.reportDate" [labelType]="labelType"></app-info-labels>
+    </div>
+    <div class="w-full">
+        <app-pie-chart
+            [size]="size"
+            [titleSize]="22"
+            [seriesList]="seriesList"
+            [dataSource]="dataSource"
+            [showLegend]="false"
+            [customizeText]="customizeCategoryLabel"
+            [customizeTooltip]="customizeCategoryTooltip"
+            [title]="title">
+        </app-pie-chart>
+    </div>
+</div>
+<app-load-panel [loadingVisible]="loadingVisible"></app-load-panel>

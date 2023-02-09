@@ -5,15 +5,13 @@
             <div class="dx-field">
                 <ng-container [ngTemplateOutlet]="spec.fieldType === CategoryFieldType.YesNo ? checkBoxField : normalField">
                     <ng-template #normalField>
-                        <div class="dx-field-label" [ngClass]="{ 'required' : spec.isMandatory }">
+                        <div class="dx-field-label">
                             <strong>{{spec.fieldName}}:</strong>
                         </div>
                     </ng-template>
                     <ng-template #checkBoxField>
-                        <div [ngClass]="{ 'required' : spec.isMandatory }">
-                            <app-checkbox [(ngModel)]="spec.specValue"  [text]="spec.fieldName">
-                            </app-checkbox>
-                        </div>
+                        <app-checkbox [(ngModel)]="spec.specValue"  [text]="spec.fieldName">
+                        </app-checkbox>
                     </ng-template>
                 </ng-container>
                 <div class="dx-field-value pt-0">

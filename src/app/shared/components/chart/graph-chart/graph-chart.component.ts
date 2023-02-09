@@ -2,7 +2,6 @@ import { ChangeDetectionStrategy, Component, Input, OnChanges, OnInit, SimpleCha
 
 //import { LayoutService } from '@core/layout/layout.service';
 import { DxChartComponent } from 'devextreme-angular';
-import { List } from 'immutable';
 
 import { ChartSeries } from '../chart-series';
 import { SafeAny } from '@core/safe-any-type';
@@ -30,15 +29,19 @@ export class GraphChartComponent implements OnInit, OnChanges {
   @Input() title: string;
   @Input() valueField: string;
   @Input() argumentField: string;
+  @Input() valueAxis: SafeAny;
+  @Input() valueAxisLabelFormat: SafeAny;
   @Input() dataSource: SafeAny[];
-  @Input() rotateXAxisValue: boolean = false;
-  @Input() seriesList: List<ChartSeries> = List();
+  @Input() rotateXAxisValue: boolean = true;
+  @Input() seriesList: Array<ChartSeries> = [];
   @Input() secondaryAxisName: string = '';
   @Input() yAxisTitle: string = '';
   @Input() visualRange: number[] = [];
   @Input() tickInterval: number;
   @Input() barOverlapGroup: string;
   @Input() barGroupPadding: number;
+  @Input() xAxisDateTickInterval = 'month';
+  @Input() dateFormat = 'MMM - yy';
   @Input() position: 'outside' | 'inside' = 'outside';
   @Input() verticalAlignment: 'bottom' | 'top' = 'bottom';
   @Input() horizontalAlignment: 'center' | 'left' = 'center';
@@ -61,8 +64,7 @@ export class GraphChartComponent implements OnInit, OnChanges {
 
   protected overlappingBehavior: 'rotate' | 'none' = 'none';
   protected rotationAngle: 0 | -60 = -60;
-  protected xAxisDateTickInterval = 'month';
-  protected dateFormat = 'MMM - yy';
+  
   secondaryYAxisName = '';
 
   constructor() {}

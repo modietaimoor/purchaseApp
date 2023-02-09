@@ -1,0 +1,33 @@
+.cards-column {
+  display: flex;
+}
+.card {
+  display: flex;
+  flex-direction: column;
+  justify-content: center;
+  align-items: center;
+  box-shadow: 0 19px 38px rgba(0, 0, 0, 0.3), 0 15px 12px rgba(0, 0, 0, 0.22);
+  border-color: transparent;
+  color: #fff;
+  border-radius: 10px;
+  height: 82px;
+}
+.card-multi-main-title {
+  font-size: 12pt;
+}
+.card-multi-sub-title {
+  font-size: 18pt;
+  font-weight: bold;
+}
+.card-green {
+  background: #009900;
+}
+.card-blue {
+  background: #00537e;
+}
+.card-orange {
+  background: #fd7c28;
+}
+.card-darkblue {
+  background: #00243d;
+}

@@ -3,13 +3,16 @@ import { DxPieChartComponent } from 'devextreme-angular';
 import { SafeAny } from '@core/safe-any-type';
 
 @Component({
-  selector: 'pie-chart',
+  selector: 'app-pie-chart',
   templateUrl: './pie-chart.component.html',
   styles: [
     `
       ::ng-deep #chart {
         width: 100% !important;
         height: 100% !important;
+      }
+      ::ng-deep .dxc-tooltip {
+        z-index: 100000 !important;
       }
     `
   ]
@@ -32,13 +35,15 @@ export class PieChartComponent implements OnInit, OnChanges {
     axis?: string;
   }> = [];
 
+  @Input() resolveLabelOverlapping: "shift" | "hide" | "none" = "shift";
+
   @Input() size: {
     height: number;
     width: number;
   };
 
   @Input() customizeText: (data: SafeAny) => string;
-  @Input() customizeTooltip: (data: SafeAny) => string;
+  @Input() customizeTooltip: (data: SafeAny) => SafeAny;
   @Input() onPointClick: (event: { target: SafeAny }) => void;
 
   constructor() {}

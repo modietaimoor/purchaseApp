@@ -8,6 +8,6 @@
   <template #container></template>
 </div>
 <div class="modal-footer">
-  <button type="button" *ngIf="params.showConfirmButton" class="btn btn-secondary" (click)="params.checkBeforeSubmit ? requestClose() : confirm()">{{params.confirmText}}</button>
-  <button type="button" class="btn btn-cancel" (click)="cancel()">{{params.cancelText}}</button> 
+  <button type="button" *ngIf="params.showConfirmButton" class="btn btn-secondary" (click)="params.checkBeforeSubmit ? requestClose() : confirm()">{{params.confirmText ?? 'OK'}}</button>
+  <button type="button" class="btn btn-cancel" (click)="cancel()">{{params.cancelText ?? 'Cancel'}}</button> 
 </div>

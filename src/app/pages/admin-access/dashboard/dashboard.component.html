@@ -1,19 +1,45 @@
 <div class="wrapper">
   <div class="overflow-x-hidden overflow-y-auto h-screen px-4 pt-4 pb-20">
     <div class="flex flex-wrap">
-      <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-        TEST 1
+      <div class="w-7/12">
+        <h1 class="text-4xl font-normal leading-normal mx-1 mb-2 font-bold w-full">Dashboard</h1>
       </div>
-      <div class="w-full xl:w-4/12 px-4">
-        TEST 2
+      <div class="w-5/12">
+        <div class="dx-fieldset mt-0">
+          <div class="dx-field">
+            <div class="dx-field-label">Report Date</div>            
+            <div class="dx-field-value">
+              <app-date-picker [(ngModel)]="reportDate" dateType="date" showDays="true">
+              </app-date-picker>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-    <div class="flex flex-wrap mt-4">
-      <div class="w-full xl:w-8/12 mb-12 xl:mb-0 px-4">
-        TEST 3
-      </div>
-      <div class="w-full xl:w-4/12 px-4">
-        TEST 4
+      <div class="flex flex-wrap">
+        <div class="w-full">
+          <div class="flex flex-wrap">           
+            <div class="w-1/2 p-2">
+              <app-yearly-sales [reportDate]="reportDate"></app-yearly-sales>
+            </div>   
+            <div class="w-1/2 p-2">
+              <app-monthly-sales [reportDate]="reportDate"></app-monthly-sales>
+            </div>
+            <div class="w-full p-2">
+              <app-daily-sales [reportDate]="reportDate"></app-daily-sales>
+            </div>  
+                <!-- 
+                <div class="flex flex-wrap">         
+                  <div class="w-full p-2">
+                    <app-yearly-sales-by-category [reportDate]="reportDate" [categories]="ancestors"></app-yearly-sales-by-category>
+                  </div>         
+                  <div class="w-full p-2">
+                    <app-monthly-sales-by-category [reportDate]="reportDate" [categories]="ancestors"></app-monthly-sales-by-category>
+                  </div>
+                  <div class="w-full p-2">
+                    <app-daily-sales-by-category [reportDate]="reportDate" [categories]="ancestors"></app-daily-sales-by-category>
+                  </div>
+                </div>-->
+        </div>
       </div>
     </div>
   </div>

@@ -1,4 +1,4 @@
-<dx-pie-chart id="chart" palette="bright" [dataSource]="dataSource" [size]="size" (onPointClick)="onPointClick($event)">
+<dx-pie-chart id="chart" palette="bright" [dataSource]="dataSource" [size]="size" (onPointClick)="onPointClick($event)" [resolveLabelOverlapping]="resolveLabelOverlapping">
   <dxi-series *ngFor="let item of seriesList" [argumentField]="item.argumentField" [valueField]="item.valueField">
     <dxo-label [visible]="showLabel" [customizeText]="customizeText">
       <dxo-connector visible="true" width="1"></dxo-connector>
