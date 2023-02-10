@@ -38,7 +38,7 @@ export interface Column {
   summeryType?: SummeryType;
   filterName?: string;
   type?: ColumnType;
-  format?: 'hh:mm a' | 'dd-MM-yyyy' | 'dd-MM-yyyy h:mm a' | 'MMMM y';
+  format?: 'hh:mm a' | 'dd-MM-yyyy' | 'dd-MM-yyyy h:mm a' | 'MMMM y' | 'dd-MM-yyyy hh:mm a';
   enableButtonBasedOn?: string;
   onClick?: (id: number | string, event?: Event) => void;
   customizeText?: (evt) => string;

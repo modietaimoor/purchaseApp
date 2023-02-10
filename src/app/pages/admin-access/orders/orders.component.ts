@@ -5,6 +5,7 @@ import { DataGridClientSideComponent } from "@shared/components/grid/data-grid-c
 import { Column, DataSourceSteamResult, PageChange } from "@shared/components/grid/model";
 import { OrdersService } from "./orders.service";
 import { Observable, Subject } from "rxjs";
+import { OrderResponse } from "@domain/resquest-response/response/orders-response";
 
 @Component({
   selector: "app-orders",
@@ -12,22 +13,22 @@ import { Observable, Subject } from "rxjs";
   styleUrls: ["./orders.component.css"]
 })
 export class OrdersComponent implements OnInit {
-  @ViewChild(DataGridClientSideComponent) grid: DataGridClientSideComponent<Order>; 
-  ordersList: Subject<DataSourceSteamResult<Order>>; 
-  ordersList$: Observable<DataSourceSteamResult<Order>>;
+  @ViewChild(DataGridClientSideComponent) grid: DataGridClientSideComponent<OrderResponse>; 
+  ordersList: Subject<DataSourceSteamResult<OrderResponse>>; 
+  ordersList$: Observable<DataSourceSteamResult<OrderResponse>>;
   statusLookup: Array<StatusModel> = [];
   orderItems: Array<OrderItems> = [];
   selectedStatus: number;
   pageChange: PageChange;
   orderColumns: Column[] = [
-    { dataField: 'orderID', name: 'Order Number', alignment: 'center' },
-    { dataField: 'username', name: 'Client Name', alignment: 'center' },
-    { dataField: 'email', name: 'Email Address', alignment: 'center' },
-    { dataField: 'phoneNumber', name: 'Phone Number', alignment: 'center' },
-    { dataField: 'orderDate', name: 'Order Date', alignment: 'center', type: 'date', format: 'dd-MM-yyyy' },
-    { dataField: 'orderTime', name: 'Ordered At', alignment: 'center', type: 'date', format: 'hh:mm a' },
-    { dataField: 'statusName', name: 'Order Status', alignment: 'center' },
-    { dataField: 'orderCost', name: 'Order Cost', alignment: 'right', type: 'currency' }
+    { dataField: 'OrderID', name: 'Order Number', alignment: 'center' },
+    { dataField: 'Username', name: 'Client Name', alignment: 'center' },
+    { dataField: 'Email', name: 'Email Address', alignment: 'center' },
+    { dataField: 'PhoneNumber', name: 'Phone Number', alignment: 'center' },
+    { dataField: 'OrderDate', name: 'Order Date', alignment: 'center', 
+      type: 'date', format: 'dd-MM-yyyy', allowHeaderFiltering: false, allowSearch: false },
+    { dataField: 'StatusName', name: 'Order Status', alignment: 'center' },
+    { dataField: 'OrderCost', name: 'Order Cost', alignment: 'right', type: 'currency' }
   ];
 
   constructor(private _ordersService: OrdersService,

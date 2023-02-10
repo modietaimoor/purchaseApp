@@ -7,9 +7,9 @@ import { PortalComponent } from './portal/portal.component';
 export const routes: Routes = [
     { 
         path: "", 
-        component: HomepageComponent,
+        component: PortalComponent,
         children: [    
-            { path: "homepage", component: PortalComponent },
+            { path: "homepage", component: HomepageComponent },
             { path: "products", component: CategoryProductsComponent }/*,
             { path: "manage-orders", component: OrdersComponent },
             { path: "manage-categories", component: ManageCategoriesComponent }*/

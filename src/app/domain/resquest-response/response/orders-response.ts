@@ -32,6 +32,7 @@ export interface OrderResponse {
 export interface OrdersListResponse {
     data: OrderResponse[];
     totalCount: number;
+    summary: number[];
   }
 
 export interface OrderItemsResponse {

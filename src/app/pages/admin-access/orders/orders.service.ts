@@ -9,6 +9,7 @@ import { OrderItems, OrdersList, StatusModel } from '@domain/models/orders';
 import { Observable } from 'rxjs';
 import { GridFilterGroup, Sort } from '@shared/components/grid/model';
 import { BulkChangeStatusRequest } from '@domain/resquest-response/request/orders-request';
+import { OrdersListResponse } from '@domain/resquest-response/response/orders-response';
 
 @Injectable()
 export class OrdersService {
@@ -20,7 +21,7 @@ export class OrdersService {
     private _getOrdersListUsecase: GetOrdersListUsecase) { }
 
   
-  public getOrdersList(requireTotalCount: boolean, skip: number, take: number, sort: Sort[], filter: unknown, group?: GridFilterGroup[]): Observable<OrdersList> {
+  public getOrdersList(requireTotalCount: boolean, skip: number, take: number, sort: Sort[], filter: unknown, group?: GridFilterGroup[]): Observable<OrdersListResponse> {
       return this._getOrdersListUsecase.execute(requireTotalCount, skip, take, sort, filter, group);
   }
 
