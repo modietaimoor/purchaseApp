@@ -5,15 +5,21 @@ import { Observable } from 'rxjs';
 import { Query, Body } from '@core/async-services/http/decorator/parameters';
 import { GET, POST } from '@core/async-services/http/decorator/request-methods';
 import { RestClient } from '@core/async-services/http/rest-client';
-import { OrderContentResponse, OrderResponse, StatusModelResponse } from '@domain/resquest-response/response/orders-response';
+import { OrderContentResponse, OrdersListResponse, StatusModelResponse } from '@domain/resquest-response/response/orders-response';
 import { BulkChangeStatusRequest } from '@domain/resquest-response/request/orders-request';
+import { GridFilterGroup, Sort } from '@shared/components/grid/model';
 
 @Injectable({
   providedIn: 'root'
 })
 export class OrdersRepository extends RestClient {
   @GET('Orders/GetOrdersList')
-  GetOrdersList(): Observable<OrderResponse[]> {
+  GetOrdersList(    @Query('requireTotalCount') requireTotalCount: string,
+  @Query('skip') skip: number,
+  @Query('take') take: number,
+  @Query('sort') sort: Sort[],
+  @Query('filter') filter: unknown,
+  @Query('group') group?: GridFilterGroup[]): Observable<OrdersListResponse> {
     return null;
   }
 

@@ -1,15 +1,10 @@
 import { Component, OnInit, ViewChild } from "@angular/core";
 import { NotificationService } from "@shared/service/notification.service";
-import { SafeAny } from "@core/safe-any-type";
 import { Order, OrderItems, StatusModel } from "@domain/models/orders";
 import { DataGridClientSideComponent } from "@shared/components/grid/data-grid-client-side/data-grid-client-side.component";
-import { Column } from "@shared/components/grid/model";
+import { Column, DataSourceSteamResult, PageChange } from "@shared/components/grid/model";
 import { OrdersService } from "./orders.service";
-import { GetStatusLookupUsecase } from "@domain/repositories/usecases/orders/get-status-lookup.usecase";
-import { GetOrdersListUsecase } from "@domain/repositories/usecases/orders/get-orders-list.usecase";
-import { GetOrderContentUsecase } from "@domain/repositories/usecases/orders/get-order-content.usecase";
-import { BulkChangeOrderStatusUsecase } from "@domain/repositories/usecases/orders/bulk-change-order-status.usecase";
-import { ChangeOrderStatusUsecase } from "@domain/repositories/usecases/orders/change-order-status.usecase";
+import { Observable, Subject } from "rxjs";
 
 @Component({
   selector: "app-orders",
@@ -17,18 +12,15 @@ import { ChangeOrderStatusUsecase } from "@domain/repositories/usecases/orders/c
   styleUrls: ["./orders.component.css"]
 })
 export class OrdersComponent implements OnInit {
-  @ViewChild(DataGridClientSideComponent) grid: DataGridClientSideComponent<Order>;  
-  ordersList: Array<Order> = [];
+  @ViewChild(DataGridClientSideComponent) grid: DataGridClientSideComponent<Order>; 
+  ordersList: Subject<DataSourceSteamResult<Order>>; 
+  ordersList$: Observable<DataSourceSteamResult<Order>>;
   statusLookup: Array<StatusModel> = [];
   orderItems: Array<OrderItems> = [];
   selectedStatus: number;
-  customizeText = (cellInfo: SafeAny):string =>  {
-    let s = cellInfo.value.toString();
-    while (s.length < 5) s = "0" + s;
-    return s;
-  }
+  pageChange: PageChange;
   orderColumns: Column[] = [
-    { dataField: 'orderID', name: 'Order Number', alignment: 'center',  customizeText: this.customizeText},
+    { dataField: 'orderID', name: 'Order Number', alignment: 'center' },
     { dataField: 'username', name: 'Client Name', alignment: 'center' },
     { dataField: 'email', name: 'Email Address', alignment: 'center' },
     { dataField: 'phoneNumber', name: 'Phone Number', alignment: 'center' },
@@ -39,28 +31,48 @@ export class OrdersComponent implements OnInit {
   ];
 
   constructor(private _ordersService: OrdersService,
-    private _getStatusLookupUsecase: GetStatusLookupUsecase,
-    private _getOrderContentUsecase: GetOrderContentUsecase,
-    private _bulkChangeOrderStatusUsecase: BulkChangeOrderStatusUsecase,
-    private _changeOrderStatusUsecase: ChangeOrderStatusUsecase,
-    private _getOrdersListUsecase: GetOrdersListUsecase,
     private _notificationService: NotificationService) {}
 
   ngOnInit(): void {
+    this.ordersList = new Subject();
+    this.ordersList$ = this.ordersList.asObservable();
     this.getOrders();
     this.getStatusList();
   }
 
+  onPageChange(pageChange: PageChange): void {
+    this.pageChange = pageChange;
+    this.getOrders();
+  }
+
   getOrders(): void{
-    this._getOrdersListUsecase.execute().subscribe(res => (this.ordersList = res), err => this._notificationService.error(err));
+    if(this.pageChange) {
+    this._ordersService.getOrdersList(true, this.pageChange.skip, this.pageChange.take, this.pageChange.sort, this.pageChange.filter,
+      this.pageChange.group).subscribe(res => this.ordersList.next({
+        data: {
+          data: res.data,
+          summary: res.summary,
+          totalCount: res.totalCount
+        }
+      }), err => this._notificationService.error(err));
+      }
+      else{
+        this.ordersList.next({
+          data: {
+            data: [],
+            summary: [],
+            totalCount: 0
+        }
+      });
+    }
   }
 
   getStatusList(): void {
-    this._getStatusLookupUsecase.execute().subscribe(x => (this.statusLookup = x), err => this._notificationService.error(err));
+    this._ordersService.getStatusLookup().subscribe(x => (this.statusLookup = x), err => this._notificationService.error(err));
   }
 
   getOrderContent(orderID: number): void{
-    this._getOrderContentUsecase.execute(orderID).subscribe(x => (this.orderItems = x), err => this._notificationService.error(err));
+    this._ordersService.getOrderContent(orderID).subscribe(x => (this.orderItems = x), err => this._notificationService.error(err));
   }
 
   bulkUpdateStatus(): void {
@@ -73,7 +85,7 @@ export class OrdersComponent implements OnInit {
       this._notificationService.error('Please select at least one order');
       return;
     }
-    this._bulkChangeOrderStatusUsecase.execute({
+    this._ordersService.bulkChangeOrderStatus({
       Orders: selectedRows.map(x => {
         return x.orderID
       }),
@@ -86,7 +98,7 @@ export class OrdersComponent implements OnInit {
 
   updateOrderStatus(orderID: number): void {
     let statusID = 0;
-    this._changeOrderStatusUsecase.execute(orderID, statusID).subscribe(_=> {
+    this._ordersService.changeOrderStatus(orderID, statusID).subscribe(_=> {
       this._notificationService.success('Order status updated successfully.');
       this.getOrders();
     });

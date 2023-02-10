@@ -27,7 +27,7 @@ import { startWith } from 'rxjs/operators';
 @Component({
   selector: 'app-data-grid-client-side',
   templateUrl: './data-grid-client-side.component.html',
-  styleUrls: ['./data-grid-client-side.component.css']
+  styleUrls: ['./../data-grid.component.css']
 })
 export class DataGridClientSideComponent<T> extends BaseGridComponent implements OnChanges, AfterContentInit {
   @ContentChild(TemplateRef) templateRef: TemplateRef<unknown>;

@@ -47,6 +47,7 @@
       allowColumnResizing="true"
       columnResizingMode="nextColumn"
       (onRowClick)="onRowClick($event)"
+      (onRowExpanded)="onRowExpanded($event)"
       [repaintChangesOnly]="true"
       [width]="width"
       [height]="height"
@@ -118,6 +119,13 @@
           [id]="row.data.id"
           [rowIndex]="row.rowIndex"
         ></app-column-cell>
+      </div>
+      <dxo-master-detail [enabled]="nested" template="masterDetail"></dxo-master-detail>
+      <div *dxTemplate="let masterDetailItem of 'masterDetail'">
+        <ng-template
+          [ngTemplateOutlet]="templateRef"
+          [ngTemplateOutletContext]="{ $implicit: masterDetailItem.data }"
+        ></ng-template>
       </div>
       <dxo-summary>
         <ng-container *ngFor="let summery of summaries">

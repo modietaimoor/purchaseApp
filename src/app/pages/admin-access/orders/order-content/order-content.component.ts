@@ -10,11 +10,9 @@ import { OrderItems } from "@domain/models/orders";
 export class OrderContentComponent {
   @Input() orderItems: Array<OrderItems> = [];
   itemColumns: Column[] = [
-    { dataField: 'quantity', name: 'Qty', alignment: 'center' },
-    { dataField: 'productCode', name: 'Product Code', alignment: 'center' },
+    { dataField: 'quantity', name: 'Quantity', alignment: 'center' },
     { dataField: 'productName', name: 'Product Name', alignment: 'center' },
-    { dataField: 'productDescription', name: 'Description', alignment: 'center' },
-    { dataField: 'size', name: 'Size', alignment: 'center' },
+    { dataField: 'categoryName', name: 'Category', alignment: 'center' },
     { dataField: 'productPrice', name: 'Unit Price', alignment: 'right', type: 'currency' },
     { dataField: 'totalPrice', name: 'Total Price', alignment: 'right', type: 'currency' }
   ];

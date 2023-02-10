@@ -2,6 +2,7 @@ import {
   AfterContentInit,
   ChangeDetectionStrategy,
   Component,
+  ContentChild,
   ContentChildren,
   EventEmitter,
   Input,
@@ -11,6 +12,7 @@ import {
   Output,
   QueryList,
   SimpleChanges,
+  TemplateRef,
   ViewChild
 } from '@angular/core';
 import { Observable, Subscription } from 'rxjs';
@@ -26,29 +28,16 @@ import { DataGridService } from '../data-grid.service';
 import * as Utils from '../grid.utils';
 import { GenerateSummeryMessage } from '../grid.utils';
 import { Column, DataSource, DataSourceSteamResult, GridFilterGroup, LoadOptions, PageChange, Sort } from '../model';
+import { SafeAny } from '@core/safe-any-type';
 
 @Component({
   selector: 'app-data-grid-server-side',
   templateUrl: './data-grid-server-side.component.html',
-  styles: [
-    `
-      .download-buttons {
-        margin-bottom: 10px;
-      }
-
-      :host::ng-deep.dx-datagrid-headers .dx-datagrid-table .dx-header-row > td {
-        background-color: #005c8d !important;
-      }
-
-      :host::ng-deep.dx-datagrid-headers .dx-header-row > td > .dx-datagrid-text-content {
-        color: #fff !important;
-        font-family: 'Open Sans';
-      }
-    `
-  ],
+  styleUrls: ['./../data-grid.component.css'],
   changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class DataGridComponent<T> extends BaseGridComponent implements OnInit, OnChanges, OnDestroy, AfterContentInit {
+  @ContentChild(TemplateRef) templateRef: TemplateRef<unknown>;
   @ViewChild('gridContainer') grid: DxDataGridComponent;
   @Input() readonly key: string = '';
   @Input() readonly columnWidth: number;
@@ -64,6 +53,8 @@ export class DataGridComponent<T> extends BaseGridComponent implements OnInit, O
   @Input() width: number;
   @Input() height: number;
   @Input() columnAutoWidth: boolean = false;
+  @Input() nested: boolean;
+  @Output() readonly rowExpanded: EventEmitter<SafeAny> = new EventEmitter<SafeAny>();
   @Output() readonly pageChange: EventEmitter<PageChange> = new EventEmitter();
   @Output() readonly export: EventEmitter<'Excel' | 'CSV'> = new EventEmitter();
   @Output() readonly add = new EventEmitter();
@@ -257,6 +248,10 @@ export class DataGridComponent<T> extends BaseGridComponent implements OnInit, O
     const filterName = this.replaceDataFieldByFilterName(filter[0] as string);
     filter[0] = filterName ?? filter[0];
     return filter;
+  }
+
+  onRowExpanded(evt: SafeAny): void {
+    this.rowExpanded.emit(evt);
   }
 
   replaceDataFieldByFilterName(dataField: string): string {

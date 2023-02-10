@@ -1,4 +1,6 @@
 export interface Order {
+    key?: string;
+    count?: number;
     orderID: number;
     userID?: number;
     username: string;
@@ -28,3 +30,9 @@ export interface StatusModel {
     statusID: number;
     statusName: string;
 }
+
+export interface OrdersList {
+    data: Order[];
+    totalCount: number;
+    summary: number[];
+  }
