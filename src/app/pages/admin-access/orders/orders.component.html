@@ -1,32 +1,31 @@
 <div class="overflow-x-hidden overflow-y-auto h-screen p-4">
-    <h1 class="text-4xl font-normal leading-normal m-1 font-bold w-full">Orders</h1>
-    <ng-template [ngIf]="ordersList.length > 0">
-        <div class="my-6 h-12">
-            <div class="inline-flex float-right">
-                <label class="text-blueGray-600 m-0 font-bold p-3">Bulk Update Status</label>
-                <div class="p-3">
-                    <app-select [(ngModel)]="selectedStatus">
-                        <app-select-option *ngFor="let status of statusLookup" [value]="status.statusName" [key]="status.statusID"> </app-select-option>
-                    </app-select>
-                </div>
-                <div class="p-3">
-                    <button class="text-white bg-emerald-700 font-bold text-base px-4 rounded h-full" (click)="bulkUpdateStatus()">Update</button>
-                </div>
+    <h1 class="text-4xl font-normal leading-normal m-1 font-bold w-full">Manage Orders</h1>
+    <div class="my-6 h-12">
+        <div class="inline-flex float-right">
+            <label class="text-blueGray-600 m-0 font-bold p-3">Bulk Update Status</label>
+            <div class="p-3">
+                <app-select [(ngModel)]="selectedStatus">
+                    <app-select-option *ngFor="let status of statusLookup" [value]="status.statusName" [key]="status.statusID"> </app-select-option>
+                </app-select>
+            </div>
+            <div class="p-3">
+                <button class="text-white bg-emerald-700 font-bold text-base px-4 rounded h-full" (click)="bulkUpdateStatus()">Update</button>
             </div>
         </div>
-        <div class="w-full p-4 shadow-lg rounded bg-white">
-            <app-data-grid-client-side
-                [dataSource]="ordersList"
-                selectionMode="multiple"
-                nested="true"
-                (rowExpanded)="getOrderContent($event.key.orderID)"
-                [columns]="orderColumns">
-                    <ng-template>
-                        <app-order-content
-                            [orderItems]="orderItems">
-                        </app-order-content>
-                    </ng-template>
-            </app-data-grid-client-side>
-        </div>
-    </ng-template>
+    </div>
+    <div class="w-full p-4 shadow-lg rounded bg-white">
+        <app-data-grid-server-side
+            [source$]="ordersList$"
+            selectionMode="multiple"
+            nested="true"
+            (pageChange)="onPageChange($event)"
+            (rowExpanded)="getOrderContent($event.key.orderID)"
+            [columns]="orderColumns">
+                <ng-template>
+                    <app-order-content
+                        [orderItems]="orderItems">
+                    </app-order-content>
+                </ng-template>
+        </app-data-grid-server-side>
+    </div>
 </div>

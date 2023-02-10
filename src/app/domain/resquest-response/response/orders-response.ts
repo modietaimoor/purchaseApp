@@ -15,6 +15,8 @@ export interface OrderContentResponse {
 }
 
 export interface OrderResponse {
+    key: string;
+    count: number;
     OrderID: number;
     UserID?: number;
     Username: string;
@@ -26,6 +28,11 @@ export interface OrderResponse {
     StatusID: number;
     StatusName: string;
 }
+
+export interface OrdersListResponse {
+    data: OrderResponse[];
+    totalCount: number;
+  }
 
 export interface OrderItemsResponse {
     OrderID: number;

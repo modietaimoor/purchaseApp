@@ -28,10 +28,11 @@ export class AdminComponent implements OnInit {
   
   ngOnInit() {
     this.initializeListAndToolbar();
-    this._router.navigate([this.menu[0].url]);
+    this.initializeToolbar();
   }
 
   initializeListAndToolbar(): void {
+    let activeUrl = this._router.url;
     this.menu = Menu.map(x => ({
       id: x.id,
       url: x.url,
@@ -43,9 +44,10 @@ export class AdminComponent implements OnInit {
     this.menu.forEach(x => {
       x.icon = this.collapsed ? '' : this.getIconById(x.id);
       x.html = this.collapsed ? this.getHtmlById(x.id) : x.title;
+      x.active = x.url === activeUrl;
     });
-    this.currentPage = this.menu[0].title;
-    this.initializeToolbar();
+
+    this.currentPage = this.menu.find(x => x.url === activeUrl).title;
     this.selectedItemKeys = this.menu.filter(x => x.active === true).map(x => {
       return x.url
     });
