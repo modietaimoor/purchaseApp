@@ -18,7 +18,7 @@ export class ConfigService {
   }
   ;
   private env: Environment = { env: 'development' };
-  configUrl = '../config';
+  configUrl = '/purchaseApp/config';
   envUrl = 'env';
 
   constructor(private http: HttpClient) {}
