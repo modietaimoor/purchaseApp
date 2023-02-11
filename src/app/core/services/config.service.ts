@@ -52,6 +52,7 @@ export class ConfigService {
   }
 
   loadFile<T>(env: string, url: string): Observable<T> {
+    console.log(url);
     return this.getJSON(`${url}/${env}.json`);
   }
 
