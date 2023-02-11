@@ -1,0 +1,45 @@
+<!--<div class="flex flex-wrap overflow-y-hidden">
+  <div class="w-full px-2 py-1 bg-gray-100">
+    <div class="w-full">
+      <a id="discounts" class="ad-label bg-white border float-left" (mouseenter)="showPopup($event)" (mouseleave)="hidePopup()">
+        <i class="dx-icon-percent ad-icon"></i>
+        <span class="ad-text">Discounts</span>
+      </a>
+      <a id="multi-national" class="ad-label bg-white border float-left" (mouseenter)="showPopup($event)" (mouseleave)="hidePopup()">
+        <i class="dx-icon-globe ad-icon"></i>
+        <span class="ad-text">Products from all over the world</span>
+      </a>
+      <a id="point-gifts" class="ad-label bg-white border float-left" (mouseenter)="showPopup($event)" (mouseleave)="hidePopup()">
+        <i class="dx-icon-gift ad-icon"></i>
+        <span class="ad-text">Points</span>
+      </a>
+      <a class="ad-label bg-white border float-right" (click)="backToLogin()">
+        <i class="fa fa-sign-out ad-icon"></i>
+        <span class="ad-text">Logout</span>
+      </a>
+      <a class="ad-label bg-white border float-right" (click)="showCartDetails()">
+        <i class="dx-icon-cart ad-icon"></i>
+        <span class="shop-count">{{itemsCount}}</span>
+      </a>
+    </div>
+    <app-popover
+      [(target)]="target"
+      [showTitle]="false"
+      [position]="position"
+      [width]="250"
+      [height]="100"
+      [(visible)]="popoverShow"
+      [wrapperAttr]="{ id: 'elementId' }">
+      <ng-template>
+        <div class="bg-gray-300">
+          <p>{{ popupText }}</p>
+        </div>
+      </ng-template>
+    </app-popover>
+
+  </div>
+  <div class="w-full p-4 bg-gray-100">
+    <app-toolbar [(items)]="searchToolBarItmes"></app-toolbar>
+  </div>
+  <router-outlet></router-outlet>
+</div>-->
