@@ -8,17 +8,9 @@ import { AppSettings } from './app.settings.service';
 
 @Injectable()
 export class ConfigService {
-  private config: Configuration = {
-    "api": {
-      "baseUrl": "http://localhost:55540/api/"
-    },
-    "idle": {
-      "timeout": 10
-    }
-  }
-  ;
-  private env: Environment = { env: 'development' };
-  configUrl = '/purchaseApp/config';
+  private config: Configuration;
+  private env: Environment;
+  configUrl = '../config';
   envUrl = 'env';
 
   constructor(private http: HttpClient) {}

@@ -1,4 +1,5 @@
 <app-graph-chart
+    id="yearChart"
     [size]="size"
     [titleFont]="22"
     rotateXAxisValue="true"
@@ -12,7 +13,7 @@
     [onPointClick]="pointClicked"
     [valueAxis]="valueAxis"
     [seriesList]="seriesList"
-    [dataSource]="dataSource"
+    [dataSource]="dataSource"    
     [title]="title">
 </app-graph-chart>
-<app-load-panel [loadingVisible]="loadingVisible"></app-load-panel>
+<app-load-panel [loadingVisible]="loadingVisible" [position]="position"></app-load-panel>

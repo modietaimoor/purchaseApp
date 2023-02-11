@@ -26,6 +26,7 @@ export class YearlySalesComponent implements OnChanges {
   @Input() reportDate: Date;
   loadingVisible = false;
   size = { width: '100%', height: '100%' };
+  position = { of: '#yearChart' };
   dataSource: SalesModel[];
   title = 'Yearly Sales (EGP)';
   seriesList: Array<ChartSeries> = [

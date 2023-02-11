@@ -26,6 +26,7 @@ export class DailySalesComponent implements OnChanges {
   @Input() reportDate: Date;
   loadingVisible = false;
   size = { width: '100%', height: '100%' };
+  position = { of: '#dayChart' };
   dataSource: SalesModel[];
   title = 'Daily Sales (EGP)';
   seriesList: Array<ChartSeries> = [
