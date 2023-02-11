@@ -44,6 +44,7 @@
     "@types/node": "^12.11.1",
     "@typescript-eslint/eslint-plugin": "4.28.2",
     "@typescript-eslint/parser": "4.28.2",
+    "angular-cli-ghpages": "^1.0.5",
     "devextreme-cli": "latest",
     "devextreme-themebuilder": "^22.2.3",
     "eslint": "^7.26.0",
