@@ -14,6 +14,8 @@ export interface ProductGridModel {
     categoryName: string;
     productPrice: number;
     isByWeight: boolean;
+    retired: boolean;
+    retireDate: Date;
 }
 
 export interface ProductSpecValues {

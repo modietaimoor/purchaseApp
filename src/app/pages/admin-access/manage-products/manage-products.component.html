@@ -15,6 +15,7 @@
       <app-data-grid-client-side 
         [dataSource]="productsList"
         [selectionMode]="selectionMode"
+        (rowPrepared)="rowPrepared($event)"
         (rowsSelected)="selectedRows($event)">                        
           <app-column *ngFor="let col of productColumns" 
             [name]="col.name" 

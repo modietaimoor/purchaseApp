@@ -60,6 +60,7 @@ export class DataGridClientSideComponent<T> extends BaseGridComponent implements
   @Output() readonly rowUpdating: EventEmitter<SafeAny> = new EventEmitter<SafeAny>();
   @Output() readonly rowExpanded: EventEmitter<SafeAny> = new EventEmitter<SafeAny>();
   @Output() readonly rowDeleting: EventEmitter<SafeAny> = new EventEmitter<SafeAny>();
+  @Output() readonly rowPrepared: EventEmitter<SafeAny> = new EventEmitter<SafeAny>();
   @ContentChildren(ColumnComponent)
   public columnsComponents!: QueryList<ColumnComponent>;
   selectedValue: string | number;
@@ -239,6 +240,10 @@ export class DataGridClientSideComponent<T> extends BaseGridComponent implements
 
   onRowRemoving(evt: SafeAny): void {
     this.rowDeleting.emit(evt);
+  }
+
+  onRowPrepared(evt: SafeAny): void {
+    this.rowPrepared.emit(evt);
   }
 
   // TODO:: calling method inside html is marked as bad practice and we need to find a better solution for it

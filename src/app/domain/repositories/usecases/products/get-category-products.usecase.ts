@@ -21,7 +21,9 @@ export class GetCategoryProductsUsecase {
               categoryID: x.CategoryID,
               categoryName: x.CategoryName,
               productPrice: x.ProductPrice,
-              isByWeight: x.IsByWeight     
+              isByWeight: x.IsByWeight,
+              retired: x.Retired,
+              retireDate: x.RetireDate     
             };
           })
     ));

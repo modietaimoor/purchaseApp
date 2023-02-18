@@ -132,4 +132,12 @@ export class ManageCategoriesComponent implements OnInit {
       return !res;
     });
   }   
+
+  rowPrepared(event: SafeObjectAny): void {
+    if(event.rowType === 'data'){
+      if(event.data.retired === true){
+        event.rowElement.classList?.add('font-red');
+      }
+    }
+  }
 }

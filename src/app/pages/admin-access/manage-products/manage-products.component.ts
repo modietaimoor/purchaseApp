@@ -1,4 +1,5 @@
 import { Component, Input, OnInit } from "@angular/core";
+import { SafeObjectAny } from "@core/safe-any-type";
 import { Category } from "@domain/models/categories";
 import { ProductGridModel } from "@domain/models/products";
 import { SpecField } from "@domain/models/specfields";
@@ -97,5 +98,13 @@ export class ManageProductComponent implements OnInit {
       this._notificationService.success("Product deleted successfully");
       this.getAllProducts();
     }, err => this._notificationService.error(err));
+  }
+
+  rowPrepared(event: SafeObjectAny): void {
+    if(event.rowType === 'data'){
+      if(event.data.retired === true){
+        event.rowElement.classList?.add('font-red');
+      }
+    }
   }
 }

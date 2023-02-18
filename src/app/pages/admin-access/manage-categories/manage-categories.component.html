@@ -82,6 +82,7 @@
                         [allowUpdating]="true"
                         [allowDeleting]="true"
                         [columns]="categoryColumns"
+                        (rowPrepared)="rowPrepared($event)"
                         (rowUpdating)="updatCategoryName($event)"
                         (rowDeleting)="deleteCategory($event)">                                            
                       </app-data-grid-client-side> 

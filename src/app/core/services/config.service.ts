@@ -10,7 +10,7 @@ import { AppSettings } from './app.settings.service';
 export class ConfigService {
   private config: Configuration;
   private env: Environment;
-  configUrl = '../config';
+  configUrl = './config';
   envUrl = 'env';
 
   constructor(private http: HttpClient) {}

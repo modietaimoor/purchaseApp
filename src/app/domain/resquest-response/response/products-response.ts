@@ -6,4 +6,6 @@ export interface ProductsGridModelResponse {
     CategoryName: string;
     ProductPrice: number;
     IsByWeight: boolean;
+    Retired: boolean;
+    RetireDate: Date;
 }

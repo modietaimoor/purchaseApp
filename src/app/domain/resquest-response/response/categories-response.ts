@@ -4,4 +4,6 @@ export interface CategoryResponse {
     ParentID: number;
     ParentName: string;
     CreationDate: Date,
+    Retired: boolean,
+    RetireDate: Date,
 }

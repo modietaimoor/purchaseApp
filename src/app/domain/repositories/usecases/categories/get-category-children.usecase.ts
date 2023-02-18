@@ -18,7 +18,9 @@ export class GetCategoryChildrenUsecase {
             categoryName: x.CategoryName,
             parentID: x.ParentID,
             parentName: x.ParentName,
-            creationDate: x.CreationDate
+            creationDate: x.CreationDate,
+            retired: x.Retired,
+            retireDate: x.RetireDate
           }
         })
       )

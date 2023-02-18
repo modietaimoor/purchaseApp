@@ -4188,6 +4188,10 @@ select {
   .xl\:w-8\/12 {
     width: 66.666667%;
   }
+
+  .font-red {
+    color: red !important;
+  }
 }
 
 @media (min-width: 1536px) {

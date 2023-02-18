@@ -4,6 +4,8 @@ export interface Category {
     parentID: number;
     parentName: string;
     creationDate: Date;
+    retired: boolean;
+    retireDate: Date;
 }
 
 export enum CategoryFieldType {
